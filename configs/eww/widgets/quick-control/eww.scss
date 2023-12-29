@@ -1,0 +1,50 @@
+* {
+    all: unset;
+    font-family: "CodeNewRoman Nerd Font Mono";
+}
+
+.quick-control {
+    background: rgba(90, 90, 90, 0.0);
+}
+
+.control-menu {
+    margin-left: 50px;
+}
+
+.quick-access-button,
+.quick-access-button-focused,
+.system-monitor-title,
+.system-monitor-item {
+    background-color: #1a1a1a;
+    border-radius: 10px;
+    color: #fafafa;
+    font-size: 120px;
+}
+
+.quick-access-button-focused {
+    box-shadow: 0px 0px 0px 2px #fafafa inset;
+}
+
+.system-monitor-title {
+    label {
+        font-size: 30px;
+    }
+}
+
+.system-monitor-item {
+    font-size: 25px;
+    &-innerbox {
+        margin: 10px 0px 0px 0px;
+        padding: 10px 0px;
+    }
+    circular-progress {
+        background-color: #5a5a5a;
+        color: #d35d6e;
+        label {
+            color: #fafafa;
+        }
+    }
+    label {
+        margin-top: 5px;
+    }
+}

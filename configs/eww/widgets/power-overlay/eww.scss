@@ -1,0 +1,39 @@
+* {
+    all: unset;
+    font-family: "CodeNewRoman Nerd Font Mono";
+}
+
+.power-overlay {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.power-button,
+.power-button-focused,
+.power-button-selected {
+    background-color: #1a1a1a;
+    border-radius: 10px;
+    color: #fafafa;
+    font-size: 100px;
+}
+
+.power-button {
+    &-focused {
+        box-shadow: 0px 0px 0px 2px #fafafa inset;
+    }
+    &-selected {
+        background-color: #454545;
+        box-shadow: 0px 0px 0px 3px #eaeaea inset;
+    }
+}
+
+.confirm-button,
+.confirm-button-focused {
+    background-color: #1a1a1a;
+    border-radius: 10px;
+    color: #fafafa;
+    font-size: 30px;
+}
+
+.confirm-button-focused {
+    box-shadow: 0px 0px 0px 2px #fafafa inset;
+}

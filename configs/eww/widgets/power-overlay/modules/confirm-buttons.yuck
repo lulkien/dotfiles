@@ -1,0 +1,36 @@
+(defvar CONFIRM_BTN_W 530)
+(defvar CONFIRM_BTN_H 100)
+(defvar CONFIRM_BTN_SPACING 20)
+
+(defwidget confirm-button [button-id label onclick]
+    (eventbox
+        :onhover "${EWW_CMD} update focused_button=${button-id}"
+        :onhoverlost "${EWW_CMD} update focused_button=0"
+        (box :class "confirm-button${button-id == focused_button ? "-focused" : ""}"
+            (button
+                :width CONFIRM_BTN_W
+                :height CONFIRM_BTN_H
+                :onclick onclick
+                "${label}"
+            )
+        )
+    )
+)
+
+(defwidget confirm-button-list []
+    (box
+        :orientation "h"
+        :space-evenly false
+        :spacing CONFIRM_BTN_SPACING
+        (confirm-button
+            :button-id 6
+            :label "Confirm"
+            :onclick "${EWW_CMD} close power-overlay; ${EWW_CMD} update focused_button=0; ${EWW_CMD} update selected_button=0; ${action_command}"
+        )
+        (confirm-button
+            :button-id 7
+            :label "Decline"
+            :onclick "${EWW_CMD} update selected_button=0"
+        )
+    )
+)

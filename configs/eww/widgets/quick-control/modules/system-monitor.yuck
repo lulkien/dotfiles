@@ -1,0 +1,57 @@
+;; Variables
+(defvar ITEM-WIDTH 150)
+(defvar ITEM-HEIGHT 200)
+
+;; Widgets
+(defwidget system-monitor-item [name value]
+    (box :class "system-monitor-item"
+        :width ITEM-WIDTH
+        :height ITEM-HEIGHT
+        :orientation "v"
+        :space-evenly false
+        :valign "center"
+        :halign "start"
+        (box :class "system-monitor-item-innerbox"
+            :width 130
+            :height 150
+            (circular-progress
+                :value value
+                :thickness 12
+                :start-at 75
+                (label :text name)
+            )
+        )
+        (label :text "${round(value, 1)}%")
+    )
+)
+
+(defwidget system-monitor []
+    (box
+        :orientation "v"
+        :space-evenly false
+        :spacing 10
+        (box :class "system-monitor-title"
+            :width 470
+            :height 100
+            (label :text "System Monitoring")
+        )
+        (box
+            :orientation "h"
+            :space-evenly false
+            :spacing 10
+            :valign "start"
+            (system-monitor-item
+                :name "CPU"
+                :value {EWW_CPU.avg}
+            )
+            (system-monitor-item
+                :name "RAM"
+                :value {EWW_RAM.used_mem_perc}
+            )
+            (system-monitor-item
+                :name "DISK"
+                :value {round((1 - (EWW_DISK["/"].free / EWW_DISK["/"].total)) * 100, 1)}
+            )
+        )
+    )
+)

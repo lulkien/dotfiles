@@ -1,0 +1,66 @@
+(defvar BUTTON-SIZE 150)
+
+(defwidget quick-access-button [btn-id ico style cmd]
+    (eventbox
+        :onhover "${EWW_CMD} update focused_button=${btn-id}"
+        :onhoverlost "${EWW_CMD} update focused_button=0"
+        (box
+            ;; Use button widget to handle "onclick" event in stead of using eventbox onclick event.
+            ;; It is not so hard to explain but I'm quite lazy to do that
+            ;; So, trust me bro :)
+            ;; Try it yourself if you want
+            (button
+                :class "quick-access-button${btn-id == focused_button ? "-focused" : ""}"
+                :width BUTTON-SIZE
+                :height BUTTON-SIZE
+                :style style
+                :onclick "${EWW_CMD} close ${widget-name}; ${EWW_CMD} update focused_button=0; ${cmd} & disown"
+                ico
+            )
+        )
+    )
+)
+
+(defwidget quick-access []
+    (box
+        :orientation "v"
+        :space-evenly false
+        :spacing 10
+        (quick-access-button
+            :btn-id 1
+            :ico "󰖟"
+            :style ""
+            :cmd "brave"
+        )
+        (quick-access-button
+            :btn-id 2
+            :ico "󰉖"
+            :style ""
+            :cmd "nemo"
+        )
+        (quick-access-button
+            :btn-id 3
+            :ico ""
+            :style ""
+            :cmd "kitty"
+        )
+        (quick-access-button
+            :btn-id 4
+            :ico ""
+            :style "font-size: 100px;"
+            :cmd "blueman-manager"
+        )
+        (quick-access-button
+            :btn-id 5
+            :ico ""
+            :style ""
+            :cmd ""
+        )
+        (quick-access-button
+            :btn-id 6
+            :ico ""
+            :style ""
+            :cmd ""
+        )
+    )
+)

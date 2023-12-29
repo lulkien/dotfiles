@@ -1,0 +1,49 @@
+;; Include
+(include "modules/power-buttons.yuck")
+(include "modules/confirm-buttons.yuck")
+
+;; Contants
+(defvar widget-name "power-overlay")
+
+;; Variables
+(defvar focused_button 0)
+(defvar selected_button 0)
+(defvar action_command "")
+;; ----- Button ID -----
+;; NONE:    0
+;; DPMS:    1
+;; LOCK:    2
+;; EXIT:    3
+;; REBOOT:  4
+;; POWER:   5
+;; CONFIRM: 6
+;; DECLINE: 7
+
+(defwidget power-menu []
+    (eventbox 
+        :onclick "${EWW_CMD} close power-overlay; ${EWW_CMD} update focused_button=0; ${EWW_CMD} update selected_button=0"
+        :hexpand true
+        :vexpand true
+        (box :class "power-menu"
+            :orientation "v"
+            :space-evenly false
+            :halign "center"
+            :valign "center"
+            :spacing 10
+            (power-buttons)
+            (revealer :transition "slideup"
+                :reveal {selected_button != 0}
+                :duration "200ms"
+                (confirm-button-list)
+            )
+        )
+    )
+)
+
+(defwindow power-overlay
+    :monitor 0
+    :stacking "overlay"
+    :focusable true
+    :geometry (geometry :width "100%" :height "100%")
+    (power-menu)
+)

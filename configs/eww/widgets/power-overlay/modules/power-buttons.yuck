@@ -1,0 +1,58 @@
+(defvar PWR_BTN_W 200)
+(defvar PWR_BTN_H 200)
+(defvar PWR_BTN_SPACING 20)
+
+(defwidget power-button [button-id label-icon addition-style command]
+    (eventbox
+        :onhover "${EWW_CMD} update focused_button=${button-id}"
+        :onhoverlost "${EWW_CMD} update focused_button=0"
+        (box :class "power-button${button-id == selected_button ? "-selected" 
+                                                                : button-id == focused_button ? "-focused" : ""}"
+            :style addition-style
+            (button
+                :width PWR_BTN_W
+                :height PWR_BTN_H
+                :onclick "${EWW_CMD} update action_command='${command}'; ${EWW_CMD} update selected_button=${button-id}"
+                "${label-icon}"
+            )
+        )
+    )
+)
+
+(defwidget power-buttons []
+    (box
+        :orientation "h"
+        :space-evenly false
+        :spacing PWR_BTN_SPACING
+        (power-button
+            :button-id 1
+            :label-icon "󰤄"
+            :addition-style ""
+            :command "sleep 0.2 && hyprctl dispatch dpms off &"
+        )
+        (power-button
+            :button-id 2
+            :label-icon ""
+            :addition-style ""
+            :command "sleep 0.2 && swaylock & disown"
+        )
+        (power-button
+            :button-id 3
+            :label-icon "󰗼"
+            :addition-style ""
+            :command "hyprctl dispatch exit"
+        )
+        (power-button
+            :button-id 4
+            :label-icon ""
+            :addition-style ""
+            :command "systemctl reboot"
+        )
+        (power-button
+            :button-id 5
+            :label-icon "󰐥"
+            :addition-style "color:#d35d6e;"
+            :command "systemctl poweroff"
+        )
+    )
+)

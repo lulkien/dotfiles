@@ -1,0 +1,106 @@
+// ---------------------------------- Variable ----------------------------------
+$bg-color: #2a2a2a;
+$gl-padding: 0px 10px;
+$gl-radius: 8px;
+
+$text-fontsize: 18px;
+$text-color: #fafafa;
+$disabled-text-color: #7c7c7c;
+
+$button-padding: 0px 13px;
+$button-fontsize: 30px;
+
+$widget-padding: 5px 0px;
+$widget-margin: 10px;
+
+// ---------------------------------- Global ----------------------------------
+* {
+    all: unset; //Unsets everything so you can style everything from scratch
+    font-family: "CodeNewRoman Nerd Font Mono";
+}
+
+.bar {
+    background-color: rgba(176, 176, 176, 0.3);
+}
+
+.left-widgets,
+.center-widgets,
+.right-widgets {
+    padding: $widget-padding;
+}
+
+.left-widgets {
+    margin-left: $widget-margin;
+}
+
+.right-widgets {
+    margin-right: $widget-margin;
+}
+
+tooltip.background {
+    background-color: #1f1f1f;
+    border-radius: $gl-radius;
+    font-size: $text-fontsize;
+    color: #bfc9db;
+}
+
+tooltip label {
+    margin: 5px;
+}
+
+// ---------------------------------- Left section ----------------------------------
+.dashboard-button,
+.workspaces-widget {
+    padding: $gl-padding;
+    background-color: $bg-color;
+    border-radius: $gl-radius;
+    color: $text-color;
+    font-size: $button-fontsize;
+}
+
+.workspace-button {
+    &-active {
+        padding: 0px 5px;
+    }
+    &-deactive {
+        padding: 0px 5px;
+        color: $disabled-text-color;
+    }
+}
+
+// ---------------------------------- Central section ----------------------------------
+.date-time,
+.noti-button {
+    background-color: $bg-color;
+    border-radius: $gl-radius;
+    color: $text-color;
+}
+
+.date-time {
+    padding: $gl-padding;
+    font-size: $text-fontsize;
+}
+
+.noti-button {
+    padding: $button-padding;
+    font-size: $button-fontsize;
+}
+
+// ---------------------------------- Right section ----------------------------------
+.system-monitor-widget,
+.power-button {
+    padding: $gl-padding;
+    background-color: $bg-color;
+    border-radius: $gl-radius;
+    color: $text-color;
+}
+
+.system-monitor-circular {
+    background-color: #5a5a5a;
+    color: #d35d6e;
+}
+
+.power-button {
+    padding: $button-padding;
+    font-size: $button-fontsize;
+}

@@ -1,0 +1,3 @@
+[submodule "submodule/hyprvisor"]
+	path = submodule/hyprvisor
+	url = https://github.com/lulkien/hyprvisor.git

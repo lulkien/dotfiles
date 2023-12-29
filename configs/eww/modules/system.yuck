@@ -1,0 +1,32 @@
+(defwidget system-monitor-item [value tooltip]
+    (box :class "system-monitor-item"
+        :tooltip tooltip
+        (circular-progress :class "system-monitor-circular"
+            :value value
+            :width 27
+            :height 27
+            :thickness 6
+            :start-at 75
+        )
+    )
+)
+
+(defwidget system-monitor-widget []
+    (box :class "system-monitor-widget"
+        :orientation "h"
+        :space-evenly true
+        :spacing 10
+        (system-monitor-item
+            :value "${EWW_CPU.avg}"
+            :tooltip "CPU: ${round(EWW_CPU.avg, 1)}%"
+        )
+        (system-monitor-item
+            :value "${EWW_RAM.used_mem_perc}"
+            :tooltip "RAM: ${round(EWW_RAM.used_mem / 1073741824, 1)}/${round(EWW_RAM.total_mem / 1073741824, 1)} GB"
+        )
+        (system-monitor-item
+            :value "${round((1 - (EWW_DISK["/"].free / EWW_DISK["/"].total)) * 100, 0)}"
+            :tooltip "Disk: ${round(EWW_DISK["/"].free / 1073741824, 1)}GB free on /"
+        )
+    )
+)

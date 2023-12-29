@@ -1,0 +1,65 @@
+;; Modules
+(include "modules/dashboard.yuck")
+(include "modules/workspaces.yuck")
+(include "modules/datetime.yuck")
+(include "modules/quickcontrol.yuck")
+(include "modules/system.yuck")
+(include "modules/power.yuck")
+(include "modules/notification.yuck")
+
+;; Widgets section
+(defwidget left-widgets []
+    (box :class "left-widgets"
+        :orientation "h"
+        :halign "start"
+        :space-evenly false
+        :spacing 5
+        (dashboard)
+        (workspaces-widget)
+    )
+)
+
+(defwidget center-widgets []
+    (box :class "center-widgets"
+        :halign "center"
+        :orientation "h"
+        :space-evenly false
+        :spacing 5
+        (date-time)
+        (notification)
+    )
+)
+
+(defwidget right-widgets []
+    (box :class "right-widgets"
+        :orientation "h"
+        :space-evenly false
+        :spacing 5
+        :halign "end"
+        (system-monitor-widget)
+        (power-window)
+    )
+)
+
+(defwidget bar []
+    (centerbox 
+        :orientation "h"
+        (left-widgets)
+        (center-widgets)
+        (right-widgets)
+    )
+)
+
+;; Window section
+(defwindow bar
+    :monitor 0
+    :windowtype "dock"
+    :geometry (geometry :x "0px"
+                        :y "0px"
+                        :width "100%"
+                        :height "40px"
+                        :anchor "top center")
+    :exclusive "true"
+    (bar)
+)
+
