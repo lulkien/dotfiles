@@ -1,0 +1,3 @@
+[submodule "configs/eww/submodule/hyprvisor"]
+	path = configs/eww/submodule/hyprvisor
+	url = https://github.com/lulkien/hyprvisor.git
