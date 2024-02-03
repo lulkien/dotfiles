@@ -1,77 +1,44 @@
 #!/usr/bin/env bash
 
-if [[ -z "$1" ]]; then
-  echo "Missing arguments!!!"
-  exit 1
-fi
+echo "[PREPARE]"
+HYPR_CFG=$HOME/.config/hypr
+EWW_CFG=$HOME/.config/eww
+SWAYLOCK_CFG=$HOME/.config/swaylock
+KITTY_CFG=$HOME/.config/kitty
+WOFI_CFG=$HOME/.config/wofi
+FISH_CFG=$HOME/.config/fish
 
-dotfiles_dir=$(realpath "$(dirname "$0")")
+CFG_LIST=("$HYPR_CFG" "$EWW_CFG" "$SWAYLOCK_CFG" "$KITTY_CFG" "$WOFI_CFG" "$FISH_CFG")
 
-install_fish=false
-install_kitty=false
-install_hypr=false
-install_eww=false
-
-install_nvim=false
-is_reset_nvim=false
-
-install_vim=false
-is_reset_vim=false
-
-OPTS=$(getopt -o kfhen:v: -l kitty,fish,hypr,eww,nvim:,vim: -- "$@")
-
-if [[ $? -ne 0 ]]; then
-  echo "Invalid options. Exiting..."
-  exit 1
-fi
-
-eval set -- "$OPTS"
-while true; do
-  case "$1" in
-    -f | --fish)
-      install_fish=true
-      shift
-      ;;
-    -k | --kitty)
-      install_kitty=true
-      shift
-      ;;
-    -e | --eww)
-      install_eww=true
-      shift
-      ;;
-    -h | --hypr)
-      install_hypr=true
-      shift
-      ;;
-    -n | --nvim)
-      install_nvim=true
-      is_reset_nvim="$2"
-      shift 2
-      ;;
-    -v | --vim)
-      install_vim=true
-      is_reset_vim="$2"
-      shift 2
-      ;;
-    --)
-      shift
-      break
-      ;;
-  esac
+for cfg in "${CFG_LIST[@]}"
+do
+    test -L $cfg && unlink $cfg || rm -rf $cfg
 done
 
-if [[ $install_nvim = true ]]; then
-  echo "Create symlink for nvim configs"
 
-  if [[ $is_reset_nvim = true ]]; then
-    echo "Remove old nvim packages"
-    rm -rf $HOME/.local/share/nvim
-  fi
+NVIM_CFG=$HOME/.config/nvim
+NVCHAD_CFG=$NVIM_CFG/lua
+NVCHAD_CUSTOM_CFG=$NVCHAD_CFG/custom
 
-  test -L $HOME/.config/nvim      \
-    && unlink $HOME/.config/nvim  \
-    || rm -rf $HOME/.config/nvim
-
-  ln -s $dotfiles_dir/configs/nvim $HOME/.config/nvim
+if [[ ! -d $NVIM_CFG ]]; then
+    echo "[INSTALL NVCHAD]"
+    git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
+else
+    if [[ ! -d $NVCHAD_CFG ]]; then
+        echo "[REMOVE OLD NVIM AND INSTALL NVCHAD]"
+        rm -rf $NVIM_CFG
+        git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
+    else
+        test -L $NVCHAD_CUSTOM_CFG && unlink $NVCHAD_CUSTOM_CFG || rm -rf $NVCHAD_CUSTOM_CFG
+    fi
 fi
+
+echo "[RUN STOW]"
+if ! command -v stow &> /dev/null
+then
+    echo "[INSTALL STOW]"
+    sudo pacman -S stow
+fi
+
+DOT_PATH=$(realpath "$(dirname $0)")
+stow --verbose=2 --dir=$DOT_PATH/home --target=$HOME .
