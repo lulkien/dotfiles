@@ -1,3 +1,2 @@
 fish_variables
-customs
-*user.fish
+user_*.fish

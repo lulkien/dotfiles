@@ -1,6 +1,6 @@
-function ___singularis_branch_info
+function ___kfc_branch_info
     # Failsafe
-    if not set -q SINGULARIS_GIT_PROMPT_LOCK
+    if not set -q KFC_GIT_PROMPT_LOCK
         return
     end
 
@@ -8,25 +8,25 @@ function ___singularis_branch_info
     set -f head_sha         $argv[2]
 
     if test $bare_repo = true
-        echo $QF_CL_WHITE_N"   BARE"
+        echo $KFC_WHITE_N"   BARE"
         echo false
         return
     end
 
     set -f branch_name      (command git branch --show-current)
     if test -z "$branch_name"
-        echo $QF_CL_YELLOW_N'  '$QF_CL_PINK_N(string shorten -m8 -c "" -- $head_sha)
+        echo $KFC_YELLOW_N'  '$KFC_PINK_N(string shorten -m8 -c "" -- $head_sha)
         echo true   # this is a detached head
         return
     end
 
-    echo $QF_CL_YELLOW_N'  '$QF_CL_PURPLE_N$branch_name
+    echo $KFC_YELLOW_N'  '$KFC_PURPLE_N$branch_name
     echo false  # this is not a detached head
 end
 
-function ___singularis_worktree_prompt
+function ___kfc_worktree_prompt
     # Failsafe
-    if not set -q SINGULARIS_GIT_PROMPT_LOCK
+    if not set -q KFC_GIT_PROMPT_LOCK
         return
     end
 
@@ -43,12 +43,12 @@ function ___singularis_worktree_prompt
 
     # Clean case
     if test $dirty = false; and test $untracked = false
-        echo $QF_CL_WHITE_N'  '$QF_CL_GREEN_N''
+        echo $KFC_WHITE_N'  '$KFC_GREEN_N''
         return
     end
 
-    set -f worktree_dirty   $QF_CL_YELLOW_N''
-    set -f worktree_untrack $QF_CL_BLUE_N''
+    set -f worktree_dirty   $KFC_YELLOW_N''
+    set -f worktree_untrack $KFC_BLUE_N''
 
     set -f worktree_string  ''
 
@@ -65,12 +65,12 @@ function ___singularis_worktree_prompt
         end
     end
 
-    echo $QF_CL_WHITE_N'  '$worktree_string
+    echo $KFC_WHITE_N'  '$worktree_string
 end
 
-function ___singularis_relative_upstream
+function ___kfc_relative_upstream
     # Failsafe
-    if not set -q SINGULARIS_GIT_PROMPT_LOCK
+    if not set -q KFC_GIT_PROMPT_LOCK
         return
     end
 
@@ -86,15 +86,15 @@ function ___singularis_relative_upstream
         case "0 0" # equal to upstream
             echo ''
         case "0 *" # ahead of upstream
-            echo $QF_CL_GREEN_N' '$ahead
+            echo $KFC_GREEN_N' '$ahead
         case "* 0" # behind upstream
-            echo $QF_CL_YELLOW_N' '$behind
+            echo $KFC_YELLOW_N' '$behind
         case '*' # diverged from upstream
-            echo $QF_CL_RED_N''
+            echo $KFC_RED_N''
     end
 end
 
-function singularis_git_prompt
+function kfc_git_prompt
     if not command -sq git
         echo ''
         return
@@ -112,35 +112,35 @@ function singularis_git_prompt
     set -f last_commit_id       $git_info[4]
 
     if test $inside_gitdir = true; and test $bare_repo = false
-        echo $QF_CL_YELLOW_B'   GIT_DIR'
+        echo $KFC_YELLOW_B'   GIT_DIR'
         return
     end
 
     if test -z "$last_commit_id"; and test $bare_repo = false
-        echo $QF_CL_RED_B'   INVALID'
+        echo $KFC_RED_B'   INVALID'
         return
     end
 
-    set -g SINGULARIS_GIT_PROMPT_LOCK
+    set -g KFC_GIT_PROMPT_LOCK
     # No longer inside git directory from here
     # Unless is a BARE repository
-    set -f branch_info          (___singularis_branch_info $bare_repo $last_commit_id)
+    set -f branch_info          (___kfc_branch_info $bare_repo $last_commit_id)
     set -f branch_name          $branch_info[1]
     set -f detached             $branch_info[2]
     set -f worktree_prompt      ''
     set -f relative_upstream    ''
 
-    if test "$QF_SHOW_GIT_PROMPT_STATUS" = true; and test "$inside_workspace" = true;
-        set worktree_prompt (___singularis_worktree_prompt)
+    if test "$KFC_GIT_STATUS" = true; and test "$inside_workspace" = true;
+        set worktree_prompt (___kfc_worktree_prompt)
     end
 
-    if test -n "$worktree_prompt"; and test "$QF_SHOW_GIT_RELATIVE_COUNT" = true; and test "$detached" = false
-        set relative_upstream (___singularis_relative_upstream)
+    if test -n "$worktree_prompt"; and test "$KFC_GIT_RELATIVE_COUNT" = true; and test "$detached" = false
+        set relative_upstream (___kfc_relative_upstream)
         if test -n "$relative_upstream"
             set relative_upstream ' '$relative_upstream
         end
     end
 
     echo $branch_name$relative_upstream$worktree_prompt
-    set -e SINGULARIS_GIT_PROMPT_LOCK
+    set -e KFC_GIT_PROMPT_LOCK
 end
