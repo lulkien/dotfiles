@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 
-echo "[PREPARE]"
+DOT_PATH=$(realpath "$(dirname $0)")
+cd $DOT_PATH
+echo ">>> CHANGE DIRECTORY TO $DOT_PATH"
+
+echo ">>> REMOVE OLD CONFIG"
 HYPR_CFG=$HOME/.config/hypr
 EWW_CFG=$HOME/.config/eww
 SWAYLOCK_CFG=$HOME/.config/swaylock
@@ -21,11 +25,11 @@ NVCHAD_CFG=$NVIM_CFG/lua
 NVCHAD_CUSTOM_CFG=$NVCHAD_CFG/custom
 
 if [[ ! -d $NVIM_CFG ]]; then
-    echo "[INSTALL NVCHAD]"
+    echo ">>> INSTALL NVCHAD"
     git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
 else
     if [[ ! -d $NVCHAD_CFG ]]; then
-        echo "[REMOVE OLD NVIM AND INSTALL NVCHAD]"
+        echo ">>> REMOVE OLD NVIM CONFIG THEN INSTALL NVCHAD"
         rm -rf $NVIM_CFG
         git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
     else
@@ -33,12 +37,17 @@ else
     fi
 fi
 
-echo "[RUN STOW]"
 if ! command -v stow &> /dev/null
 then
-    echo "[INSTALL STOW]"
+    echo ">>> INSTALL STOW"
     sudo pacman -S stow
 fi
 
-DOT_PATH=$(realpath "$(dirname $0)")
+echo ">>> RUN STOW"
 stow --verbose=2 --dir=$DOT_PATH/home --target=$HOME .
+
+echo ">>> GIT UPDATE SUBMODULES"
+git submodule update --init --recursive
+
+echo "-------------------------------------------------"
+echo "PLEASE INSTALL THE SUBMODULES YOURSELF."

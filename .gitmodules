@@ -1,0 +1,3 @@
+[submodule "packages/hyprvisor"]
+	path = packages/hyprvisor
+	url = https://github.com/lulkien/hyprvisor.git
