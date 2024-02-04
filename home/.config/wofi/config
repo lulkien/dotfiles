@@ -1,0 +1,11 @@
+show = drun
+width = 40%
+height = 40%
+prompt = Applications
+allow_images = true
+hide_scroll = true
+insensitive = true
+no_actions = true
+sort-order = default
+dynamic_lines = true
+single_click = false
