@@ -5,7 +5,7 @@
 ## What is this?
 A custom fish shell configurations because I prefer not to use a package manager.
 
-### Features
+### Key features:
 - Nerdy custom prompt with icons.
 - Wrapper for some built-in commands.
 - Some short aliases.
@@ -63,7 +63,7 @@ set -g KFC_GIT_RELATIVE_COUNT true
 |   `l`   | `ls -lhA --ignore=lost+found --color=always` | |
 |  `vim` | `nvim` | Only when `neovim` is installed. |
 
-### Some new handy functions
+## Some new handy functions
 
 1. **git_push_now**
 
@@ -75,7 +75,7 @@ set -g KFC_GIT_RELATIVE_COUNT true
    - If the user chooses not to push changes, it prints a "Canceled!" message.
 - Safely handles interruptions during user interaction, preventing accidental actions.
 
-### Abbreviations
+## Abbreviations
 
 1. **Apt**
 
@@ -133,12 +133,12 @@ Note: Using `p` as a prefix for Apt instead of `a` because I use Arch Linux as t
 |`chmox`|`chmod +x`|
 |`rf`|`rm -rf`|
 
-### User Customization Guide
+## User Customization Guide
 
 To customize your Fish shell configuration, follow these simple guidelines:
 
 1. **Pattern Matching Exclusion:**
-  - Files matching the pattern `user_*.fish` will be ignored.
+  - Files matching the pattern `user_*.fish` will be ignored by Git.
 2. **Variable Configuration:**
   - Create a file named `user_<abcxyz>.fish` in the `conf.d` directory.
   - Customize the file to set specific variables according to your preferences.
