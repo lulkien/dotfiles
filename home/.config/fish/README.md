@@ -53,6 +53,7 @@ set -g KFC_GIT_RELATIVE_COUNT true
 - Enforces color-coded output for easy identification of file types and attributes.
 - Use like the standard `ls` command
 
+
 ## Short aliases for some commands
 
 | Aliases | Commands     | Note               |
@@ -62,6 +63,7 @@ set -g KFC_GIT_RELATIVE_COUNT true
 | `quit`  | `exit` | |
 |   `l`   | `ls -lhA --ignore=lost+found --color=always` | |
 |  `vim` | `nvim` | Only when `neovim` is installed. |
+
 
 ## Some new handy functions
 
@@ -74,6 +76,7 @@ set -g KFC_GIT_RELATIVE_COUNT true
    - If the user confirms ('Y' or 'y'), the function executes `git push origin <current_branch>` to push changes to the remote repository.
    - If the user chooses not to push changes, it prints a "Canceled!" message.
 - Safely handles interruptions during user interaction, preventing accidental actions.
+
 
 ## Abbreviations
 
@@ -150,10 +153,11 @@ To customize your Fish shell configuration, follow these simple guidelines:
 
 This customization is tailored for personal use, and others are welcome to utilize it as they see fit. However, please be aware that this customization is provided as-is, without any guarantees or promises of immediate support for issues that may arise.
 
-**Disclaimer:**
 - This configuration is designed for personal preferences and may not cater to all use cases.
 - Users are encouraged to adapt and modify the configuration to suit their own needs.
 - While efforts may be made to address issues, there is no commitment to immediate resolutions.
 - The owner of this customization reserves the right to address and modify issues at their discretion and may not guarantee timely updates.
 
 Use this customization at your own risk, and feel free to contribute or modify it according to your requirements.
+
+Happy ricing! ✨
