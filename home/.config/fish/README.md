@@ -1,72 +1,117 @@
-# Fish Config
+# Kiewn's Fish Config (KFC)
 
 [![License: Unlicense](https://img.shields.io/badge/license-Unlicense-green.svg)](http://unlicense.org/)
 
-Custom fish shell configurations because I prefer not to use a package manager.
+## What is this?
+A custom fish shell configurations because I prefer not to use a package manager.
 
-## Overview
+### Features
+- Nerdy custom prompt with icons.
+- Wrapper for some built-in commands.
+- Some short aliases.
+- Some new handy functions.
+- Abbreviations for apt, pacman, git, tec.
 
-### Custom fish prompt
+## A nerdy custom fish prompt
+
+1. **Preview**
 
 ```plaintext
-[ username@hostname :: /current/working/directory ] -> { git_branch }
- >
+ username 󰉋 /current/working/directory  get_branch [[git_relative_count]  git_status]
+󰶻 command
 ```
+2. **To show git status**
+```fish
+# Set this variable in your user config
+set -g KFC_GIT_STATUS true
+```
+3. **To show relative distance of current commit to HEAD**
+```fish
+# Set these variables in your user config
+# Both of them are required
+set -g KFC_GIT_STATUS true
+set -g KFC_GIT_RELATIVE_COUNT true
+```
+**Note:** Enabling the Git status prompt is not recommended for slow devices as it may result in significant delays.
 
-### Builtin functions wrapper
+## Built-in commands wrapper
 
-#### cd
+1. **cd wrapper**
+
+- Automatically saves a detailed history of all directories visited during a fish session.
+- Ensures that the history is cleared when the fish session is ended.
+- Provide an easy way to travel to any of visited directories with index.
   
-| Option | Value     | Description                |
-| -------- | ------- | ------------------------- |
-| `-l` | `none` | Show cd history of this fish session |
-| `-i` | `number` |  Go to directory at index `number` in  the history of this session |
+| Option | Value     | Description               |
+| :--------: | ------- | ------------------------- |
+| `-l` | none | Show cd history of this fish session |
+| `-i` | number |  Go to directory at index `number` in  the history of this session |
 
-### Shortform commands
-  - `cls` = `clear`
-  - `q` = `exit`
-  - `l` = `ls -lhA --ignore=lost+found --color=always`
-  - `vim` = `nvim` (If neovim is installed. Why use vim when you install neovim already.)
+2. **ls wrapper**
+
+- Ignores the lost+found directory in the listing
+- Enforces color-coded output for easy identification of file types and attributes.
+- Use like the standard `ls` command
+
+## Short aliases for some commands
+
+| Aliases | Commands     | Note               |
+| :-----: | ----------- | ------------------ |
+|  `cls`  | `clear` | |
+|   `q`  | `exit` | |
+| `quit`  | `exit` | |
+|   `l`   | `ls -lhA --ignore=lost+found --color=always` | |
+|  `vim` | `nvim` | Only when `neovim` is installed. |
+
+### Some new handy functions
+
+1. **git_push_now**
+
+- Displays a clear prompt asking if the user wants to push changes to the current branch.
+- Retrieves the name of the current Git branch dynamically.
+- Waits for user input, ensuring a deliberate choice.
+- Validates the user input to accept only 'Y' or 'N' as valid responses. The user can respond with either upper or lowercase letters.
+   - If the user confirms ('Y' or 'y'), the function executes `git push origin <current_branch>` to push changes to the remote repository.
+   - If the user chooses not to push changes, it prints a "Canceled!" message.
+- Safely handles interruptions during user interaction, preventing accidental actions.
 
 ### Abbreviations
 
-#### Apt
+1. **Apt**
 
-| Abbreviation | Full command | Note                |
-| -------- | ------- | ------------------------- |
+| Abbr | Full command | Note                |
+| :--------: | ------- | ------------------------- |
 | `pud` | `sudo apt update` | |
 | `prm` | `sudo apt purge` | |
 | `pcl` | `sudo apt autoclean; sudo apt autoremove` | |
 | `pss` | `apt-cache search` | |
 | `pfm` | `sudo apt install --fix-missing` | |
 | `pit` | `sudo apt install -y` | |
-| `pit` | `sudo apt-fast install -y` | `apt-fast` is installed |
+| `pit` | `sudo apt-fast install -y` | If `apt-fast` is installed |
 | `pug` | `sudo apt upgrade` | |
-| `pug` | `sudo apt-fast upgrade` | `apt-fast` is installed |
+| `pug` | `sudo apt-fast upgrade` | If `apt-fast` is installed |
 | `puf` | `sudo apt update; sudo apt upgrade` | |
-| `puf` | `sudo apt update; sudo apt-fast upgrade` | `apt-fast` is installed |
+| `puf` | `sudo apt update; sudo apt-fast upgrade` | If `apt-fast` is installed |
 
-Note: Using `p` as a prefix for Apt instead of `a` because I use Arch Linux as the main driver. It's a `pacman` thing, you know. :)
+Note: Using `p` as a prefix for Apt instead of `a` because I use Arch Linux as the main driver. Muscle memory.
 
-#### Pacman
+2. **Pacman**
 
-| Abbreviation | Full command | Note                |
-| -------- | ------- | ------------------------- |
-| `pud` | `sudo pacman -Sy` | |
-| `pug` | `sudo pacman -Su --noconfirm` | |
-| `puf` | `sudo pacman -S --noconfirm --needed archlinux-keyring; sudo pacman -Syu` | |
-| `pit` | `sudo pacman -S --noconfirm --needed` | |
-| `pcl` | `sudo pacman -Rns (pacman -Qdttq)` | |
-| `prm` | `sudo pacman -Rns` | |
-| `pss` | `pacman -sS` | |
-| `pqr` | `pacman -Q` | |
-| `yuf` | `yay -Syu` | `yay` is installed |
-| `yit` | `yay -S` | `yay` is installed |
+| Abbr | Full command |
+| :-------: | ------- |
+| `pud` | `sudo pacman -Sy` |
+| `pug` | `sudo pacman -Su --noconfirm` |
+| `puf` | `sudo pacman -S --noconfirm --needed archlinux-keyring; sudo pacman -Syu` |
+| `pit` | `sudo pacman -S --noconfirm --needed` |
+| `pcl` | `sudo pacman -Rns (pacman -Qdttq)` |
+| `prm` | `sudo pacman -Rns` |
+| `pss` | `pacman -sS` |
+| `pqr` | `pacman -Q` |
 
-#### Git
+3. **Git**
 
-| Abbreviation | Full command |
-| -------- | ------- |
+| Abbr | Full command |
+| :--------: | ------- |
 |`gco`|`git checkout`|
 |`gcm`|`git commit`|
 |`gca`|`git commit --amend`|
@@ -79,22 +124,27 @@ Note: Using `p` as a prefix for Apt instead of `a` because I use Arch Linux as t
 |`gdf`|`git diff`|
 |`gad`|`git add`|
 |`glo`|`git log --oneline`|
-|`gpom`|`git push origin master`|
+|`gpp`|`git_push_now`|
 
-#### Others
+4. **Others**
 
-| Abbreviation | Full command |
-| -------- | ------- |
+| Abbr | Full command |
+| :--------: | ------- |
 |`chmox`|`chmod +x`|
-|`rmrf`|`rm -rf`|
+|`rf`|`rm -rf`|
 
-### User Customizations
+### User Customization Guide
 
-A `custom` directory will be created inside `quanta-fish` if it does not exist when a `fish` session starts. Every change inside this directory will be ignored by Git.
+To customize your Fish shell configuration, follow these simple guidelines:
 
-The directory structure is the same as `quanta-fish`. Check [init.fish](https://github.com/QuantaRicer/fish/blob/master/quanta-fish/init.fish) for more information.
-
-Users can modify this folder without interfering with other Git operations.
+1. **Pattern Matching Exclusion:**
+  - Files matching the pattern `user_*.fish` will be ignored.
+2. **Variable Configuration:**
+  - Create a file named `user_<abcxyz>.fish` in the `conf.d` directory.
+  - Customize the file to set specific variables according to your preferences.
+3. **Function Customization:**
+  - For custom functions, create a file named `user_<abcxyz>.fish` in the `functions` directory.
+  - Define and implement your desired functions within this file.
 
 ## Disclaimer
 
