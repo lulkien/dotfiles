@@ -1,4 +1,4 @@
-# My Hyprland's dotfiles
+# My dotfiles
 
 [![License: Unlicense](https://img.shields.io/badge/License-Unlicense-blue.svg)](http://unlicense.org/)
 
