@@ -1,72 +1,137 @@
 #!/usr/bin/env bash
 
+# Env
+PATH=/opt/homebrew/bin:$PATH
+IS_DARWIN=$(test $(uname -s) = 'Darwin' && echo true || echo false)
+
+# Source path
 DOT_PATH=$(realpath "$(dirname $0)")
+ALL_CONFIG=${DOT_PATH}/config
+TARGET_HOME=${DOT_PATH}/target_home
+TARGET_CONFIG=${TARGET_HOME}/.config
 
-echo ">>> CHANGE DIRECTORY TO ${DOT_PATH}"
-cd ${DOT_PATH}
-echo "--------------------------------------"
+# Config home
+XDG_CONFIG_HOME=${HOME}/.config
 
+NVIM_CONFIG=${XDG_CONFIG_HOME}/nvim
+NVCHAD_CONFIG=${NVIM_CONFIG}/lua
+NVCHAD_USER=${NVCHAD_CONFIG}/custom
 
-echo ">>> BACKUP OLD CONFIG"
-HYPR_CFG=${HOME}/.config/hypr
-EWW_CFG=${HOME}/.config/eww
-SWAYLOCK_CFG=${HOME}/.config/swaylock
-KITTY_CFG=${HOME}/.config/kitty
-WOFI_CFG=${HOME}/.config/wofi
-FISH_CFG=${HOME}/.config/fish
+setup_dotfiles ()
+{
+    TARGET=$1
 
-CFG_LIST=("${HYPR_CFG}" "${EWW_CFG}" "${SWAYLOCK_CFG}" "${KITTY_CFG}" "${WOFI_CFG}" "${FISH_CFG}")
-
-for CFG in "${CFG_LIST[@]}"
-do
-    if test -L ${CFG}; then
-        unlink ${CFG}
-    else
-        rm -rf ${CFG}.bak
-        mv ${CFG} ${CFG}.bak
-    fi
-done
-echo "--------------------------------------"
-
-
-NVIM_CFG=${HOME}/.config/nvim
-NVCHAD_CFG=${NVIM_CFG}/lua
-NVCHAD_CUSTOM_CFG=${NVCHAD_CFG}/custom
-
-if [[ ! -d ${NVIM_CFG} ]]; then
-    echo ">>> INSTALL NVCHAD"
-    git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
+    echo "[INFO] Setup dotfiles for $TARGET"
     echo "--------------------------------------"
-else
-    if [[ ! -d ${NVCHAD_CFG} ]]; then
-        echo ">>> REMOVE OLD NVIM CONFIG THEN INSTALL NVCHAD"
-        rm -rf ${NVIM_CFG}.bak
-        mv ${NVIM_CFG} ${NVIM_CFG}.bak
+
+    if test $(pwd) != $DOT_PATH; then
+        echo "[DEBUG] cd $DOT_PATH"
+        cd ${DOT_PATH}
+        echo "--------------------------------------"
+    fi
+
+    echo "[INFO] Remake target config"
+    if test -d ${TARGET_HOME}; then
+        rm -r ${TARGET_HOME}
+    fi
+
+    mkdir -p ${TARGET_CONFIG}
+    for CONFIG in "${CONFIG_LIST[@]}"; do
+        echo "[DEBUG] Link: ${ALL_CONFIG}/${CONFIG} -> ${TARGET_CONFIG}"
+        ln -sf ${ALL_CONFIG}/${CONFIG} ${TARGET_CONFIG}
+    done
+    echo "--------------------------------------"
+
+    echo "[INFO] Backup or unlink old config"
+    for CONFIG in "${CONFIG_LIST[@]}"
+    do
+        if [[ -L ${XDG_CONFIG_HOME}/${CONFIG} ]]; then
+            echo "[DEBUG] unlink ${XDG_CONFIG_HOME}/${CONFIG}"
+            unlink ${XDG_CONFIG_HOME}/${CONFIG}
+        elif [[ -d ${XDG_CONFIG_HOME}/${CONFIG} ]]; then
+            echo "[DEBUG] Rename: ${XDG_CONFIG_HOME}/${CONFIG} -> ${XDG_CONFIG_HOME}/${CONFIG}.bak"
+            rm -rf ${XDG_CONFIG_HOME}/${CONFIG}.bak
+            mv ${XDG_CONFIG_HOME}/${CONFIG} ${XDG_CONFIG_HOME}/${CONFIG}.bak
+        fi
+    done
+    echo "--------------------------------------"
+
+    if [[ ! -d ${NVIM_CONFIG} ]]; then
+        echo "[INFO] Install NvChad"
         git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
         echo "--------------------------------------"
     else
-        if test -L ${NVCHAD_CUSTOM_CFG}; then
-            unlink ${NVCHAD_CUSTOM_CFG}
+        if [[ ! -d ${NVCHAD_CONFIG} ]]; then
+            echo "[INFO] Backup old Neovim config and install NvChad"
+            echo "[DEBUG] ${NVIM_CONFIG} -> ${NVIM_CONFIG}.bak"
+            rm -rf ${NVIM_CONFIG}.bak
+            mv ${NVIM_CONFIG} ${NVIM_CONFIG}.bak
+            git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
+            echo "--------------------------------------"
         else
-            rm -rf ${NVCHAD_CUSTOM_CFG}.bak
-            mv ${NVCHAD_CUSTOM_CFG} ${NVCHAD_CUSTOM_CFG}.bak
+            if [[ -L ${NVCHAD_USER} ]]; then
+                echo "[DEBUG] unlink ${NVCHAD_USER}"
+                unlink ${NVCHAD_USER}
+            elif [[ -d ${NVCHAD_USER} ]]; then
+                echo "[DEBUG] ${NVCHAD_USER} -> ${NVCHAD_USER}.bak"
+                rm -rf ${NVCHAD_USER}.bak
+                mv ${NVCHAD_USER} ${NVCHAD_USER}.bak
+            fi
         fi
     fi
-fi
 
-if ! command -v stow &> /dev/null
-then
-    echo ">>> INSTALL STOW"
-    sudo pacman -S stow
+    if ! command -v stow &> /dev/null
+    then
+        echo "[ERROR] stow: command not found. Please install stow first."
+        return 1
+    fi
+
+    echo "[INFO] Start stow --verbose=2 --dir=${TARGET_HOME} --target=${HOME} ."
+    echo
+    stow --verbose=2 --dir=${TARGET_HOME} --target=${HOME} .
     echo "--------------------------------------"
-fi
 
-echo ">>> RUN STOW"
-stow --dir=${DOT_PATH}/home --target=${HOME} .
-echo "--------------------------------------"
+    if test "$TARGET" = 'Hyprland'; then
+        echo "[INFO] Init submodules for Hyprland"
+        git submodule update --init --recursive
+        echo "--------------------------------------"
 
-echo ">>> GIT UPDATE SUBMODULES"
-git submodule update --init --recursive
-echo "--------------------------------------"
+        echo "[WARN] Please install all submodules for Hyprland."
+    fi
 
-echo "PLEASE INSTALL THE SUBMODULES YOURSELF."
+    echo
+    echo "[INFO] Completed."
+}
+
+main ()
+{
+    if test "${IS_DARWIN}" = true; then
+        CONFIG_LIST=( "fish" )
+        setup_dotfiles 'MacOS'
+        return 0
+    fi
+
+    echo "Target number:"
+    echo "1: For Hyprland"
+    echo "2: For normal DE (like KDE or GNOME)"
+    echo "_: quit"
+    echo -n "Select: "
+    read answer
+
+    case "${answer}" in
+        1)
+            CONFIG_LIST=( "eww" "fish" "hypr" "kitty" "swaylock" "wofi" )
+            setup_dotfiles 'Hyprland'
+            ;;
+        2)
+            CONFIG_LIST=( "fish" "kitty" )
+            setup_dotfiles "normal DE"
+            ;;
+        *)
+            echo "Exit"
+            return 1
+            ;;
+    esac
+}
+
+main
