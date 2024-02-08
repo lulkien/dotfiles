@@ -38,7 +38,7 @@ setup_dotfiles ()
     mkdir -p ${TARGET_CONFIG}
     for CONFIG in "${CONFIG_LIST[@]}"; do
         echo "[DEBUG] Link: ${ALL_CONFIG}/${CONFIG} -> ${TARGET_CONFIG}"
-        ln -sf ${ALL_CONFIG}/${CONFIG} ${TARGET_CONFIG}
+        ln -s ${ALL_CONFIG}/${CONFIG} ${TARGET_CONFIG}
     done
     echo "--------------------------------------"
 
@@ -56,35 +56,17 @@ setup_dotfiles ()
     done
     echo "--------------------------------------"
 
-    if [[ ! -d ${NVIM_CONFIG} ]]; then
-        echo "[INFO] Install NvChad"
-        git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
-        echo "--------------------------------------"
-    else
-        if [[ ! -d ${NVCHAD_CONFIG} ]]; then
-            echo "[INFO] Backup old Neovim config and install NvChad"
-            echo "[DEBUG] ${NVIM_CONFIG} -> ${NVIM_CONFIG}.bak"
-            rm -rf ${NVIM_CONFIG}.bak
-            mv ${NVIM_CONFIG} ${NVIM_CONFIG}.bak
-            git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
-            echo "--------------------------------------"
-        else
-            if [[ -L ${NVCHAD_USER} ]]; then
-                echo "[DEBUG] unlink ${NVCHAD_USER}"
-                unlink ${NVCHAD_USER}
-            elif [[ -d ${NVCHAD_USER} ]]; then
-                echo "[DEBUG] ${NVCHAD_USER} -> ${NVCHAD_USER}.bak"
-                rm -rf ${NVCHAD_USER}.bak
-                mv ${NVCHAD_USER} ${NVCHAD_USER}.bak
-            fi
-        fi
-    fi
-
-    if ! command -v stow &> /dev/null
-    then
-        echo "[ERROR] stow: command not found. Please install stow first."
-        return 1
-    fi
+    echo -n "[INFO] Do you want to setup NvChad? [y/N] "
+    read nvchad_confirm
+    case "$nvchad_confirm" in
+        'y'|'Y')
+            setup_nvchad
+            ;;
+        *)
+            echo "Hmm, nah."
+            ;;
+    esac
+    echo "--------------------------------------"
 
     echo "[INFO] Start stow --verbose=2 --dir=${TARGET_HOME} --target=${HOME} ."
     echo
@@ -103,8 +85,44 @@ setup_dotfiles ()
     echo "[INFO] Completed."
 }
 
+setup_nvchad ()
+{
+    if [[ ! -d ${NVIM_CONFIG} ]]; then
+        echo "[INFO] Install NvChad"
+        git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
+        echo
+    else
+        if [[ ! -d ${NVCHAD_CONFIG} ]]; then
+            echo "[INFO] Backup old Neovim config and install NvChad"
+            echo "[DEBUG] ${NVIM_CONFIG} -> ${NVIM_CONFIG}.bak"
+            rm -rf ${NVIM_CONFIG}.bak
+            mv ${NVIM_CONFIG} ${NVIM_CONFIG}.bak
+            git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
+            echo
+        else
+            if [[ -L ${NVCHAD_USER} ]]; then
+                echo "[DEBUG] unlink ${NVCHAD_USER}"
+                unlink ${NVCHAD_USER}
+            elif [[ -d ${NVCHAD_USER} ]]; then
+                echo "[DEBUG] ${NVCHAD_USER} -> ${NVCHAD_USER}.bak"
+                rm -rf ${NVCHAD_USER}.bak
+                mv ${NVCHAD_USER} ${NVCHAD_USER}.bak
+            fi
+        fi
+    fi
+
+    echo "[DEBUG] Link: ${ALL_CONFIG}/nvim -> ${TARGET_CONFIG}"
+    ln -s ${ALL_CONFIG}/nvim ${TARGET_CONFIG}
+}
+
 main ()
 {
+    if ! command -v stow &> /dev/null
+    then
+        echo "[ERROR] stow: command not found. Please install stow first."
+        return 1
+    fi
+
     if test "${IS_DARWIN}" = true; then
         CONFIG_LIST=( "fish" )
         setup_dotfiles 'MacOS'
