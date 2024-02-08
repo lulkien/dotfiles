@@ -47,4 +47,4 @@ If you have suggestions, improvements, or spot any issues, feel free to open an 
 
 This project is released into the public domain under the [Unlicense](https://unlicense.org). See the [UNLICENSE](https://github.com/lulkien/dotfiles/blob/master/UNLICENSE) file for details.
 
-Happy coding! ✨
+Happy ricing! ✨
