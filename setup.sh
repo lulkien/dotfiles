@@ -124,7 +124,7 @@ main ()
     fi
 
     if test "${IS_DARWIN}" = true; then
-        CONFIG_LIST=( "fish" )
+        CONFIG_LIST=( "fish" "alacritty" )
         setup_dotfiles 'MacOS'
         return 0
     fi

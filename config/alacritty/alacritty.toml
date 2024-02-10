@@ -1,0 +1,36 @@
+import = [
+    # uncomment the flavour you want below:
+    # "~/.config/alacritty/themes/catppuccin-latte.toml"
+    # "~/.config/alacritty/themes/catppuccin-frappe.toml"
+    # "~/.config/alacritty/themes/catppuccin-macchiato.toml"
+    "~/.config/alacritty/themes/catppuccin-mocha.toml"
+]
+
+[env]
+TERM = "xterm-256color"
+
+[font]
+size = 16.0
+normal = { family = "CaskaydiaCove NF", style = "Regular" }
+bold = { family = "CaskaydiaCove NF", style = "Bold" }
+italic = { family = "CaskaydiaCove NF", style = "Italic" }
+bold_italic = { family = "CaskaydiaCove NF", style = "Bold Italic"}
+
+[keyboard]
+bindings = [
+   { key = "N", mods = "Control|Shift", action = "SpawnNewInstance" }
+]
+
+[shell]
+program = "/opt/homebrew/bin/fish"
+
+[window]
+padding = { x = 4, y = 4 }
+dynamic_padding = true
+decorations = "Full"
+opacity = 0.95
+blur = true
+startup_mode = "Maximized"
+dynamic_title = true
+decorations_theme_variant = "Dark"
+option_as_alt = "OnlyLeft"
