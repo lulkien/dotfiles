@@ -18,7 +18,15 @@ bold_italic = { family = "CaskaydiaCove NF", style = "Bold Italic"}
 
 [keyboard]
 bindings = [
-   { key = "N", mods = "Control|Shift", action = "SpawnNewInstance" }
+    { key = "N",        mods = "Control|Shift", action = "SpawnNewInstance" },
+    { key = "T",        mods = "Control|Shift", action = "CreateNewWindow"  },
+    { key = "C",        mods = "Control|Shift", action = "Copy"             },
+    { key = "V",        mods = "Control|Shift", action = "Paste"            },
+    { key = "F",        mods = "Control|Shift", action = "SearchForward"    },
+    { key = "B",        mods = "Control|Shift", action = "SearchBackward"   },
+    { key = "U",        mods = "Control",       action = "ScrollPageUp"     },
+    { key = "D",        mods = "Control",       action = "ScrollPageDown"   },
+    { key = "Escape",   mods = "Control",       action = "ClearSelection"   },
 ]
 
 [shell]
