@@ -12,7 +12,6 @@ TARGET_CONFIG=${TARGET_HOME}/.config
 
 # Config home
 XDG_CONFIG_HOME=${HOME}/.config
-
 NVIM_CONFIG=${XDG_CONFIG_HOME}/nvim
 NVCHAD_CONFIG=${NVIM_CONFIG}/lua
 NVCHAD_USER=${NVCHAD_CONFIG}/custom
@@ -21,7 +20,11 @@ setup_dotfiles ()
 {
     TARGET=$1
 
-    echo "[INFO] Setup dotfiles for $TARGET"
+    if test -z ""; then
+        echo "[INFO] Setup dotfiles"
+    else
+        echo "[INFO] Setup dotfiles for $TARGET"
+    fi
     echo "--------------------------------------"
 
     if test $(pwd) != $DOT_PATH; then
@@ -130,9 +133,9 @@ main ()
     fi
 
     echo "Target number:"
-    echo "1: For Hyprland"
-    echo "2: For normal DE (like KDE or GNOME)"
-    echo "_: quit"
+    echo "1: For Hyprland."
+    echo "2: For KDE, GNOME, etc."
+    echo "_: Cancel"
     echo -n "Select: "
     read answer
 
@@ -143,11 +146,11 @@ main ()
             ;;
         2)
             CONFIG_LIST=( "fish" "kitty" )
-            setup_dotfiles "normal DE"
+            setup_dotfiles
             ;;
         *)
-            echo "Exit"
-            return 1
+            echo "Canceled."
+            return 0
             ;;
     esac
 }
