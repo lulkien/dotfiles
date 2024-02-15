@@ -1,5 +1,4 @@
 import = [
-    # uncomment the flavour you want below:
     # "~/.config/alacritty/themes/catppuccin-latte.toml"
     # "~/.config/alacritty/themes/catppuccin-frappe.toml"
     # "~/.config/alacritty/themes/catppuccin-macchiato.toml"
@@ -29,16 +28,13 @@ bindings = [
     { key = "Escape",   mods = "Control",       action = "ClearSelection"   },
 ]
 
-[shell]
-program = "/opt/homebrew/bin/fish"
-
 [window]
 padding = { x = 4, y = 4 }
 dynamic_padding = true
 decorations = "Full"
-opacity = 0.95
+opacity = 0.9
 blur = true
 startup_mode = "Maximized"
 dynamic_title = true
 decorations_theme_variant = "Dark"
-option_as_alt = "OnlyLeft"
+# option_as_alt = "OnlyLeft"

@@ -141,7 +141,7 @@ main ()
 
     case "${answer}" in
         1)
-            CONFIG_LIST=( "eww" "fish" "hypr" "kitty" "swaylock" "wofi" )
+            CONFIG_LIST=( "eww" "fish" "hypr" "kitty" "swaylock" "wofi" "alacritty" )
             setup_dotfiles 'Hyprland'
             ;;
         2)
