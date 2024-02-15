@@ -1,15 +1,18 @@
+/* Catppuccin mocha colors */
+
 window {
     font-size: 20px;
     font-family: "CaskaydiaCove NF";
+    background: transparent;
 }
 
 #outer-box {
-    background: #2a2a2a;
+    background: #1e1e2e;
 }
 
 #input {
-    background-color: #2a2a2a;
-    border: 2px solid #aaaaaa;
+    background-color: #1e1e2e;
+    border: 2px solid #89b4fa;
     padding-top: 1em;
     padding-bottom: 1em;
     padding-left: 1em;
@@ -17,29 +20,30 @@ window {
 
 #scroll {
     margin-top: 10px;
+    border: 2px solid #b4befe;
 }
 
 #entry {
-    background-color: transparent;
+    background-color: #1e1e2e;
     padding-top: 1em;
     padding-bottom: 1em;
 }
 
 #entry:selected {
-    background-color: #aaaaaa;
+    background-color: #7f849c;
 }
 
 #img {
-    margin-left: 3em;
+    margin-left: 2.5em;
 }
 
 #text {
-    color: #aaaaaa;
-    margin-left: 1em;
+    color: #cdd6f4;
+    margin-left: 1.5em;
 }
 
 #text:selected {
-    color: #2a2a2a;
+    color: #1e1e2e;
     font-size: 25px;
-    margin-left: 2em;
+    margin-left: 2.5em;
 }
