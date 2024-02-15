@@ -1,42 +1,33 @@
-* {
-    color: #163235;
-}
-
 window {
     font-size: 20px;
-    font-family: "CodeNewRoman Nerd Font Mono";
-    background-color: transparent;
+    font-family: "CaskaydiaCove NF";
 }
 
-#inner-box {
-    background: linear-gradient(90deg, #a3e0e1, #71cfde);
-    border: 1px solid #163235;
-    border-radius: 10px;
+#outer-box {
+    background: transparent;
+}
+
+#input {
+    background-color: #2a2a2a;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    padding-left: 1.5em;
+}
+
+#scroll {
+    margin-top: 15px;
 }
 
 #entry {
     background-color: transparent;
-    padding: 0.5em;
+    padding: 1em;
 }
 
 #entry:selected {
-    background: linear-gradient(90deg, #00e5d0, #00a4f7);
-    border-radius: 10px;
+    background-color: #cacaca;
+    color: #2a2a2a;
     padding-left: 1.5em;
     outline: none;
-}
-
-#input {
-    border-radius: 10px;
-    margin-bottom: 10px;
-    background-color: #106967;
-    padding-top: 0.5em;
-    padding-bottom: 0.5em;
-    padding-left: 1em;
-}
-
-#list:entry {
-    background-color: transparent;
 }
 
 #img {
