@@ -4,7 +4,7 @@ window {
 }
 
 #outer-box {
-    background: transparent;
+    background: #2a2a2a;
 }
 
 #input {
@@ -26,11 +26,14 @@ window {
 #entry:selected {
     background-color: #cacaca;
     color: #2a2a2a;
-    padding-left: 1.5em;
+    padding-left: 3em;
     outline: none;
 }
 
 #img {
-    margin-right: 1em;
     margin-left: 0.5em;
+}
+
+#text {
+    margin-left: 1em;
 }

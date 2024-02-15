@@ -1,5 +1,5 @@
 show = drun
-width = 60%
+width = 20%
 height = 60%
 prompt = Applications
 allow_images = true
