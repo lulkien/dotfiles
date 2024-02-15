@@ -9,31 +9,37 @@ window {
 
 #input {
     background-color: #2a2a2a;
+    border: 2px solid #aaaaaa;
     padding-top: 1em;
     padding-bottom: 1em;
-    padding-left: 1.5em;
+    padding-left: 1em;
 }
 
 #scroll {
-    margin-top: 15px;
+    margin-top: 10px;
 }
 
 #entry {
     background-color: transparent;
-    padding: 1em;
+    padding-top: 1em;
+    padding-bottom: 1em;
 }
 
 #entry:selected {
-    background-color: #cacaca;
-    color: #2a2a2a;
-    padding-left: 3em;
-    outline: none;
+    background-color: #aaaaaa;
 }
 
 #img {
-    margin-left: 0.5em;
+    margin-left: 3em;
 }
 
 #text {
+    color: #aaaaaa;
     margin-left: 1em;
+}
+
+#text:selected {
+    color: #2a2a2a;
+    font-size: 25px;
+    margin-left: 2em;
 }
