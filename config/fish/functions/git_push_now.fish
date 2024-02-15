@@ -1,8 +1,33 @@
-function git_push_now
+function ___kfc_git_push_delay
+    set -l branch   $argv[1]
+    set -l delay    5
+
+    test -z "$branch"; and return
+
+    # Print message
+    echo -en "Push commit to branch \e[1;33m$branch\e[00m in "
+
+    # Print number -> sleep 0.25 -> print . . .
+    while test $delay -gt 0
+        echo -n $delay
+        set delay (math $delay - 1)
+        sleep 0.25
+
+        set -l dot_timer 3
+        while test $dot_timer -gt 0
+            echo -n '.'
+            set dot_timer (math $dot_timer - 1)
+            sleep 0.25
+        end
+    end
+    echo
+end
+
+function git_push_now --description "Push to current branch"
     set -f allow_ans        'Y' 'y' 'N' 'n'
     set -f confirm          'Y' 'y'
     set -f current_branch   (command git branch --show-current)
-    set -f fail_safe        5   # Wait 5 seconds before push
+    set -f opts             $argv[1]
 
     echo "Push to branch: $current_branch? [y/n]"
     read ans
@@ -21,13 +46,14 @@ function git_push_now
     end
 
     if contains -- "$ans" $confirm
-        echo -n "Push commit to branch $current_branch in "
-        while test $fail_safe -gt 0
-            echo -n "$fail_safe..."
-            set fail_safe (math $fail_safe - 1)
-            sleep 1
+        if test "$opts" != '--yolo'
+            ___kfc_git_push_delay $current_branch
+            if test $status -ne 0
+                echo
+                echo "Interupted!"
+                return
+            end
         end
-        echo
         command git push origin $current_branch
         return
     end
