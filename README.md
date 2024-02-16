@@ -10,8 +10,9 @@ This repository contains configuration files and scripts, known as dotfiles, tai
 
 ## Preview Images
 
-![Screenshot](https://github.com/lulkien/dotfiles/blob/hyprland/previews/workflow.png)
-![EWW Power Menu](https://github.com/lulkien/dotfiles/blob/hyprland/previews/eww_power_menu.png)
+![Screenshot](https://github.com/lulkien/dotfiles/blob/6a5373d2750401db7fd84c1cb4899925af4f1c7e/previews/workflow.png)
+![EWW Power Menu](https://github.com/lulkien/dotfiles/blob/6a5373d2750401db7fd84c1cb4899925af4f1c7e/previews/eww_power_menu.png)
+
 
 
 ## Configurations
