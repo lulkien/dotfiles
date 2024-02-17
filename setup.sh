@@ -3,6 +3,7 @@
 # Env
 PATH=/opt/homebrew/bin:$PATH
 IS_DARWIN=$(test $(uname -s) = 'Darwin' && echo true || echo false)
+IS_ROOT=$(test $USER = root && echo true || echo false)
 
 # Source path
 DOT_PATH=$(realpath "$(dirname $0)")
@@ -126,33 +127,39 @@ main ()
         return 1
     fi
 
-    if test "${IS_DARWIN}" = true; then
+    CONFIG_TARGET=''
+
+    if test ${IS_ROOT} = true; then
+        CONFIG_LIST=( "fish" )
+        CONFIG_TARGET=''
+    elif test ${IS_DARWIN} = true; then
         CONFIG_LIST=( "fish" "alacritty" )
-        setup_dotfiles 'MacOS'
-        return 0
+        CONFIG_TARGET='MacOS'
+    else
+        echo "Target number:"
+        echo "1: For Hyprland."
+        echo "2: For KDE, GNOME, etc."
+        echo "_: Cancel"
+        echo -n "Select: "
+        read answer
+
+        case "${answer}" in
+            1)
+                CONFIG_LIST=( "eww" "fish" "hypr" "kitty" "swaylock" "wofi" "alacritty" )
+                CONFIG_TARGET='Hyprland'
+                ;;
+            2)
+                CONFIG_LIST=( "fish" "kitty" )
+                CONFIG_TARGET=''
+                ;;
+            *)
+                echo "Canceled."
+                return 0
+                ;;
+        esac
     fi
 
-    echo "Target number:"
-    echo "1: For Hyprland."
-    echo "2: For KDE, GNOME, etc."
-    echo "_: Cancel"
-    echo -n "Select: "
-    read answer
-
-    case "${answer}" in
-        1)
-            CONFIG_LIST=( "eww" "fish" "hypr" "kitty" "swaylock" "wofi" "alacritty" )
-            setup_dotfiles 'Hyprland'
-            ;;
-        2)
-            CONFIG_LIST=( "fish" "kitty" )
-            setup_dotfiles
-            ;;
-        *)
-            echo "Canceled."
-            return 0
-            ;;
-    esac
+    setup_dotfiles $CONFIG_TARGET
 }
 
 main
