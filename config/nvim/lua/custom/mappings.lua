@@ -2,11 +2,11 @@ local M = {}
 
 M.crates = {
 	n = {
-		["<leader>rcu"] = {
+		["<leader>ru"] = {
 			function()
 				require("crates").upgrade_all_crates()
 			end,
-			"Update crates",
+			"Rust update crates",
 		},
 	},
 }

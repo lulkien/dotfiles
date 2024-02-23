@@ -1,6 +1,6 @@
-require("custom.configs.keymaps")
-require("custom.configs.settings")
-require("custom.configs.autocmd")
+require("custom.setup.keymaps")
+require("custom.setup.settings")
+require("custom.setup.autocmd")
 
 -- Trim whitespace at end of line
 vim.api.nvim_create_autocmd({ "BufWritePre" }, {

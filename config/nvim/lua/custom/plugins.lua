@@ -1,66 +1,82 @@
 local M = {
-    "williamboman/mason.nvim",
-    opts = {
-        ensure_installed = {
-            "lua-language-server",
-            "stylua",
-            "bash-language-server",
-            "cmake-language-server",
-            "pyright",
-            "css-lsp",
-            "json-lsp",
-            "clangd",
-            "clang-format",
-            "typescript-language-server",
-        },
-    },
-    {
-        "slint-ui/vim-slint",
-        ft = "slint",
-    },
-    {
-        "neovim/nvim-lspconfig",
-        config = function()
-            require("plugins.configs.lspconfig")
-            require("custom.configs.lspconfig")
-        end,
-    },
-    {
-        "nvimtools/none-ls.nvim",
-        event = "VeryLazy",
-        opts = function()
-            return require("custom.configs.none-ls")
-        end,
-    },
-    {
-        "rust-lang/rust.vim",
-        ft = "rust",
-        init = function()
-            vim.g.rustfmt_autosave = 1
-        end,
-    },
-    {
-        "mrcjkb/rustaceanvim",
-        version = "^4", -- Recommended
-        ft = { "rust" },
-    },
-    {
-        "saecki/crates.nvim",
-        ft = { "rust", "toml" },
-        config = function(_, opts)
-            local crates = require("crates")
-            crates.setup(opts)
-            crates.show()
-        end,
-    },
-    {
-        "hrsh7th/nvim-cmp",
-        opts = function()
-            local M = require("plugins.configs.cmp")
-            table.insert(M.sources, { name = "crates" })
-            return M
-        end,
-    },
+	"williamboman/mason.nvim",
+	opts = {
+		ensure_installed = {
+			"lua-language-server",
+			"stylua",
+			"bash-language-server",
+			"cmake-language-server",
+			"pyright",
+			"css-lsp",
+			"json-lsp",
+			"clangd",
+			"clang-format",
+			"typescript-language-server",
+		},
+	},
+	{
+		"slint-ui/vim-slint",
+		ft = "slint",
+	},
+	{
+		"neovim/nvim-lspconfig",
+		config = function()
+			require("plugins.configs.lspconfig")
+			require("custom.configs.lspconfig")
+		end,
+	},
+	{
+		"nvimtools/none-ls.nvim",
+		event = "VeryLazy",
+		opts = function()
+			return require("custom.configs.none-ls")
+		end,
+	},
+	{
+		"rust-lang/rust.vim",
+		ft = "rust",
+		init = function()
+			vim.g.rustfmt_autosave = 1
+		end,
+	},
+	{
+		"mrcjkb/rustaceanvim",
+		version = "^4", -- Recommended
+		ft = { "rust" },
+		config = function()
+			require("custom.configs.rust")
+		end,
+	},
+	{
+		"saecki/crates.nvim",
+		ft = { "rust", "toml" },
+		config = function(_, opts)
+			local crates = require("crates")
+			crates.setup(opts)
+			crates.show()
+		end,
+	},
+	{
+		"hrsh7th/nvim-cmp",
+		opts = function()
+			local M = require("plugins.configs.cmp")
+			table.insert(M.sources, { name = "crates" })
+			return M
+		end,
+	},
+	{
+		"nvim-telescope/telescope-ui-select.nvim",
+		config = function()
+			require("telescope").setup({
+				extensions = {
+					["ui-select"] = {
+						require("telescope.themes").get_dropdown({}),
+					},
+				},
+			})
+			require("telescope").load_extension("ui-select")
+		end,
+	},
 }
 
 return M
