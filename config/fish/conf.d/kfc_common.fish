@@ -1,12 +1,12 @@
 # Append some paths into PATH variable
-set -a PATH     $HOME/.cargo/bin
-set -a PATH     $HOME/.local/bin
-set -a PATH     /opt/homebrew/bin
+set -a PATH $HOME/.cargo/bin
+set -a PATH $HOME/.local/bin
+set -a PATH /opt/homebrew/bin
 
 # Abbreviations
-abbr -a chmox   'chmod +x'
-abbr -a rmc     'rm ~/.config/fish/fish_variables'
-abbr -a rf      'rm -rf'
+abbr -a chmox 'chmod +x'
+abbr -a rmc 'rm ~/.config/fish/fish_variables'
+abbr -a rf 'rm -rf'
 
 # Fish builtin variables
 set -g fish_color_valid_path

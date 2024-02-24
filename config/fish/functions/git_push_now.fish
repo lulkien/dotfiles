@@ -1,6 +1,6 @@
 function ___kfc_git_push_delay
-    set -l branch   $argv[1]
-    set -l delay    5
+    set -l branch $argv[1]
+    set -l delay 5
 
     test -z "$branch"; and return
 
@@ -24,10 +24,10 @@ function ___kfc_git_push_delay
 end
 
 function git_push_now --description "Push to current branch"
-    set -f allow_ans        'Y' 'y' 'N' 'n'
-    set -f confirm          'Y' 'y'
-    set -f current_branch   (command git branch --show-current)
-    set -f opts             $argv[1]
+    set -f allow_ans Y y N n
+    set -f confirm Y y
+    set -f current_branch (command git branch --show-current)
+    set -f opts $argv[1]
 
     echo "Push to branch: $current_branch? [y/n]"
     read ans
@@ -46,7 +46,7 @@ function git_push_now --description "Push to current branch"
     end
 
     if contains -- "$ans" $confirm
-        if test "$opts" != '--yolo'
+        if test "$opts" != --yolo
             ___kfc_git_push_delay $current_branch
             if test $status -ne 0
                 echo

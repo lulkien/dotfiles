@@ -3,15 +3,15 @@ function __cd_int_check
 end
 
 function log
-    echo $argv >> $HOME/cd.log
+    echo $argv >>$HOME/cd.log
 end
 
 function __cd_add_history
-    set -l new_path       "$argv[1]"
-    set -l old_history    (string split --no-empty ' ' "$argv[2]")
+    set -l new_path "$argv[1]"
+    set -l old_history (string split --no-empty ' ' "$argv[2]")
 
     # Remove existed path in history
-    set -l new_history    (string match -v $new_path $old_history)
+    set -l new_history (string match -v $new_path $old_history)
 
     # Remove oldest item in history if OOM
     # Not implemented yet
@@ -41,7 +41,7 @@ function cd --description "Wrapper function for change directory"
         return 1
     end
 
-    if set -q _flag_list        # Using list option
+    if set -q _flag_list # Using list option
         test (count $argv) -gt 0 && echo "WARN: Print dir history only, ignore other arguments"
         set -l index 1
         for dir in $cd_history
@@ -49,7 +49,7 @@ function cd --description "Wrapper function for change directory"
             set index (math $index + 1)
         end
         return 0
-    else if set -q _flag_index  # If using index option
+    else if set -q _flag_index # If using index option
         if not __cd_int_check $_flag_index
             echo "ERROR: $_flag_index is not an integer"
             return 1
@@ -63,11 +63,11 @@ function cd --description "Wrapper function for change directory"
     else # default case
         if test -z "$argv"
             set cd_destination $HOME
-        else if test "$argv" = '-'
+        else if test "$argv" = -
             set cd_destination $cd_prev_path
         else
-            set cd_destination  (realpath -q $argv)
-            set path_stt        $status
+            set cd_destination (realpath -q $argv)
+            set path_stt $status
             if test $path_stt -ne 0
                 printf "ERROR: The directory '%s' not exist\n" $argv
                 return 1
