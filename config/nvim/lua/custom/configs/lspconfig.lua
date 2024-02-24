@@ -4,18 +4,19 @@ local capabilities = base.capabilities
 local lspconfig = require("lspconfig")
 
 -- Table of LSP servers
-local servers = {
+local language_servers = {
     "bashls",
     "cmake",
     "cssls",
+    "jsonls",
     "lua_ls",
+    "slint_lsp",
     "pyright",
-    "qmlls",
     "tsserver",
 }
 
 -- Default configs for lsp
-for _, lsp in ipairs(servers) do
+for _, lsp in ipairs(language_servers) do
     lspconfig[lsp].setup({
         on_attach = on_attach,
         capabilities = capabilities,
@@ -30,6 +31,3 @@ lspconfig.clangd.setup({
     end,
     capabilities = capabilities,
 })
-
--- Config for slint --
-lspconfig.slint_lsp.setup({})
