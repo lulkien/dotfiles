@@ -6,6 +6,7 @@ local opts = {
         null_ls.builtins.formatting.stylua,
         null_ls.builtins.formatting.astyle,
         null_ls.builtins.formatting.fish_indent,
+        null_ls.builtins.formatting.yamlfmt,
     },
     on_attach = function(client, bufnr)
         if client.supports_method("textDocument/formatting") then
