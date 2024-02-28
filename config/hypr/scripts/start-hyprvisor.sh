@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
 
-killall hyprvisor-server
-~/.cargo/bin/hyprvisor-server &
+
+# killall hyprvisor
+~/.cargo/bin/hyprvisor kill
+sleep 0.2
+~/.cargo/bin/hyprvisor daemon

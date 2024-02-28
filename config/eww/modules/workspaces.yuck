@@ -1,6 +1,6 @@
 ;; Listener
 (deflisten workspaces :initial "[]"
-    "sh -c '~/.cargo/bin/hyprvisor-client workspace 10'")
+    "sh -c '~/.cargo/bin/hyprvisor workspaces 10'")
 
 (defwidget workspaces-widget []
     (box :class "workspaces-widget"
