@@ -139,18 +139,23 @@ main ()
         echo "Target number:"
         echo "1: For Hyprland."
         echo "2: For KDE, GNOME, etc."
+        echo "3: For WSL"
         echo "_: Cancel"
         echo -n "Select: "
         read answer
 
         case "${answer}" in
             1)
-                CONFIG_LIST=( "eww" "fish" "hypr" "kitty" "swaylock" "wofi" "alacritty" )
+                CONFIG_LIST=( "eww" "fish" "hypr" "kitty" "swaylock" "wofi" "alacritty" "dunst")
                 CONFIG_TARGET='Hyprland'
                 ;;
             2)
                 CONFIG_LIST=( "fish" "kitty" )
-                CONFIG_TARGET=''
+                CONFIG_TARGET='General'
+                ;;
+            3)
+                CONFIG_LIST=( "fish" )
+                CONFIG_TARGET='WSL'
                 ;;
             *)
                 echo "Canceled."
