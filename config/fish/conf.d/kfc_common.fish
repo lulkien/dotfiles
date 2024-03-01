@@ -12,4 +12,8 @@ abbr -a rf 'rm -rf'
 set -g fish_color_valid_path
 set -g fish_term24bit 1
 set -g fish_greeting
+
+# Recommend for user config
+# set -g KFC_GIT_STATUS true
+# set -g KFC_GIT_RELATIVE_COUNT true
 # set -g fish_greeting    $KFC_GREEN_B"ARMORED RESPONSE COALITION - TOGETHER WE SURVIVE"

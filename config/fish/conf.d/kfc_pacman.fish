@@ -1,14 +1,17 @@
-if command -sq pacman
-    # Package manager
-    abbr -a pud 'sudo pacman -Sy'
-    abbr -a pug 'sudo pacman -Su --noconfirm'
-
-    abbr -a puf 'sudo pacman -S --noconfirm --needed archlinux-keyring; sudo pacman -Syu'
-    abbr -a pit 'sudo pacman -S --noconfirm --needed'
-
-    abbr -a prm 'sudo pacman -Rns'
-    abbr -a pcl 'sudo pacman -Rns (pacman -Qdttq)'
-
-    abbr -a pqr 'pacman -Q'
-    abbr -a pss 'pacman -sS'
+if not command -sq pacman
+    return
 end
+
+set -l pac_wapper "sudo pacman"
+if command -sq paru
+    set pac_wapper paru
+end
+
+# Package manager
+abbr -a pit "$pac_wapper -S --noconfirm --needed"
+abbr -a prm "$pac_wapper -Rns"
+abbr -a puf "$pac_wapper -S --noconfirm --needed archlinux-keyring; $pac_wapper -Syu"
+abbr -a pcl "$pac_wapper -Rns (pacman -Qdttq)"
+
+abbr -a pqr 'pacman -Q'
+abbr -a pss 'pacman -sS'
