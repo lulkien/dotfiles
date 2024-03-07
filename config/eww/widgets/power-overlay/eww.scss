@@ -1,39 +1,77 @@
+@import '../../themes/catppuccin-mocha';
+
 * {
     all: unset;
     font-family: "CodeNewRoman Nerd Font Mono";
 }
 
 .power-overlay {
-    background: rgba(255, 255, 255, 0.1);
+    // background: rgba(255, 255, 255, 0.1);
+    background: rgba($color: $base, $alpha: 0.9);
 }
 
-.power-button,
-.power-button-focused,
-.power-button-selected {
-    background-color: #1a1a1a;
+.button-display,
+.button-lock,
+.button-exit,
+.button-reboot,
+.button-power {
+    background-color: $crust;
     border-radius: 10px;
-    color: #fafafa;
-    font-size: 100px;
+    font-size: 85px;
+
+    &-focused {
+        background-color: $crust;
+        border-radius: 10px;
+        font-size: 100px;
+    }
+
+    &-selected {
+        background-color: $crust;
+        border-radius: 10px;
+        font-size: 120px;
+    }
 }
 
-.power-button {
+.button-display,
+.button-lock,
+.button-exit,
+.button-reboot {
+    color: $text;
+
     &-focused {
-        box-shadow: 0px 0px 0px 2px #fafafa inset;
+        box-shadow: 0px 0px 0px 2px $blue inset;
+        color: $blue;
     }
+
     &-selected {
-        background-color: #454545;
-        box-shadow: 0px 0px 0px 3px #eaeaea inset;
+        background-color: $base;
+        box-shadow: 0px 0px 0px 3px $yellow inset;
+        color: $yellow;
+    }
+}
+
+.button-power {
+    color: $peach;
+    &-focused {
+        box-shadow: 0px 0px 0px 2px $maroon inset;
+        color: $maroon;
+    }
+
+    &-selected {
+        background-color: $base;
+        box-shadow: 0px 0px 0px 3px $red inset;
+        color: $red;
     }
 }
 
 .confirm-button,
 .confirm-button-focused {
-    background-color: #1a1a1a;
+    background-color: $mantle;
     border-radius: 10px;
-    color: #fafafa;
+    color: $text;
     font-size: 30px;
 }
 
 .confirm-button-focused {
-    box-shadow: 0px 0px 0px 2px #fafafa inset;
+    box-shadow: 0px 0px 0px 2px $red inset;
 }
