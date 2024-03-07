@@ -1,14 +1,13 @@
+@import 'themes/catppuccin-mocha';
+
 // ---------------------------------- Variable ----------------------------------
-$bg-color: #2a2a2a;
 $gl-padding: 0px 10px;
 $gl-radius: 8px;
 
 $text-fontsize: 18px;
-$text-color: #fafafa;
-$disabled-text-color: #7c7c7c;
 
-$button-padding: 0px 13px;
-$button-fontsize: 30px;
+$btn-padding: 0px 13px;
+$btn-fontsize: 30px;
 
 $widget-padding: 5px 0px;
 $widget-margin: 10px;
@@ -20,7 +19,7 @@ $widget-margin: 10px;
 }
 
 .bar {
-    background-color: rgba(176, 176, 176, 0.3);
+    background-color: rgba($color: $surface0, $alpha: 0.5);
 }
 
 .left-widgets,
@@ -38,10 +37,10 @@ $widget-margin: 10px;
 }
 
 tooltip.background {
-    background-color: #1f1f1f;
+    background-color: $crust;
     border-radius: $gl-radius;
     font-size: $text-fontsize;
-    color: #bfc9db;
+    color: $text;
 }
 
 tooltip label {
@@ -52,55 +51,60 @@ tooltip label {
 .dashboard-button,
 .workspaces-widget {
     padding: $gl-padding;
-    background-color: $bg-color;
+    background-color: $base;
     border-radius: $gl-radius;
-    color: $text-color;
-    font-size: $button-fontsize;
+    font-size: $btn-fontsize;
+}
+
+.dashboard-button {
+    color: $blue;
 }
 
 .workspace-button {
     &-active {
         padding: 0px 5px;
+        color: $sky;
     }
     &-deactive {
         padding: 0px 5px;
-        color: $disabled-text-color;
+        color: $overlay0;
     }
 }
 
 // ---------------------------------- Central section ----------------------------------
 .date-time,
 .noti-button {
-    background-color: $bg-color;
+    background-color: $base;
     border-radius: $gl-radius;
-    color: $text-color;
 }
 
 .date-time {
     padding: $gl-padding;
     font-size: $text-fontsize;
+    color: $text;
 }
 
 .noti-button {
-    padding: $button-padding;
-    font-size: $button-fontsize;
+    padding: $btn-padding;
+    font-size: $btn-fontsize;
+    color: $green;
 }
 
 // ---------------------------------- Right section ----------------------------------
 .system-monitor-widget,
 .power-button {
     padding: $gl-padding;
-    background-color: $bg-color;
+    background-color: $base;
     border-radius: $gl-radius;
-    color: $text-color;
 }
 
 .system-monitor-circular {
-    background-color: #5a5a5a;
-    color: #d35d6e;
+    background-color: $overlay0;
+    color: $peach;
 }
 
 .power-button {
-    padding: $button-padding;
-    font-size: $button-fontsize;
+    padding: $btn-padding;
+    font-size: $btn-fontsize;
+    color: $red;
 }
