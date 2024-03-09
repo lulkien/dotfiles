@@ -14,9 +14,10 @@ eww daemon
 eww -c ~/.config/eww/widgets/power-overlay daemon
 eww -c ~/.config/eww/widgets/quick-control daemon
 
-local max_check_attempts=10
-local attempt=0
+sleep 0.1
 
+local max_check_attempts=50
+local attempt=0
 
 # Wait until hyprvisor start
 until pidof hyprvisor || [[ $attempt -ge $max_check_attempts ]]; do

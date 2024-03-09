@@ -26,19 +26,20 @@
             :button-name "display"
             :button-id 1
             :label-icon "󰤄"
-            :command "sleep 0.2 && hyprctl dispatch dpms off &"
+            :command "sleep 0.1; hyprctl dispatch dpms off"
         )
         (power-button
             :button-name "lock"
             :button-id 2
             :label-icon ""
-            :command "sleep 0.2 && hyprlock & disown"
+            :command "sleep 0.1; pidof hyprlock || hyprlock &"
         )
         (power-button
             :button-name "exit"
             :button-id 3
             :label-icon "󰗼"
-            :command "hyprctl dispatch exit"
+            :command "sleep 0.1;
+                hyprctl dispatch exit"
         )
         (power-button
             :button-name "reboot"

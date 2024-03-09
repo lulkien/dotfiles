@@ -2,7 +2,6 @@
 (include "modules/dashboard.yuck")
 (include "modules/workspaces.yuck")
 (include "modules/datetime.yuck")
-(include "modules/quickcontrol.yuck")
 (include "modules/system.yuck")
 (include "modules/power.yuck")
 (include "modules/notification.yuck")

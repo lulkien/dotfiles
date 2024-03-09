@@ -20,8 +20,11 @@
 ;; DECLINE: 7
 
 (defwidget power-menu []
-    (eventbox 
-        :onclick "${EWW_CMD} close power-overlay; ${EWW_CMD} update focused_button=0; ${EWW_CMD} update selected_button=0"
+    (eventbox
+        :onclick "${EWW_CMD} close ${widget-name};
+            ${EWW_CMD} update focused_button=0;
+            ${EWW_CMD} update selected_button=0;
+            eww open bar"
         :hexpand true
         :vexpand true
         (box :class "power-menu"

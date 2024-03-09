@@ -10,8 +10,8 @@
                 (box :class "workspace-button-${ws.active ? "active" : "deactive"}"
                     :tooltip "Workspace ${ws.id}"
                     (label
-                        :text "${ws.occupied ? ws.active ? "" : "󰻃"
-                                             : ws.active ? "" : "" }"
+                        :text "${ws.occupied ? ws.active ? "" : ""
+                                             : ws.active ? "" : "" }"
                     )
                 )
             )

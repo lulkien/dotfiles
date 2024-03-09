@@ -25,7 +25,11 @@
         (confirm-button
             :button-id 6
             :label "Confirm"
-            :onclick "${EWW_CMD} close power-overlay; ${EWW_CMD} update focused_button=0; ${EWW_CMD} update selected_button=0; ${action_command}"
+            :onclick "${EWW_CMD} close ${widget-name};
+                ${EWW_CMD} update focused_button=0;
+                ${EWW_CMD} update selected_button=0;
+                eww open bar;
+                ${action_command}"
         )
         (confirm-button
             :button-id 7
