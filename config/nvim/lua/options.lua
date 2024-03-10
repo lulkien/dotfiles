@@ -1,3 +1,5 @@
+require("nvchad.options")
+
 -- Shell
 vim.opt.shell = "/usr/bin/fish"
 
