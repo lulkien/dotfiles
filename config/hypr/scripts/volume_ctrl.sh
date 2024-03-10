@@ -5,6 +5,7 @@ VOLUME=0
 MUTED=false
 NOTIFY_ID=865863
 NOTIFY_TITLE="Volume changed"
+VOLUME_ICO='audio-volume-medium'
 
 if [[ -z "$CMD" || ! $(command -v wpctl) ]]; then
     exit 1
@@ -54,11 +55,26 @@ parse_notify_title() {
     fi
 }
 
+parse_volume_icon() {
+    if [[ $MUTED = true || $VOLUME -eq 0 ]]; then
+        VOLUME_ICO='/usr/share/icons/Paper/48x48/notifications/notification-audio-volume-muted.svg'
+        return
+    fi
+
+    if [[ $VOLUME -le 33 ]]; then
+        VOLUME_ICO='/usr/share/icons/Paper/48x48/notifications/notification-audio-volume-low.svg'
+    elif [[ $VOLUME -le 66 ]]; then
+        VOLUME_ICO='/usr/share/icons/Paper/48x48/notifications/notification-audio-volume-medium.svg'
+    else
+        VOLUME_ICO='/usr/share/icons/Paper/48x48/notifications/notification-audio-volume-high.svg'
+    fi
+}
+
 send_notify() {
     if [[ ! $(command -v dunstify) ]]; then
         exit 1
     fi
-    dunstify --replace=$NOTIFY_ID --hints=int:value:"$VOLUME%" "$NOTIFY_TITLE" "$VOLUME%"
+    dunstify --replace=$NOTIFY_ID --icon=$VOLUME_ICO --hints=int:value:"$VOLUME%" "$NOTIFY_TITLE" "$VOLUME%"
 }
 
 do_process() {
@@ -67,22 +83,22 @@ do_process() {
             increase_volume
             parse_volume
             parse_notify_title "Muted" "Volume changed"
-            if [[ $MUTED = true ]]; then
-                NOTIFY_TITLE="Muted"
-            fi
+            parse_volume_icon
             send_notify
             ;;
         '-' | 'dec' | 'DEC')
             decrease_volume
             parse_volume
             parse_notify_title "Muted" "Volume changed"
+            parse_volume_icon
             send_notify
             ;;
         '0' | 'toggle' | 'TOGGLE')
             toggle_mute
             parse_volume
             parse_notify_title "Muted" "Volume"
-            dunstify --replace=$NOTIFY_ID --hints=int:value:"$VOLUME%" "$NOTIFY_TITLE" "$VOLUME%"
+            parse_volume_icon
+            send_notify
             ;;
         *)
             exit 1
