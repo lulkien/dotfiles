@@ -1,5 +1,5 @@
 local options = {
-	lsp_fallback = false,
+	lsp_fallback = true,
 
 	formatters_by_ft = {
 		lua = { "stylua" },
@@ -9,6 +9,7 @@ local options = {
 		cpp = { "astyle" },
 		sh = { "shfmt" },
 		bash = { "shfmt" },
+		python = { "black" },
 	},
 }
 

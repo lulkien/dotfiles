@@ -24,7 +24,7 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 		require("conform").format({
 			bufnr = args.buf,
 			timeout_ms = 500,
-			-- lsp_fallback = true,
+			lsp_fallback = true,
 		})
 	end,
 })
