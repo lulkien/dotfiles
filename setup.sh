@@ -136,17 +136,17 @@ main ()
         CONFIG_LIST=( "fish" "alacritty" )
         CONFIG_TARGET='MacOS'
     else
-        echo "Target number:"
-        echo "1: For Hyprland."
-        echo "2: For KDE, GNOME, etc."
-        echo "3: For WSL"
+        echo "Target list:"
+        echo "1: For Hyprland           (everything you need)"
+        echo "2: For KDE, GNOME, etc    (fish + kitty)"
+        echo "3: For WSL                (fish only)"
         echo "_: Cancel"
         echo -n "Select: "
         read answer
 
         case "${answer}" in
             1)
-                CONFIG_LIST=( "eww" "fish" "hypr" "kitty" "swaylock" "wofi" "alacritty" "dunst")
+                CONFIG_LIST=( "hypr" "fish" "eww" "wofi" "alacritty" "dunst")
                 CONFIG_TARGET='Hyprland'
                 ;;
             2)
