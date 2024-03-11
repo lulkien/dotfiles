@@ -1,6 +1,4 @@
 local options = {
-	lsp_fallback = true,
-
 	formatters_by_ft = {
 		lua = { "stylua" },
 		fish = { "fish_indent" },
@@ -11,6 +9,11 @@ local options = {
 		bash = { "shfmt" },
 		python = { "black" },
 	},
+	-- Manual save with auto command
+	-- format_on_save = {
+	-- 	lsp_fallback = true,
+	-- 	timeout_ms = 500,
+	-- },
 }
 
 require("conform").setup(options)

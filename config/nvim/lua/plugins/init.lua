@@ -1,4 +1,4 @@
-return {
+local M = {
 	{
 		"stevearc/conform.nvim",
 		config = function()
@@ -68,3 +68,5 @@ return {
 		end,
 	},
 }
+
+return M
