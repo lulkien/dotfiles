@@ -1,0 +1,19 @@
+(defwidget menu []
+    (eventbox
+        :onclick "${EWW_CMD} close menu;"
+        :vexpand true
+        :hexpand true
+        (box :class "system-menu"
+
+        )
+    )
+)
+
+(defwindow menu
+    :monitor 0
+    :namespace "gtk-overlay-menu"
+    :stacking "overlay"
+    :focusable true
+    :geometry (geometry :width "100%" :height "100%")
+    (menu)
+)

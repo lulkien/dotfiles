@@ -1,0 +1,10 @@
+@import '../../themes/catppuccin-mocha';
+
+* {
+    all: unset;
+    font-family: "CodeNewRoman Nerd Font Mono";
+}
+
+.menu {
+    background: rgba($color: $base, $alpha: 0.5);
+}

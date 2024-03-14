@@ -1,10 +1,9 @@
 ;; Modules
-(include "modules/dashboard.yuck")
-(include "modules/workspaces.yuck")
-(include "modules/datetime.yuck")
-(include "modules/system.yuck")
-(include "modules/power.yuck")
-(include "modules/notification.yuck")
+(include "components/datetime.yuck")
+(include "components/power-menu.yuck")
+(include "components/system-menu.yuck")
+(include "components/system-gauges.yuck")
+(include "components/workspaces.yuck")
 
 ;; Widgets section
 (defwidget left-widgets []
@@ -13,7 +12,7 @@
         :halign "start"
         :space-evenly false
         :spacing 5
-        (dashboard)
+        (system-menu)
         (workspaces-widget)
     )
 )
@@ -25,7 +24,6 @@
         :space-evenly false
         :spacing 5
         (date-time)
-        (notification)
     )
 )
 
@@ -35,8 +33,8 @@
         :space-evenly false
         :spacing 5
         :halign "end"
-        (system-monitor-widget)
-        (power-window)
+        (system-gauges)
+        (power-menu)
     )
 )
 

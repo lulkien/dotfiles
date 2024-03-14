@@ -1,9 +1,0 @@
-(defwidget notification []
-    (eventbox
-        :onclick "sleep 0.1 && swaync-client -op & disown"
-        (box :class "noti-button"
-            :tooltip "Notification"
-            (label :text "")
-        )
-    )
-)

@@ -1,9 +1,0 @@
-(defwidget dashboard []
-    (box
-        :tooltip "Dashboard"
-        (button :class "dashboard-button"
-            :onclick "sleep 0.1 && eww -c ~/.config/eww/widgets/quick-control open quick-control"
-            "󰣇"
-        )
-    )
-)

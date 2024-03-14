@@ -1,0 +1,10 @@
+(defwidget system-menu []
+    (eventbox
+        :onclick "sleep 0.1;
+            eww -c ~/.config/eww/widgets/system-menu open menu"
+        (box :class "system-menu"
+            :tooltip "System menu"
+            (label :text "󰣇")
+        )
+    )
+)

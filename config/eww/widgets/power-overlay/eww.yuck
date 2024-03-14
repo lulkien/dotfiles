@@ -1,6 +1,6 @@
 ;; Include
-(include "modules/power-buttons.yuck")
-(include "modules/confirm-buttons.yuck")
+(include "components/power-buttons.yuck")
+(include "components/confirm-buttons.yuck")
 
 ;; Contants
 (defvar widget-name "power-overlay")
@@ -45,6 +45,7 @@
 
 (defwindow power-overlay
     :monitor 0
+    :namespace "gtk-overlay-menu"
     :stacking "overlay"
     :focusable true
     :geometry (geometry :width "100%" :height "100%")

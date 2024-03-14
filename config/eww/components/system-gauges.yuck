@@ -11,8 +11,8 @@
     )
 )
 
-(defwidget system-monitor-widget []
-    (box :class "system-monitor-widget"
+(defwidget system-gauges []
+    (box :class "system-gauges"
         :orientation "h"
         :space-evenly true
         :spacing 10
