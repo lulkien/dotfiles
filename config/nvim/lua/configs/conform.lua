@@ -6,8 +6,8 @@ local options = {
 		c = { "astyle" },
 		cpp = { "astyle" },
 		sh = { "shfmt" },
-		bash = { "shfmt" },
 		python = { "black" },
+		javascript = { "prettierd" },
 	},
 	-- Manual save with auto command
 	-- format_on_save = {
