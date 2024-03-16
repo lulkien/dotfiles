@@ -14,6 +14,7 @@ const COMPILED_STYLE_DIR = "/tmp/ags";
 function ArchButton() {
     return Widget.Button({
         class_name: "arch-button",
+        cursor: "pointer",
         child: Widget.Label("󰣇"),
     });
 }
@@ -34,10 +35,10 @@ function Workspaces() {
 
         return ws_full.map(({ id, occupied }) =>
             Widget.Button({
+                class_name: activeId.as((i) => `${i === id ? "focused" : ""}`),
+                child: Widget.Label(`${occupied ? "" : ""}`),
                 on_clicked: () =>
                     hyprland.messageAsync(`dispatch workspace ${id}`),
-                child: Widget.Label(`${occupied ? "" : ""}`),
-                class_name: activeId.as((i) => `${i === id ? "focused" : ""}`),
             }),
         );
     });
@@ -74,6 +75,7 @@ function Notification() {
     const popups = notifications.bind("popups");
     return Widget.Button({
         class_name: `notification${popups.as((p) => p.length > 0) ? "-new" : "-empty"}`,
+        cursor: "pointer",
         child: Widget.Label({
             label: popups.as((p) => (p.length > 0 ? "󱅫" : "󰂚")),
         }),
@@ -99,51 +101,56 @@ function Notification() {
 //     });
 // }
 
-function Volume() {
-    const icons = {
-        101: "overamplified",
-        67: "high",
-        34: "medium",
-        1: "low",
-        0: "muted",
-    };
-
-    function getIcon() {
-        const icon = audio.speaker.is_muted
-            ? 0
-            : [101, 67, 34, 1, 0].find(
-                  (threshold) => threshold <= audio.speaker.volume * 100,
-              );
-
-        return `audio-volume-${icons[icon]}-symbolic`;
-    }
-
-    const icon = Widget.Icon({
-        icon: Utils.watch(getIcon(), audio.speaker, getIcon),
-    });
-
-    const slider = Widget.Slider({
-        hexpand: true,
-        draw_value: false,
-        on_change: ({ value }) => (audio.speaker.volume = value),
-        setup: (self) =>
-            self.hook(audio.speaker, () => {
-                self.value = audio.speaker.volume || 0;
-            }),
-    });
-
-    return Widget.Box({
-        class_name: "volume",
-        css: "min-width: 180px",
-        children: [icon, slider],
-    });
-}
+// function Volume() {
+//     const icons = {
+//         101: "overamplified",
+//         67: "high",
+//         34: "medium",
+//         1: "low",
+//         0: "muted",
+//     };
+//
+//     function getIcon() {
+//         const icon = audio.speaker.is_muted
+//             ? 0
+//             : [101, 67, 34, 1, 0].find(
+//                   (threshold) => threshold <= audio.speaker.volume * 100,
+//               );
+//
+//         return `audio-volume-${icons[icon]}-symbolic`;
+//     }
+//
+//     const icon = Widget.Icon({
+//         icon: Utils.watch(getIcon(), audio.speaker, getIcon),
+//     });
+//
+//     const slider = Widget.Slider({
+//         hexpand: true,
+//         draw_value: false,
+//         on_change: ({ value }) => (audio.speaker.volume = value),
+//         setup: (self) =>
+//             self.hook(audio.speaker, () => {
+//                 self.value = audio.speaker.volume || 0;
+//             }),
+//     });
+//
+//     return Widget.Box({
+//         class_name: "volume",
+//         css: "min-width: 180px",
+//         children: [icon, slider],
+//     });
+// }
 
 function SysTray() {
     const items = systemtray.bind("items").as((items) =>
         items.map((item) =>
             Widget.Button({
-                child: Widget.Icon({ icon: item.bind("icon") }),
+                class_name: "tray-icon",
+                child: Widget.Icon({
+                    icon: item.bind("icon"),
+                    css: "font-size: 20px",
+                }),
+                cursor: "pointer",
                 on_primary_click: (_, event) => item.activate(event),
                 on_secondary_click: (_, event) => item.openMenu(event),
                 tooltip_markup: item.bind("tooltip_markup"),
@@ -152,6 +159,7 @@ function SysTray() {
     );
 
     return Widget.Box({
+        class_name: "systemtray",
         children: items,
     });
 }
@@ -167,7 +175,7 @@ function Center() {
     return Widget.Box({
         spacing: 8,
         // children: [Media(), Notification()],
-        children: [Clock(), Notification()],
+        children: [Clock()],
     });
 }
 
@@ -175,7 +183,7 @@ function Right() {
     return Widget.Box({
         hpack: "end",
         spacing: 8,
-        children: [SysTray(), Volume()],
+        children: [SysTray(), Notification()],
     });
 }
 

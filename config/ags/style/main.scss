@@ -5,7 +5,7 @@
     font-family: "CaskaydiaCove NFM";
 }
 
-window.bar {
+.bar {
     background-color: rgba($color: $surface0, $alpha: 0.9);
     color: $text;
 }
@@ -30,7 +30,7 @@ window.bar {
 // }
 
 .arch-button {
-    margin: 8px 0px 8px 10px;
+    margin: 5px 0px 5px 10px;
     padding: 0px 13px;
     border-radius: 8px;
     color: $blue;
@@ -39,7 +39,7 @@ window.bar {
 }
 
 .workspaces {
-    margin: 8px 0px;
+    margin: 5px 0px;
     padding: 0px 10px;
     border-radius: 8px;
     background-color: $base;
@@ -62,7 +62,7 @@ window.bar {
 }
 
 .client-title {
-    margin: 8px 0px;
+    margin: 5px 0px;
     padding: 0px 10px;
     border-radius: 8px;
     color: $text;
@@ -70,7 +70,7 @@ window.bar {
 }
 
 .clock {
-    margin: 8px 0px;
+    margin: 5px 0px;
     background-color: $base;
     padding: 0px 20px;
     border-radius: 8px;
@@ -79,7 +79,7 @@ window.bar {
 
 .notification-new,
 .notification-empty {
-    margin: 8px 0px;
+    margin: 5px 10px 5px 0px;
     background-color: $base;
     padding: 0px 13px;
     border-radius: 8px;
@@ -98,6 +98,18 @@ window.bar {
             color: $green;
         }
     }
+}
+
+.tray-icon {
+    background-color: transparent;
+    padding: 0px 8px;
+}
+
+.systemtray {
+    margin: 5px 0px;
+    background-color: $base;
+    padding: 0px 10px;
+    border-radius: 8px;
 }
 
 levelbar block,
