@@ -1,0 +1,106 @@
+@import '../themes/catppuccin-mocha';
+
+* {
+    all: unset;
+    font-family: "CaskaydiaCove NFM";
+}
+
+window.bar {
+    background-color: rgba($color: $surface0, $alpha: 0.9);
+    color: $text;
+}
+
+// button {
+//     min-width: 0;
+//     padding-top: 0;
+//     padding-bottom: 0;
+//     background-color: transparent;
+// }
+
+// button:active {
+//     background-color: $green;
+// }
+
+// button:hover {
+// border-bottom: 3px solid $yellow;
+// }
+
+// label {
+//     font-weight: bold;
+// }
+
+.arch-button {
+    margin: 8px 0px 8px 10px;
+    padding: 0px 13px;
+    border-radius: 8px;
+    color: $blue;
+    background-color: $base;
+    font-size: 30px;
+}
+
+.workspaces {
+    margin: 8px 0px;
+    padding: 0px 10px;
+    border-radius: 8px;
+    background-color: $base;
+
+    button {
+        background-color: transparent;
+        padding: 3px 5px;
+        color: $overlay0;
+        font-size: 30px;
+
+        &.focused {
+            color: $teal;
+        }
+
+        &:hover {
+            background-color: transparent;
+            color: $green;
+        }
+    }
+}
+
+.client-title {
+    margin: 8px 0px;
+    padding: 0px 10px;
+    border-radius: 8px;
+    color: $text;
+    font-size: 17px;
+}
+
+.clock {
+    margin: 8px 0px;
+    background-color: $base;
+    padding: 0px 20px;
+    border-radius: 8px;
+    font-size: 17px;
+}
+
+.notification-new,
+.notification-empty {
+    margin: 8px 0px;
+    background-color: $base;
+    padding: 0px 13px;
+    border-radius: 8px;
+    font-size: 30px;
+}
+
+.notification {
+    &-new {
+        label {
+            color: $yellow;
+        }
+    }
+
+    &-empty {
+        label {
+            color: $green;
+        }
+    }
+}
+
+levelbar block,
+highlight {
+    min-height: 10px;
+}

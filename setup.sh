@@ -73,13 +73,13 @@ setup_dotfiles() {
 	stow --verbose=2 --dir=$stow_home_dir --target=$HOME .
 	echo "--------------------------------------"
 
-	if [[ "$TARGET" = 'Hyprland' ]]; then
-		echo "[INFO] Init submodules for Hyprland"
-		git submodule update --init --recursive
-		echo "--------------------------------------"
-
-		echo "[WARN] Please install all submodules for Hyprland."
-	fi
+	# if [[ "$TARGET" = 'Hyprland' ]]; then
+	# 	echo "[INFO] Init submodules for Hyprland"
+	# 	git submodule update --init --recursive
+	# 	echo "--------------------------------------"
+	#
+	# 	echo "[WARN] Please install all submodules for Hyprland."
+	# fi
 
 	echo
 	echo "[INFO] Completed."
@@ -126,7 +126,7 @@ main() {
 
 		case "${answer}" in
 		1)
-			dots=("hypr" "fish" "eww" "wofi" "alacritty" "dunst")
+			dots=("hypr" "fish" "ags" "wofi" "alacritty" "dunst")
 			distro_target='Hyprland'
 			;;
 		2)
