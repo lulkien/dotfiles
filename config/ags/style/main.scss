@@ -29,21 +29,32 @@
 //     font-weight: bold;
 // }
 
-.arch-button {
-    margin: 5px 0px 5px 10px;
-    padding: 0px 13px;
-    border-radius: 8px;
-    color: $blue;
+.bar-item {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.left-item {
+    margin-left: 10px;
+}
+
+.right-item {
+    margin-right: 10px;
+}
+
+.box-item {
     background-color: $base;
+    border-radius: 8px;
+    padding: 0px 10px;
+}
+
+.arch-button {
+    padding: 0px 13px;
     font-size: 30px;
+    color: $blue;
 }
 
 .workspaces {
-    margin: 5px 0px;
-    padding: 0px 10px;
-    border-radius: 8px;
-    background-color: $base;
-
     button {
         background-color: transparent;
         padding: 3px 5px;
@@ -62,28 +73,15 @@
 }
 
 .client-title {
-    margin: 5px 0px;
-    padding: 0px 10px;
-    border-radius: 8px;
     color: $text;
     font-size: 17px;
 }
 
 .clock {
-    margin: 5px 0px;
-    background-color: $base;
     padding: 0px 20px;
+    background-color: $base;
     border-radius: 8px;
     font-size: 17px;
-}
-
-.notification-new,
-.notification-empty {
-    margin: 5px 10px 5px 0px;
-    background-color: $base;
-    padding: 0px 13px;
-    border-radius: 8px;
-    font-size: 30px;
 }
 
 .notification {
@@ -101,15 +99,21 @@
 }
 
 .tray-icon {
-    background-color: transparent;
     padding: 0px 8px;
+    background-color: transparent;
 }
 
 .systemtray {
-    margin: 5px 0px;
     background-color: $base;
     padding: 0px 10px;
     border-radius: 8px;
+}
+
+.system-indicator {
+    &-button {
+        padding: 0px 5px;
+        font-size: 18px;
+    }
 }
 
 levelbar block,
