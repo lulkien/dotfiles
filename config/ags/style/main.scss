@@ -86,37 +86,65 @@
 
 .notification {
     &-new {
-        label {
-            color: $yellow;
-        }
+        color: $yellow;
     }
 
     &-empty {
-        label {
-            color: $green;
-        }
+        color: $green;
     }
-}
-
-.tray-icon {
-    padding: 0px 8px;
-    background-color: transparent;
 }
 
 .systemtray {
     background-color: $base;
     padding: 0px 10px;
     border-radius: 8px;
+
+    button {
+        border-radius: 4px;
+        padding: 0px 9px;
+
+        &:hover {
+            background-color: $overlay0;
+        }
+    }
 }
 
 .system-indicator {
     &-button {
-        padding: 0px 5px;
+        padding: 0px 12px;
+        border-radius: 4px;
         font-size: 18px;
+
+        &:hover {
+            background-color: $overlay0;
+        }
     }
 }
 
-levelbar block,
-highlight {
-    min-height: 10px;
+.bluetooth-indicator {
+    label {
+        &.connected {
+            font-size: 28px;
+            color: $sky;
+        }
+
+        &.disconnected {
+            font-size: 20px;
+            color: $text;
+        }
+    }
+}
+
+.noti-indicator {
+    font-size: 25px;
+
+    label {
+        &.new-message {
+            color: $peach;
+        }
+
+        &.empty {
+            color: $green;
+        }
+    }
 }

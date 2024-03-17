@@ -1,8 +1,8 @@
-const hyprland = await Service.import("hyprland");
-const notifications = await Service.import("notifications");
+const Hyprland = await Service.import("hyprland");
+const Notifications = await Service.import("notifications");
 const mpris = await Service.import("mpris");
 const audio = await Service.import("audio");
-const bluetooth = await Service.import("bluetooth");
+const Bluetooth = await Service.import("bluetooth");
 const systemtray = await Service.import("systemtray");
 import * as Utils from "resource:///com/github/Aylur/ags/utils.js";
 
@@ -21,9 +21,9 @@ function ArchButton() {
 }
 
 function Workspaces() {
-    const activeId = hyprland.active.workspace.bind("id");
+    const activeId = Hyprland.active.workspace.bind("id");
 
-    const workspaces = hyprland.bind("workspaces").as((ws) => {
+    const workspaces = Hyprland.bind("workspaces").as((ws) => {
         const ws_full = Array.from({ length: 10 }, (_, index) => {
             const id = index + 1;
             const entry = ws.find((item) => item.id === id);
@@ -39,7 +39,7 @@ function Workspaces() {
                 class_name: activeId.as((i) => `${i === id ? "focused" : ""}`),
                 child: Widget.Label(`${occupied ? "" : ""}`),
                 on_clicked: () =>
-                    hyprland.messageAsync(`dispatch workspace ${id}`),
+                    Hyprland.messageAsync(`dispatch workspace ${id}`),
             }),
         );
     });
@@ -80,11 +80,35 @@ function SysTray() {
     });
 }
 
+function NotiIndicator() {
+    const notifications = Notifications.bind("notifications");
+
+    return Widget.Button({
+        class_names: ["noti-indicator", "system-indicator-button"],
+        child: Widget.Label({
+            class_name: notifications.as((n) =>
+                n.length > 0 ? "new-message" : "empty",
+            ),
+            label: notifications.as((n) => (n.length > 0 ? "󱅫" : "󰂚")),
+        }),
+        on_secondary_click: () => {
+            Notifications.clear();
+        },
+    });
+}
+
 function BluetoothIndicator() {
+    const connected_devices = Bluetooth.bind("connected-devices");
+
     return Widget.Button({
         class_names: ["bluetooth-indicator", "system-indicator-button"],
-        child: Widget.Label("󰂯"),
-        on_clicked: () => {
+        child: Widget.Label({
+            class_name: connected_devices.as((d) =>
+                d.length > 0 ? "connected" : "disconnected",
+            ),
+            label: connected_devices.as((d) => (d.length > 0 ? "󰂱" : "󰂯")),
+        }),
+        on_primary_click: () => {
             Utils.execAsync(["blueman-manager"]);
         },
     });
@@ -93,7 +117,7 @@ function BluetoothIndicator() {
 function SysIndicator() {
     return Widget.Box({
         class_names: ["system-indicator", "right-item", "bar-item", "box-item"],
-        children: [BluetoothIndicator()],
+        children: [BluetoothIndicator(), NotiIndicator()],
     });
 }
 
