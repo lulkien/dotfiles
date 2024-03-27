@@ -152,26 +152,3 @@ function Bar(monitor = 0) {
         }),
     });
 }
-
-// Parse config
-async function applyStyle() {
-    Utils.exec(`mkdir -p ${COMPILED_STYLE_DIR}`);
-    Utils.exec(
-        `sass ${App.configDir}/style/main.scss ${COMPILED_STYLE_DIR}/style.css`,
-    );
-    App.resetCss();
-    App.applyCss(`${COMPILED_STYLE_DIR}/style.css`);
-}
-applyStyle().catch(print);
-
-App.config({
-    onConfigParsed: () => {
-        Utils.monitorFile(`${App.configDir}/style`, function () {
-            applyStyle();
-        });
-    },
-    windows: [Bar(0)],
-    style: `${COMPILED_STYLE_DIR}/style.css`,
-});
-
-export {};
