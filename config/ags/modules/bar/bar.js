@@ -1,14 +1,13 @@
 const Hyprland = await Service.import("hyprland");
 const Notifications = await Service.import("notifications");
 const Bluetooth = await Service.import("bluetooth");
-const systemtray = await Service.import("systemtray");
+const Network = await Service.import("network");
+const Systemtray = await Service.import("systemtray");
 import * as Utils from "resource:///com/github/Aylur/ags/utils.js";
 
 const date = Variable("", {
     poll: [2000, "date '+%A, %b %d | %R'"],
 });
-
-const COMPILED_STYLE_DIR = "/tmp/ags";
 
 function ArchButton() {
     return Widget.Button({
@@ -56,7 +55,7 @@ function Clock() {
 }
 
 function SysTray() {
-    const items = systemtray.bind("items").as((items) =>
+    const items = Systemtray.bind("items").as((items) =>
         items.map((item) =>
             Widget.Button({
                 class_name: "tray-icon",
@@ -112,10 +111,38 @@ function BluetoothIndicator() {
     });
 }
 
+const WifiIndicator = () => {
+    const internet = Network.wifi.bind("internet");
+
+    return Widget.Button({
+        class_names: ["network-indicator", "system-indicator-button"],
+        child: Widget.Label({
+            class_name: internet.as((i) =>
+                i === "connected" ? "connected" : "disconnected",
+            ),
+            label: internet.as((i) => (i === "connected" ? "󰖩" : "󰖪")),
+        }),
+    });
+};
+
+const WiredIndicator = () =>
+    Widget.Icon({
+        icon: Network.wired.bind("icon_name"),
+    });
+
+const NetworkIndicator = () =>
+    Widget.Stack({
+        children: {
+            wifi: WifiIndicator(),
+            wired: WiredIndicator(),
+        },
+        shown: Network.bind("primary").as((p) => p || "wifi"),
+    });
+
 function SysIndicator() {
     return Widget.Box({
         class_names: ["system-indicator", "right-item", "bar-item", "box-item"],
-        children: [BluetoothIndicator(), NotiIndicator()],
+        children: [BluetoothIndicator(), NetworkIndicator(), NotiIndicator()],
     });
 }
 
@@ -138,8 +165,8 @@ function Right() {
     });
 }
 
-function Bar(monitor = 0) {
-    return Widget.Window({
+export const Bar = (monitor = 0) =>
+    Widget.Window({
         name: `bar-${monitor}`,
         class_name: "bar",
         monitor,
@@ -151,4 +178,3 @@ function Bar(monitor = 0) {
             end_widget: Right(),
         }),
     });
-}
