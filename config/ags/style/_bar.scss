@@ -136,15 +136,14 @@
 }
 
 .network-indicator {
-
     label {
         &.connected {
-            font-size: 28px;
+            font-size: 30px;
             color: $sky;
         }
 
         &.disconnected {
-            font-size: 28px;
+            font-size: 30px;
             color: $text;
         }
     }

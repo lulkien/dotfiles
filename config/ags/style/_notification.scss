@@ -1,0 +1,59 @@
+@import '../themes/catppuccin-mocha';
+
+window.notification-popups box.notifications {
+    padding: .5em;
+}
+
+.icon {
+    min-width: 68px;
+    min-height: 68px;
+    margin-right: 1em;
+}
+
+.icon image {
+    font-size: 58px;
+    /* to center the icon */
+    margin: 5px;
+    color: $text;
+}
+
+.icon box {
+    min-width: 68px;
+    min-height: 68px;
+    border-radius: 7px;
+}
+
+.notification {
+    min-width: 350px;
+    border-radius: 11px;
+    padding: 1em;
+    margin: .5em;
+    border: 1px solid $surface2;
+    background-color: $base;
+}
+
+.notification.critical {
+    border: 1px solid lightcoral;
+}
+
+.title {
+    color: $text;
+    font-size: 1.4em;
+}
+
+.body {
+    color: $text;
+}
+
+.actions .action-button {
+    margin: 0 .4em;
+    margin-top: .8em;
+}
+
+.actions .action-button:first-child {
+    margin-left: 0;
+}
+
+.actions .action-button:last-child {
+    margin-right: 0;
+}

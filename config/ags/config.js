@@ -6,6 +6,7 @@ import * as Utils from "resource:///com/github/Aylur/ags/utils.js";
 
 // Custom modules
 import { Bar } from "./modules/bar/bar.js";
+import { NotificationPopups } from "./modules/notification-popups/notificationsPopup.js";
 
 const COMPILED_STYLE_DIR = `${GLib.get_user_cache_dir()}/ags/user/generated`;
 // const range = (length, start = 1) =>
@@ -32,7 +33,7 @@ App.config({
             applyStyle();
         });
     },
-    windows: [Bar(0)],
+    windows: [Bar(0), NotificationPopups()],
     style: `${COMPILED_STYLE_DIR}/style.css`,
 });
 
