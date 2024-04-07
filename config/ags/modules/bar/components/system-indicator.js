@@ -28,11 +28,16 @@ const BluetoothIndicator = () => {
     return Widget.Button({
         class_names: ["bluetooth-indicator", "system-indicator-button"],
         child: Widget.Label({
-            class_name: connected_devices.as((d) =>
-                d.length > 0 ? "connected" : "disconnected",
+            class_name: connected_devices.as((devices) =>
+                devices.length > 0 ? "connected" : "disconnected",
             ),
-            label: connected_devices.as((d) => (d.length > 0 ? "󰂱" : "󰂯")),
+            label: connected_devices.as((devices) =>
+                devices.length > 0 ? "󰂱" : "󰂯",
+            ),
         }),
+        tooltip_text: Bluetooth.bind("connected-devices").as(
+            (devices) => devices[0].name || "Unknown",
+        ),
         on_primary_click: () => {
             Utils.execAsync(["blueman-manager"]);
         },
@@ -50,6 +55,7 @@ const WifiIndicator = () => {
             ),
             label: internet.as((i) => (i === "connected" ? "󰖩" : "󰖪")),
         }),
+        tooltip_text: Network.wifi.bind("ssid").as((ssid) => ssid || "Unknown"),
     });
 };
 

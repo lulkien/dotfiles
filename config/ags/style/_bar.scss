@@ -5,9 +5,37 @@
     font-family: "CaskaydiaCove NFM";
 }
 
-.bar {
-    background-color: rgba($color: $surface0, $alpha: 0.9);
-    color: $text;
+menu,
+tooltip {
+    background-color: $base;
+    border-radius: 8px;
+    border: 2px solid $text;
+}
+
+tooltip {
+    & * {
+        padding: 4px 8px;
+    }
+}
+
+menu {
+    padding: 10px;
+
+    separator {
+        min-height: 0.05rem;
+        margin: 5px 0px;
+        background-color: $overlay0;
+    }
+
+    menuitem {
+        border-radius: 0;
+        padding: 5px 10px;
+        border-radius: 4px;
+
+        &:hover {
+            background-color: $overlay0;
+        }
+    }
 }
 
 // button {
@@ -28,6 +56,11 @@
 // label {
 //     font-weight: bold;
 // }
+
+.bar {
+    background-color: rgba($color: $surface0, $alpha: 0.9);
+    color: $text;
+}
 
 .bar-item {
     margin-top: 5px;
@@ -98,6 +131,16 @@
     background-color: $base;
     padding: 0px 10px;
     border-radius: 8px;
+
+    &-item {
+        .active {
+            background-color: #fff;
+        }
+    }
+
+    &-icon {
+        font-size: 20px;
+    }
 
     button {
         border-radius: 4px;
