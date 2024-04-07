@@ -5,8 +5,8 @@ import App from "resource:///com/github/Aylur/ags/app.js";
 import * as Utils from "resource:///com/github/Aylur/ags/utils.js";
 
 // Custom modules
-import { Bar } from "./modules/bar/bar.js";
-import { NotificationPopups } from "./modules/notification-popups/notificationsPopup.js";
+import { Bar } from "./modules/bar/main.js";
+import { NotificationPopups } from "./modules/notification-popups/main.js";
 
 const COMPILED_STYLE_DIR = `${GLib.get_user_cache_dir()}/ags/user/generated`;
 // const range = (length, start = 1) =>
