@@ -1,12 +1,11 @@
 // AGS
-import Gdk from "gi://Gdk";
 import GLib from "gi://GLib";
 import App from "resource:///com/github/Aylur/ags/app.js";
 import * as Utils from "resource:///com/github/Aylur/ags/utils.js";
 
 // Custom modules
 import { Bar } from "./modules/bar/main.js";
-import { NotificationPopups } from "./modules/notification-popups/main.js";
+import { NotificationPopups } from "./modules/notification/popups.js";
 
 const COMPILED_STYLE_DIR = `${GLib.get_user_cache_dir()}/ags/user/generated`;
 // const range = (length, start = 1) =>

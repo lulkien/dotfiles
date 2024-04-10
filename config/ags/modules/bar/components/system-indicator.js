@@ -1,5 +1,5 @@
 import * as Utils from "resource:///com/github/Aylur/ags/utils.js";
-import Widget from "resource:///com/github/Aylur/ags/widget.js";
+// import Widget from "resource:///com/github/Aylur/ags/widget.js";
 
 const Notifications = await Service.import("notifications");
 const Bluetooth = await Service.import("bluetooth");
@@ -7,6 +7,7 @@ const Network = await Service.import("network");
 
 const NotiIndicator = () => {
     const notifications = Notifications.bind("notifications");
+    const popups = Notifications.bind("popups");
 
     return Widget.Button({
         class_names: ["noti-indicator", "system-indicator-button"],
@@ -16,6 +17,11 @@ const NotiIndicator = () => {
             ),
             label: notifications.as((n) => (n.length > 0 ? "󱅫" : "󰂚")),
         }),
+        tooltip_text: notifications.as((n) =>
+            n.length < 2
+                ? `${n.length} notification`
+                : `${n.length} notifications`,
+        ),
         on_secondary_click: () => {
             Notifications.clear();
         },
@@ -35,8 +41,8 @@ const BluetoothIndicator = () => {
                 devices.length > 0 ? "󰂱" : "󰂯",
             ),
         }),
-        tooltip_text: Bluetooth.bind("connected-devices").as(
-            (devices) => devices[0].name || "Unknown",
+        tooltip_text: connected_devices.as((devices) =>
+            devices.length > 0 ? devices[0].name : "Unknown",
         ),
         on_primary_click: () => {
             Utils.execAsync(["blueman-manager"]);

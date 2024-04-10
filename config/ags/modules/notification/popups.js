@@ -89,12 +89,27 @@ export const NotificationPopups = (monitor = 0) => {
         children: Notifications.popups.map(NotificationPopup),
     });
 
-    function onNotified(_, /** @type {number} */ id) {
-        const n = Notifications.getNotification(id);
-        if (n) list.children = [NotificationPopup(n), ...list.children];
+    function onNotified(_, id) {
+        const notify = Notifications.getNotification(id);
+
+        // console.warn(Notifications.popups.length);
+        // Notifications.popups.forEach((popup) => {
+        //     if (id == popup.id) {
+        //         console.warn("dismissed popup with id = " + popup.id);
+        //         popup.dismiss();
+        //     }
+        // });
+        //
+        // list.children.find((n) => n.attribute.id === id)?.destroy();
+
+        if (notify) {
+            console.warn("New popup: " + id);
+            // Add new notification to the list
+            list.children = [NotificationPopup(notify), ...list.children];
+        }
     }
 
-    function onDismissed(_, /** @type {number} */ id) {
+    function onDismissed(_, id) {
         list.children.find((n) => n.attribute.id === id)?.destroy();
     }
 
