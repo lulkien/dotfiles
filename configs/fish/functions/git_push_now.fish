@@ -30,7 +30,7 @@ function git_push_now --description "Push to current branch"
     set -f opts $argv[1]
 
     echo "Push to branch: $current_branch? [y/n]"
-    read ans
+    read -p 'set_color green; printf "Answer: "; set_color normal' ans
     if test $status -ne 0
         echo "Interupted!"
         return
@@ -38,7 +38,7 @@ function git_push_now --description "Push to current branch"
 
     while not contains -- "$ans" $allow_ans
         echo "Push to branch: $current_branch? [y/n]"
-        read ans
+        read -p 'set_color green; printf "Answer: "; set_color normal' ans
         if test $status -ne 0
             echo "Interupted!"
             return
