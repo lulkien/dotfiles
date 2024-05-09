@@ -1,7 +1,15 @@
 # Append some paths into PATH variable
-set -a PATH $HOME/.cargo/bin
-set -a PATH $HOME/.local/bin
-set -a PATH /opt/homebrew/bin
+if not contains "$HOME/.cargo/bin" $PATH
+    set -p PATH $HOME/.cargo/bin
+end
+
+if not contains "$HOME/.local/bin" $PATH
+    set -p PATH $HOME/.local/bin
+end
+
+if not contains /opt/homebrew/bin $PATH
+    set -p PATH /opt/homebrew/bin
+end
 
 # Abbreviations
 abbr -a chmox 'chmod +x'
