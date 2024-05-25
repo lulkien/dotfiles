@@ -4,7 +4,7 @@ require("nvchad.options")
 vim.opt.shell = "/usr/bin/fish"
 
 -- Disable mouse
-vim.opt.mouse = nil
+vim.opt.mouse = ""
 
 -- Better editor
 vim.opt.smartindent = true
