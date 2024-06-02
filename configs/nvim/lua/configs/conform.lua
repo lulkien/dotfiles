@@ -8,6 +8,7 @@ local options = {
 		sh = { "shfmt" },
 		python = { "black" },
 		javascript = { "prettierd" },
+		toml = { "taplo" },
 	},
 	-- Manual save with auto command
 	-- format_on_save = {
