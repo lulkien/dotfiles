@@ -1,88 +1,136 @@
-function __cd_int_check
-    string match -qr '^\s*[0-9]+' "$argv" && return 0 || return 1
-end
-
-function log
-    echo $argv >>$HOME/cd.log
-end
-
-function __cd_add_history
-    set -l new_path "$argv[1]"
-    set -l old_history (string split --no-empty ' ' "$argv[2]")
-
-    # Remove existed path in history
-    set -l new_history (string match -v $new_path $old_history)
-
-    # Remove oldest item in history if OOM
-    # Not implemented yet
-    # Someone please help me implement it
-
-    # Unless cd to $HOME, add path to history
-    string match -q $HOME $new_path || set new_history $new_path $new_history
-    echo $new_history
-end
-
-function cd --description "Wrapper function for change directory"
-    set -l cd_destination ""
-    set -l cd_status 0
-    set -l HISTORY_MEM_SIZE 25
-
+function cd --description 'Wrapper function for change directory'
     # Init cd_history in new shell
-    set -q cd_history || set -g cd_history
+    set -q kfc_cd_history || set -g --path kfc_cd_history
     set -q cd_prev_path || set -g cd_prev_path $HOME
+    set -q KFC_CD_HISTORY_LEN || set -g KFC_CD_HISTORY_LEN 15
+
+
+    # ----------------- INTERNAL FUNCTIONS ------------------
+    function __cd_int_check
+        # string match -qr '^\s*[0-9]+' "$argv" && return 0 || return 1
+        string match -qr '^\s*[0-9]+' "$argv"
+    end
+
+    function __cd_update_history
+        set path "$argv[1]"
+        if test -z "$path"; or test "$path" = "$HOME"
+            return
+        end
+
+        set -p kfc_cd_history $path
+    end
+
+    function __cd_remove_history
+        set path "$argv[1]"
+        if test -z "$path"; or test "$path" = "$HOME"
+            return
+        end
+
+        set old_history $kfc_cd_history
+
+        # Clean history
+        set kfc_cd_history
+        set history_len 0
+
+        # Update history
+        for item in $old_history
+            if test "$item" = "$path"
+                continue
+            end
+
+            set history_len (math $history_len + 1)
+            if test $history_len -ge $KFC_CD_HISTORY_LEN
+                # I don't think we need to remember that much history
+                break
+            end
+
+            set -a kfc_cd_history "$item"
+        end
+    end
+
+    function __cd_print_history
+        set index 1
+        for path in $kfc_cd_history
+            echo "$index - $path"
+            set index (math $index + 1)
+        end
+    end
+
+    # ------------------ MAIN ---------------------
+    set cd_destination
+
     # Parse arguments
     set -l options (fish_opt -s l -l list)
     set -a options (fish_opt -s i -l index --required-val)
     argparse $options -- $argv; or return 1
 
     # Check if using 2 options
-    if set -q _flag_index; and set -q _flag_list
-        echo "ERROR: Only use one option at a time"
+    if set -q flag_index; and set -q flag_list
+        echo "cd: Only use one option at a time"
         return 1
     end
 
-    if set -q _flag_list # Using list option
-        test (count $argv) -gt 0 && echo "WARN: Print dir history only, ignore other arguments"
-        set -l index 1
-        for dir in $cd_history
-            echo "$index - $dir"
-            set index (math $index + 1)
+    # Using list option
+    if set -q _flag_list
+        if test (count $argv) -gt 0
+            echo "cd: Print dir history only, ignore other arguments"
         end
+        __cd_print_history
         return 0
-    else if set -q _flag_index # If using index option
+    end
+
+    # If using index option
+    if set -q _flag_index
         if not __cd_int_check $_flag_index
-            echo "ERROR: $_flag_index is not an integer"
+            echo "cd: $_flag_index is not an integer"
             return 1
         end
-        if test $_flag_index -lt 1 -o $_flag_index -gt (count $cd_history)
-            echo "ERROR: Invalid history index"
+
+        # if test $_flag_index -lt 1 -o $_flag_index -gt (count $kfc_cd_history)
+        if test $_flag_index -lt 1; or test $_flag_index -gt (count $kfc_cd_history)
+            echo "cd: Invalid index"
             return 1
         end
-        test (count $argv) -gt 0 && printf "WARN: Change directory to index %s, ignore other arguments" $_flag_index
-        set cd_destination $cd_history[$_flag_index]
-    else # default case
+
+        if test (count $argv) -gt 0
+            echo "cd: Change directory to index $_flag_index, ignore other arguments"
+        end
+
+        set cd_destination $kfc_cd_history[$_flag_index]
+    else
+        # default case
         if test -z "$argv"
             set cd_destination $HOME
         else if test "$argv" = -
             set cd_destination $cd_prev_path
         else
             set cd_destination (realpath -q $argv)
-            set path_stt $status
-            if test $path_stt -ne 0
-                printf "ERROR: The directory '%s' not exist\n" $argv
+            if test $status -ne 0
+                # This should be unreachable!
+                echo "cd: Fail to get realpath of $argv"
                 return 1
             end
         end
     end
 
-    set -l tmp_path (pwd)
+    set cwd (pwd)
+    if test "$cwd" = "$cd_destination"
+        return 0
+    end
+
+    # Actual cd to the destination
     builtin cd $cd_destination
     set cd_status $status
+
+    # Alway remove the destination out of the history no matter what
+    __cd_remove_history $cd_destination
+
+    # Update new history if the cd return SUCCESS
     if test $cd_status -eq 0
-        # Save the previous path if new destination is different with the previous
-        string match -q "$tmp_path" "$cd_destination" || set cd_prev_path $tmp_path
-        set cd_history (__cd_add_history $cd_destination "$cd_history")
-        set cd_history (string split --no-empty ' ' "$cd_history")
+        set cd_prev_path $cwd
+        __cd_update_history $cd_prev_path
     end
+
+    # return cd result code
     return $cd_status
 end
