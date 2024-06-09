@@ -20,4 +20,4 @@ abbr -a gde 'git describe'
 # Push
 abbr -a gpo 'git push origin'
 abbr -a gpp git_push_now
-abbr -a gppp 'git_push_now --yolo'
+abbr -a gppp 'git_push_now --skip-countdown'
