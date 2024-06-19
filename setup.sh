@@ -70,10 +70,10 @@ setup_dotfiles() {
 
 main() {
 	if test $is_root_user = true; then
-		echo -e '\e[1;32mTarget: Root\e[00m'
+		echo -e '\e[1;32mTarget: \e[00mRoot'
 		# keep configs for root
 	elif test $is_darwin = true; then
-		echo -e '\e[1;32mTarget: MacOS\e[00m'
+		echo -e '\e[1;32mTarget: \e[00mMacOS'
 		configs+=("${mac_conf[@]}")
 	else
 		echo -e '\e[1;32mSelect target:\e[00m'
