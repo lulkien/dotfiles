@@ -70,27 +70,27 @@ setup_dotfiles() {
 
 main() {
 	if test $is_root_user = true; then
-		echo -e '\e[1;32mTarget: Root profile\e[00m'
+		echo -e '\e[1;32mTarget: Root\e[00m'
 		# keep configs for root
 	elif test $is_darwin = true; then
-		echo -e '\e[1;32mTarget: MacOS profile\e[00m'
+		echo -e '\e[1;32mTarget: MacOS\e[00m'
 		configs+=("${mac_conf[@]}")
 	else
 		echo -e '\e[1;32mSelect target:\e[00m'
 		select opt in "${options[@]}"; do
 			case $REPLY in
 			1)
-				echo -e "\e[1;33mTarget: \e[00m${opt}"
+				echo -e "\e[1;32mTarget: \e[00m${opt}"
 				configs+=("${hypr_conf[@]}")
 				break
 				;;
 			2)
-				echo -e "\e[1;33mTarget: \e[00m${opt}"
+				echo -e "\e[1;32mTarget: \e[00m${opt}"
 				configs+=("${general_conf[@]}")
 				break
 				;;
 			3)
-				echo -e "\e[1;33mTarget: \e[00m${opt}"
+				echo -e "\e[1;32mTarget: \e[00m${opt}"
 				# keep configs for WSL
 				break
 				;;
@@ -104,10 +104,10 @@ main() {
 				;;
 			esac
 		done
-		echo
 	fi
 
 	sleep 0.5
+	echo
 	echo -e '\e[1;32mThe following configs will be linked:\e[00m'
 	for conf in "${configs[@]}"; do
 		echo " - $conf"
