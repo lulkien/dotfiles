@@ -63,9 +63,6 @@ setup_dotfiles() {
 		ln -s ${all_configs}/${config} ${user_config_dir}/${config}
 	done
 	echo "--------------------------------------"
-
-	echo
-	echo "[INFO] Completed."
 }
 
 main() {
@@ -122,6 +119,8 @@ main() {
 	[Y/y])
 		echo -e '\e[1;32mSetting up...\e[00m'
 		setup_dotfiles
+		echo
+		echo -e '\e[1;32mCompleted.\e[00m'
 		;;
 	*)
 		echo -e '\e[1;33mCanceled\e[00m'
