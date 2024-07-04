@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 if [[ ! $(command -v eww) ]]; then
-	exit 1
+    exit 1
 fi
 
 eww kill &
@@ -21,8 +21,8 @@ attempt=0
 
 # Wait until hyprvisor start
 until pidof hyprvisor || [[ $attempt -ge $max_check_attempts ]]; do
-	sleep 0.1
-	((attempt++))
+    sleep 0.1
+    ((attempt++))
 done
 
 eww open bar
