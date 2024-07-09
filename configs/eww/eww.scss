@@ -14,92 +14,135 @@ $widget-margin: 10px;
 
 // ---------------------------------- Global ----------------------------------
 * {
-    all: unset; //Unsets everything so you can style everything from scratch
-    font-family: "CaskaydiaCove NFM";
+  all: unset; //Unsets everything so you can style everything from scratch
+  font-family: "CaskaydiaCove NFM";
 }
 
 .bar {
-    background-color: rgba($color: $surface0, $alpha: 0.5);
+  background-color: rgba($color: $surface0, $alpha: 0.5);
 }
 
 .left-widgets,
 .center-widgets,
 .right-widgets {
-    padding: $widget-padding;
+  padding: $widget-padding;
 }
 
 .left-widgets {
-    margin-left: $widget-margin;
+  margin-left: $widget-margin;
 }
 
 .right-widgets {
-    margin-right: $widget-margin;
+  margin-right: $widget-margin;
 }
 
 tooltip.background {
-    background-color: $crust;
-    border-radius: $gl-radius;
-    font-size: $text-fontsize;
-    color: $text;
+  background-color: $crust;
+  border-radius: $gl-radius;
+  font-size: $text-fontsize;
+  color: $text;
 }
 
 tooltip label {
-    margin: 5px;
+  margin: 5px;
 }
 
 // ---------------------------------- Left section ----------------------------------
 .system-menu,
 .workspaces-widget {
-    padding: $gl-padding;
-    background-color: $base;
-    border-radius: $gl-radius;
-    font-size: $btn-fontsize;
+  padding: $gl-padding;
+  background-color: $base;
+  border-radius: $gl-radius;
+  font-size: $btn-fontsize;
 }
 
 .system-menu {
-    color: $blue;
+  color: $blue;
 }
 
 .workspace-button {
-    &-active {
-        padding: 0px 5px;
-        color: $sky;
-    }
+  &-active {
+    padding: 0px 5px;
+    color: $sky;
+  }
 
-    &-deactive {
-        padding: 0px 5px;
-        color: $overlay0;
-    }
+  &-deactive {
+    padding: 0px 5px;
+    color: $overlay0;
+  }
 }
 
 // ---------------------------------- Central section ----------------------------------
 .date-time,
 .noti-button {
-    background-color: $base;
-    border-radius: $gl-radius;
+  background-color: $base;
+  border-radius: $gl-radius;
 }
 
 .date-time {
-    padding: $gl-padding;
-    font-size: $text-fontsize;
-    color: $text;
+  padding: $gl-padding;
+  font-size: $text-fontsize;
+  color: $text;
 }
 
 // ---------------------------------- Right section ----------------------------------
+.systemtray,
 .system-gauges,
 .power-menu {
-    padding: $gl-padding;
-    background-color: $base;
+  padding: $gl-padding;
+  background-color: $base;
+  border-radius: $gl-radius;
+}
+
+.systemtray {
+  font-size: 20px;
+  color: $text;
+
+  menu {
+    background-color: $surface2;
     border-radius: $gl-radius;
+    padding: 0.5em;
+
+    menuitem {
+      padding: 0.25em;
+
+      arrow {
+        -gtk-icon-source: -gtk-icontheme("pan-end-symbolic");
+        color: $text;
+
+        min-width: 1em;
+        min-height: 1em;
+      }
+
+      &:disabled {
+        label {
+          color: $subtext0;
+        }
+      }
+
+      &:hover {
+        background-color: $overlay0;
+      }
+    }
+  }
+
+  separator {
+    background-color: $text;
+    padding-top: 0.06em;
+
+    &:last-child {
+      padding: unset;
+    }
+  }
 }
 
 .system-monitor-circular {
-    background-color: $overlay0;
-    color: $peach;
+  background-color: $overlay0;
+  color: $peach;
 }
 
 .power-menu {
-    padding: $btn-padding;
-    font-size: $btn-fontsize;
-    color: $red;
+  padding: $btn-padding;
+  font-size: $btn-fontsize;
+  color: $red;
 }

@@ -3,6 +3,7 @@
 (include "components/power-menu.yuck")
 (include "components/system-menu.yuck")
 (include "components/system-gauges.yuck")
+(include "components/systemtray.yuck")
 (include "components/workspaces.yuck")
 
 ;; Widgets section
@@ -33,6 +34,7 @@
         :space-evenly false
         :spacing 5
         :halign "end"
+        (systemtray)
         (system-gauges)
         (power-menu)
     )
