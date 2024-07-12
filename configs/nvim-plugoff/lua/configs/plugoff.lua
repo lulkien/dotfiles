@@ -1,3 +1,11 @@
-local M = {}
+local plugoff = require("plugoff")
 
-return M
+local opts = {}
+
+local success, plugins = pcall(require, "plugins")
+
+if not success or not plugins then
+	plugins = {}
+end
+
+plugoff.setup(plugins, opts)

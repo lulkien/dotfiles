@@ -1,23 +1,42 @@
+local opt = vim.opt
+local g = vim.g
+
 -- Shell
-vim.opt.shell = "/usr/bin/fish"
+opt.shell = "/usr/bin/fish"
 
--- Colorscheme
-vim.cmd.colorscheme("catppuccin")
+-- Clipboard
+opt.clipboard = "unnamedplus"
+opt.cursorline = true
+opt.cursorlineopt = "number"
 
--- Disable mouse
-vim.opt.mouse = ""
+-- Mouse
+opt.mouse = ""
 
--- Better editor
-vim.opt.smartindent = true
-vim.opt.tabstop = 4
-vim.opt.softtabstop = 4
-vim.opt.shiftwidth = 4
-vim.opt.expandtab = true
-vim.opt.textwidth = 180
+-- Case
+opt.ignorecase = true
+opt.smartcase = true
 
--- Number
-vim.opt.number = true
-vim.opt.relativenumber = true
+-- Line number
+opt.relativenumber = true
+opt.number = true
+opt.numberwidth = 2
+opt.ruler = false
+
+-- Tab size
+opt.tabstop = 4
+opt.softtabstop = 4
+opt.shiftwidth = 4
+opt.expandtab = true
+opt.smarttab = true
+opt.smartindent = true
 
 -- Scroll Offset
-vim.opt.scrolloff = 999
+opt.scrolloff = 999
+
+-- Disable backup
+opt.backup = nil
+opt.swapfile = nil
+opt.wb = nil
+
+-- Colorscheme
+vim.cmd("colorscheme catppuccin-mocha")

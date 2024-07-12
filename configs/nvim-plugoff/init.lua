@@ -27,10 +27,8 @@ end
 
 vim.opt.rtp:prepend(plugoff_path)
 
-local plugoff_opts = require("configs.plugoff")
-local plugins = require("plugins")
-
-require("plugoff").setup(plugins, plugoff_opts)
+-- Load plugoff
+require("configs.plugoff")
 
 require("options")
 require("autocmds")
