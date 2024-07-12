@@ -9,6 +9,10 @@ local M = {
 		"nvim-tree/nvim-tree.lua",
 		opts = {
 			git = { enable = true },
+			filters = {
+				git_ignored = false,
+				dotfiles = false,
+			},
 		},
 	},
 	{
