@@ -16,6 +16,7 @@ if not vim.loop.fs_stat(plugoff_path) then
 		"git",
 		"clone",
 		repo,
+		"--depth=1",
 		"--branch=master",
 		plugoff_path,
 	}):wait()
