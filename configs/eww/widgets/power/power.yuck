@@ -1,6 +1,6 @@
 ;; Include
-(include "components/power-buttons.yuck")
-(include "components/confirm-buttons.yuck")
+(include "widgets/power/components/power-buttons.yuck")
+(include "widgets/power/components/confirm-buttons.yuck")
 
 ;; Contants
 (defvar widget-name "power-overlay")

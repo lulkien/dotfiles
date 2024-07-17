@@ -1,4 +1,4 @@
-(defwidget systemtray []
+(defwidget system-tray []
     (box 
         :class "systemtray"
         (systray

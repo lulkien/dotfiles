@@ -1,0 +1,9 @@
+(defwidget arch-button []
+    (button
+        :class "archbutton"
+        :tooltip "Arch menu"
+        (label
+            :text "󰣇"
+        )
+    )
+)

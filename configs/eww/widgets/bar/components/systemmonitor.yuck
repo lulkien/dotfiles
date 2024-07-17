@@ -11,7 +11,7 @@
     )
 )
 
-(defwidget system-gauges []
+(defwidget system-monitor []
     (box :class "system-gauges"
         :orientation "h"
         :space-evenly true

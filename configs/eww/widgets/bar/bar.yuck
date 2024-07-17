@@ -1,0 +1,63 @@
+;; Modules
+(include "widgets/bar/components/archbutton.yuck")
+(include "widgets/bar/components/datetime.yuck")
+(include "widgets/bar/components/powerbutton.yuck")
+(include "widgets/bar/components/systemmonitor.yuck")
+(include "widgets/bar/components/systemtray.yuck")
+(include "widgets/bar/components/workspaces.yuck")
+
+;; Widgets section
+(defwidget left-widgets []
+    (box :class "left-widgets"
+        :orientation "h"
+        :halign "start"
+        :space-evenly false
+        :spacing 5
+        (arch-button)
+        (workspaces)
+    )
+)
+
+(defwidget center-widgets []
+    (box :class "center-widgets"
+        :halign "center"
+        :orientation "h"
+        :space-evenly false
+        :spacing 5
+        (date-time)
+    )
+)
+
+(defwidget right-widgets []
+    (box :class "right-widgets"
+        :orientation "h"
+        :space-evenly false
+        :spacing 5
+        :halign "end"
+        (system-tray)
+        (system-monitor)
+        (power-button)
+    )
+)
+
+(defwidget bar []
+    (centerbox
+        :orientation "h"
+        (left-widgets)
+        (center-widgets)
+        (right-widgets)
+    )
+)
+
+;; Window section
+(defwindow bar
+    :monitor 0
+    :geometry (geometry :x "0px"
+                        :y "0px"
+                        :width "100%"
+                        :height "40px"
+                        :anchor "top center")
+    :exclusive true
+    :namespace "gtk-bar"
+    (bar)
+)
