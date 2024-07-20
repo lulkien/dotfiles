@@ -8,7 +8,7 @@
 
 ;; Widgets section
 (defwidget left-widgets []
-    (box :class "left-widgets"
+    (box :class "left-group bar-groups"
         :orientation "h"
         :halign "start"
         :space-evenly false
@@ -19,7 +19,7 @@
 )
 
 (defwidget center-widgets []
-    (box :class "center-widgets"
+    (box :class "bar-groups"
         :halign "center"
         :orientation "h"
         :space-evenly false
@@ -29,7 +29,7 @@
 )
 
 (defwidget right-widgets []
-    (box :class "right-widgets"
+    (box :class "right-group bar-groups"
         :orientation "h"
         :space-evenly false
         :spacing 5

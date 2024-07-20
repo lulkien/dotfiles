@@ -1,32 +1,59 @@
-(defwidget system-monitor-item [value tooltip]
-    (box :class "system-monitor-item"
+(defvar monitor_full false)
+
+(defwidget system-gauge [type name value tooltip]
+    (box
+        :class "system-gauge"
         :tooltip tooltip
-        (circular-progress :class "system-monitor-circular"
+        :spacing 2
+        (label :text name)
+        (circular-progress
+            :class "gauge ${type}"
             :value value
-            :width 27
-            :height 27
-            :thickness 6
+            :thickness 5
             :start-at 75
         )
     )
 )
 
-(defwidget system-monitor []
-    (box :class "system-gauges"
+(defwidget hidden-monitor []
+    (box
         :orientation "h"
-        :space-evenly true
-        :spacing 10
-        (system-monitor-item
-            :value "${EWW_CPU.avg}"
-            :tooltip "CPU: ${round(EWW_CPU.avg, 1)}%"
-        )
-        (system-monitor-item
+        :space-evenly false
+        (system-gauge
+            :type "memory"
+            :name "RAM"
             :value "${EWW_RAM.used_mem_perc}"
-            :tooltip "RAM: ${round(EWW_RAM.used_mem / 1073741824, 1)}/${round(EWW_RAM.total_mem / 1073741824, 1)} GB"
+            :tooltip "Used: ${round(EWW_RAM.used_mem / 1000000000, 1)}GB | Free: ${round((EWW_RAM.free_mem) / 1000000000, 1)}GB"
         )
-        (system-monitor-item
-            :value "${round((1 - (EWW_DISK["/"].free / EWW_DISK["/"].total)) * 100, 0)}"
-            :tooltip "Disk: ${round(EWW_DISK["/"].free / 1073741824, 1)}GB free on /"
+        (system-gauge
+            :type "io"
+            :name "I/O"
+            :value "${EWW_DISK["/"].used_perc}"
+            :tooltip "Root Filesystem > Used: ${round(EWW_DISK["/"].used / 1000000000, 1)}/${round(EWW_DISK["/"].total / 1000000000, 1)} GB"
+        )
+    )
+)
+
+(defwidget system-monitor []
+    (eventbox
+        :class "bar-container"
+        :onclick "${EWW_CMD} update monitor_full=${!monitor_full}"
+        (box
+            :orientation "h"
+            :halign "center"
+            :valign "center"
+            :space-evenly false
+            (system-gauge
+                :type "cpu"
+                :name "CPU"
+                :value "${EWW_CPU.avg}"
+                :tooltip "Usage: ${round(EWW_CPU.avg, 1)}%"
+            )
+            (revealer
+                :transition "slideleft"
+                :reveal monitor_full
+                (hidden-monitor)
+            )
         )
     )
 )
