@@ -11,6 +11,9 @@ NOTIFY_TITLE=
 NOTIFY_TIMEOUT=2500
 NOTIFY_ICON=
 
+ICON_PATH_PREFIX='/usr/share/icons/Papirus/48x48/status/notification-audio-volume-'
+ICON_PATH_SUFFIX='.svg'
+
 if [[ -z "$CMD" || ! $(command -v wpctl) ]]; then
     exit 1
 fi
@@ -43,16 +46,16 @@ parse_notify_title() {
 
 parse_volume_icon() {
     if [[ $MUTED = true || $VOLUME -eq 0 ]]; then
-        NOTIFY_ICON='/usr/share/icons/Paper/48x48/notifications/notification-audio-volume-muted.svg'
+        NOTIFY_ICON="${ICON_PATH_PREFIX}muted${ICON_PATH_SUFFIX}"
         return
     fi
 
     if [[ $VOLUME -le 33 ]]; then
-        NOTIFY_ICON='/usr/share/icons/Paper/48x48/notifications/notification-audio-volume-low.svg'
+        NOTIFY_ICON="${ICON_PATH_PREFIX}low${ICON_PATH_SUFFIX}"
     elif [[ $VOLUME -le 66 ]]; then
-        NOTIFY_ICON='/usr/share/icons/Paper/48x48/notifications/notification-audio-volume-medium.svg'
+        NOTIFY_ICON="${ICON_PATH_PREFIX}medium${ICON_PATH_SUFFIX}"
     else
-        NOTIFY_ICON='/usr/share/icons/Paper/48x48/notifications/notification-audio-volume-high.svg'
+        NOTIFY_ICON="${ICON_PATH_PREFIX}high${ICON_PATH_SUFFIX}"
     fi
 }
 
