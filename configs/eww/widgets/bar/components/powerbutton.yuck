@@ -1,9 +1,71 @@
-(defwidget power-button []
-    (button
-        :class "powerbutton"
-        :tooltip "Power menu"
+(defvar PWR_BUTTONS_EXPANDED false)
+(defvar PWR_BUTTON_HOVERED 'none')
+(defvar PWR_BUTTON_SELECTED 'none')
+(defvar PWR_BUTTON_SELECTED_LABEL '')
+
+(defwidget power-button [buttonid label]
+    (eventbox
+        :onhover "${EWW_CMD} update PWR_BUTTON_HOVERED=${buttonid}"
+        :onclick "${EWW_CMD} update PWR_BUTTON_SELECTED=${buttonid}; ${EWW_CMD} update PWR_BUTTON_SELECTED_LABEL=${label}; ${EWW_CMD} update PWR_BUTTONS_EXPANDED=false"
+        (box
+            :class "pwr-button pwr-button-${buttonid}${PWR_BUTTON_SELECTED == buttonid ? "-selected" : "${PWR_BUTTON_HOVERED == buttonid ? "-hovered" : "" }"}"
+            (label 
+                :class buttonid
+                :text label
+            )
+        )
+    )
+)
+
+(defwidget hidden-buttons []
+    (box
+        :orientation "h"
+        :space-evenly false
+        (eventbox
+            :onhoverlost "${EWW_CMD} update PWR_BUTTON_HOVERED=none"
+            (box
+                :orientation "h"
+                :space-evenly false
+                (power-button
+                    :buttonid "shutdown"
+                    :label ""
+                )
+                (power-button
+                    :buttonid "reboot"
+                    :label ""
+                )
+                (power-button
+                    :buttonid "exit"
+                    :label "󰗼"
+                )
+                (power-button
+                    :buttonid "lock"
+                    :label ""
+                )
+            )
+        )
         (label
-            :text "󰐥"
+            :style "font-size: 25px;"
+            :text ""
+        )
+    )
+)
+
+(defwidget power-buttons []
+    (box
+        :class "bar-container"
+        :orientation "h"
+        :space-evenly false
+        (revealer
+            :transition "slideright"
+            :reveal PWR_BUTTONS_EXPANDED
+            (hidden-buttons)
+        )
+        (button
+            :onclick "${EWW_CMD} update PWR_BUTTONS_EXPANDED=${!PWR_BUTTONS_EXPANDED}; \
+                ${!PWR_BUTTONS_EXPANDED ? "${EWW_CMD} update PWR_BUTTON_SELECTED=none" : ""} \
+                "
+            (label :text "${PWR_BUTTON_SELECTED == "none" ? "" : PWR_BUTTON_SELECTED_LABEL }")
         )
     )
 )

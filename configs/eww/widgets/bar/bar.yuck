@@ -36,7 +36,7 @@
         :halign "end"
         (system-tray)
         (system-monitor)
-        (power-button)
+        (power-buttons)
     )
 )
 

@@ -1,6 +1,6 @@
 (defwidget system-tray []
     (box 
-        :class "systemtray"
+        :class "system-tray bar-container"
         (systray
             :spacing 10
             :orientation "h"
