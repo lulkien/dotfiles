@@ -52,6 +52,7 @@
             (revealer
                 :transition "slideleft"
                 :reveal SYSTEM_MONITOR_EXPANDED
+                :duration "250ms"
                 (hidden-monitor)
             )
         )

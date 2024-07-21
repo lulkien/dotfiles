@@ -142,40 +142,57 @@ button {
   }
 }
 
-.pwr-button-shutdown-hovered,
-.pwr-button-reboot-hovered,
-.pwr-button-exit-hovered,
-.pwr-button-lock-hovered {
-  background-color: rgba($color: $overlay0, $alpha: 0.2);
+.confirm-button:hover,
+.dynamic-button:hover {
+  box {
+    background-color: rgba($color: $overlay0, $alpha: 0.4);
+  }
 }
 
-.pwr-button-shutdown-selected,
-.pwr-button-reboot-selected,
-.pwr-button-exit-selected,
-.pwr-button-lock-selected {
-  background-color: rgba($color: $overlay2, $alpha: 0.3);
+.dynamic-button {
+  box {
+    padding: 0px 15px;
+
+    label {
+      font-size: 30px;
+    }
+
+    .poweroff {
+      color: $red;
+    }
+
+    .reboot {
+      color: $yellow;
+    }
+
+    .exit {
+      color: $blue;
+    }
+
+    .lock {
+      color: $green;
+    }
+  }
 }
 
-.pwr-button {
-  padding: 0px 15px;
+.separator {
+  font-size: 25px;
+}
 
-  label {
-    font-size: 30px;
-  }
+.confirm-button {
+  box {
+    padding: 0px 15px;
 
-  .shutdown {
-    color: $red;
-  }
+    label {
+      font-size: 30px;
+    }
 
-  .reboot {
-    color: $yellow;
-  }
+    .confirm {
+      color: $red;
+    }
 
-  .exit {
-    color: $mauve;
-  }
-
-  .lock {
-    color: $blue;
+    .cancel {
+      color: $mauve;
+    }
   }
 }
