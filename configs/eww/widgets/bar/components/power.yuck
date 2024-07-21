@@ -1,0 +1,146 @@
+(defvar PWR_BUTTONS_EXPAND_ALL false)
+(defvar PWR_BUTTON_SELECTED '')
+(defvar PWR_COMMAND '')
+
+(defwidget dynamic-button [id label ?action ?transition ?duration]
+    (revealer
+        :transition {transition ?: "slideright"}
+        :reveal {PWR_BUTTONS_EXPAND_ALL && (PWR_BUTTON_SELECTED == '' || PWR_BUTTON_SELECTED == id)}
+        :duration {duration ?: "250ms"}
+        (eventbox
+            :class "dynamic-button"
+            :onclick {action ?: "${EWW_CMD} update PWR_BUTTON_SELECTED=${id};"}
+            (box
+                (label 
+                    :class "${id}" 
+                    :text label
+                )
+            )
+        )
+    )
+)
+
+(defwidget hidden-power-buttons []
+    (revealer
+        :reveal PWR_BUTTONS_EXPAND_ALL
+        :transition "slideright"
+        :duration "300ms"
+        (box
+            :orientation "h"
+            :space-evenly false
+            (dynamic-button
+                :id "poweroff"
+                :label ""
+                :action {PWR_BUTTON_SELECTED == 'poweroff' ? "
+                    ${EWW_CMD} update PWR_BUTTON_SELECTED='';
+                    ${EWW_CMD} update PWR_COMMAND='';
+                    " : "
+                    ${EWW_CMD} update PWR_BUTTON_SELECTED=poweroff;
+                    ${EWW_CMD} update PWR_COMMAND='systemctl poweroff';
+                    "}
+            )
+            (dynamic-button
+                :id "reboot"
+                :label ""
+                :action {PWR_BUTTON_SELECTED == 'reboot' ? "
+                    ${EWW_CMD} update PWR_BUTTON_SELECTED='';
+                    ${EWW_CMD} update PWR_COMMAND='';
+                    " : "
+                    ${EWW_CMD} update PWR_BUTTON_SELECTED=reboot;
+                    ${EWW_CMD} update PWR_COMMAND='systemctl reboot';
+                    "}
+            )
+            (dynamic-button
+                :id "exit"
+                :label "󰈆"
+                :action {PWR_BUTTON_SELECTED == 'exit' ? "
+                    ${EWW_CMD} update PWR_BUTTON_SELECTED='';
+                    ${EWW_CMD} update PWR_COMMAND='';
+                    " : "
+                    ${EWW_CMD} update PWR_BUTTON_SELECTED=exit;
+                    ${EWW_CMD} update PWR_COMMAND='hyprctl dispatch exit';
+                    "}
+            )
+            (dynamic-button
+                :id "lock"
+                :label ""
+                :action "
+                    ${EWW_CMD} update PWR_BUTTONS_EXPAND_ALL=false;
+                    ${EWW_CMD} update PWR_BUTTON_SELECTED='';
+                    ${EWW_CMD} update PWR_COMMAND='';
+                    sh -c 'sleep 0.5; pidof hyprlock || hyprlock & disown';
+                    "
+            )
+            (label
+                :class "separator"
+                :text ""
+            )
+        )
+    )
+)
+
+(defwidget confirm-button [id label ?action]
+    (eventbox
+        :class "confirm-button"
+        :onclick {action ?: "
+            ${EWW_CMD} update PWR_BUTTONS_EXPAND_ALL=false;
+            ${EWW_CMD} update PWR_BUTTON_SELECTED='';
+            "}
+        (box
+            (label 
+                :class "${id}"
+                :text label
+            )
+        )
+    )
+
+)
+
+(defwidget confirm-buttons []
+    (revealer
+        :transition "slideright"
+        :reveal {PWR_BUTTON_SELECTED != ''}
+        :duration "250ms"
+        (box
+            :orientation "h"
+            :space-evenly false
+            (confirm-button
+                :id "confirm"
+                ;; :label ""
+                :label ""
+                :action "${PWR_COMMAND}"
+            )
+            (confirm-button
+                :id "cancel"
+                ;; :label "󰜺"
+                :label ""
+                :action "
+                    ${EWW_CMD} update PWR_BUTTON_SELECTED='';
+                    ${EWW_CMD} update PWR_COMMAND='';
+                    "
+            )
+            (label
+                :class "separator"
+                :text ""
+            )
+        )
+    )
+)
+
+(defwidget power-widget []
+    (box
+        :class "bar-container"
+        :orientation "h"
+        :space-evenly false
+        (confirm-buttons)
+        (hidden-power-buttons)
+        (button
+            :onclick "
+                ${EWW_CMD} update PWR_BUTTONS_EXPAND_ALL=${!PWR_BUTTONS_EXPAND_ALL};
+                ${EWW_CMD} update PWR_BUTTON_SELECTED='';
+                ${EWW_CMD} update PWR_COMMAND='';
+                "
+            (label :text "")
+        )
+    )
+)

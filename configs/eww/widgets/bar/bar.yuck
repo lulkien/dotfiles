@@ -1,7 +1,7 @@
 ;; Modules
 (include "widgets/bar/components/archbutton.yuck")
 (include "widgets/bar/components/datetime.yuck")
-(include "widgets/bar/components/powerbutton.yuck")
+(include "widgets/bar/components/power.yuck")
 (include "widgets/bar/components/systemmonitor.yuck")
 (include "widgets/bar/components/systemtray.yuck")
 (include "widgets/bar/components/workspaces.yuck")
@@ -36,7 +36,7 @@
         :halign "end"
         (system-tray)
         (system-monitor)
-        (power-button)
+        (power-widget)
     )
 )
 

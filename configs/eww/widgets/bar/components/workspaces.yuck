@@ -1,10 +1,10 @@
 ;; Listener
-(deflisten workspaces-data :initial "[]"
+(deflisten WS_DATA :initial "[]"
     "sh -c '~/.cargo/bin/hyprvisor workspaces 10'")
 
 (defwidget workspaces []
     (box :class "workspaces bar-container"
-        (for ws in workspaces-data
+        (for ws in WS_DATA
             (button
                 :onclick "hyprctl dispatch workspace ${ws.id}"
                 :tooltip "Workspace ${ws.id}"

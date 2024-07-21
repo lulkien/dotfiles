@@ -1,4 +1,4 @@
-(defvar monitor_full false)
+(defvar SYSTEM_MONITOR_EXPANDED false)
 
 (defwidget system-gauge [type name value tooltip]
     (box
@@ -37,7 +37,7 @@
 (defwidget system-monitor []
     (eventbox
         :class "bar-container"
-        :onclick "${EWW_CMD} update monitor_full=${!monitor_full}"
+        :onclick "${EWW_CMD} update SYSTEM_MONITOR_EXPANDED=${!SYSTEM_MONITOR_EXPANDED}"
         (box
             :orientation "h"
             :halign "center"
@@ -51,7 +51,8 @@
             )
             (revealer
                 :transition "slideleft"
-                :reveal monitor_full
+                :reveal SYSTEM_MONITOR_EXPANDED
+                :duration "250ms"
                 (hidden-monitor)
             )
         )

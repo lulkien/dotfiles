@@ -1,4 +1,4 @@
-(defpoll time :interval "2s"
+(defpoll TIME :interval "2s"
     "date '+%A, %b %d | %R'")
 
 (defwidget date-time []
@@ -6,7 +6,7 @@
         :orientation "h"
         :space-evenly false
         (label
-            :text "${time}"
+            :text "${TIME}"
         )
    )
 )

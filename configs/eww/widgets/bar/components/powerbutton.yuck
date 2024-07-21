@@ -1,9 +1,0 @@
-(defwidget power-button []
-    (button
-        :class "powerbutton"
-        :tooltip "Power menu"
-        (label
-            :text "󰐥"
-        )
-    )
-)
