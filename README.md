@@ -9,9 +9,11 @@ Welcome to my personal dotfiles repository!
 This repository contains configuration files and scripts, known as dotfiles, tailored to customize and streamline my development environment. These files reflect my preferences and workflow, providing consistency across various systems.
 
 ## Preview Images
+- Workflow
+![Screenshot](https://github.com/lulkien/dotfiles/blob/78e078559d50c98a3103b181999b1c7c26abc6d4/previews/workflow.png)
 
-![Screenshot](https://github.com/lulkien/dotfiles/blob/6a5373d2750401db7fd84c1cb4899925af4f1c7e/previews/workflow.png)
-![EWW Power Menu](https://github.com/lulkien/dotfiles/blob/6a5373d2750401db7fd84c1cb4899925af4f1c7e/previews/eww_power_menu.png)
+- EWW Power Bar and System Monitor
+![EWW Widget](https://github.com/lulkien/dotfiles/blob/4d1cc98ae817ba8d1952dd9df7c2a252194fe0d3/previews/systray-and-powerbar.gif)
 
 
 
@@ -22,7 +24,6 @@ This repository contains configuration files and scripts, known as dotfiles, tai
 - [Kitty](https://github.com/kovidgoyal/kitty)
 - [EWW](https://github.com/elkowar/eww)
 - [Wofi](https://hg.sr.ht/~scoopta/wofi)
-- [Swaylock](https://github.com/jirutka/swaylock-effects)
 
 ## Getting Started
 
