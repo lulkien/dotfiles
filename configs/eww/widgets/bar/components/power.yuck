@@ -1,6 +1,6 @@
 (defvar PWR_BUTTONS_EXPAND_ALL false)
 (defvar PWR_BUTTON_SELECTED '')
-(defvar PWR_COMMAND '')
+(defvar PWR_SCRIPT '')
 
 (defwidget dynamic-button [id label ?action ?transition ?duration]
     (revealer
@@ -31,35 +31,26 @@
             (dynamic-button
                 :id "poweroff"
                 :label ""
-                :action {PWR_BUTTON_SELECTED == 'poweroff' ? "
-                    ${EWW_CMD} update PWR_BUTTON_SELECTED='';
-                    ${EWW_CMD} update PWR_COMMAND='';
-                    " : "
+                :action "
                     ${EWW_CMD} update PWR_BUTTON_SELECTED=poweroff;
-                    ${EWW_CMD} update PWR_COMMAND='systemctl poweroff';
-                    "}
+                    ${EWW_CMD} update PWR_SCRIPT='~/.config/eww/scripts/poweroff.sh';
+                    "
             )
             (dynamic-button
                 :id "reboot"
                 :label ""
-                :action {PWR_BUTTON_SELECTED == 'reboot' ? "
-                    ${EWW_CMD} update PWR_BUTTON_SELECTED='';
-                    ${EWW_CMD} update PWR_COMMAND='';
-                    " : "
+                :action "
                     ${EWW_CMD} update PWR_BUTTON_SELECTED=reboot;
-                    ${EWW_CMD} update PWR_COMMAND='systemctl reboot';
-                    "}
+                    ${EWW_CMD} update PWR_SCRIPT='~/.config/eww/scripts/reboot.sh';
+                    "
             )
             (dynamic-button
                 :id "exit"
                 :label "󰈆"
-                :action {PWR_BUTTON_SELECTED == 'exit' ? "
-                    ${EWW_CMD} update PWR_BUTTON_SELECTED='';
-                    ${EWW_CMD} update PWR_COMMAND='';
-                    " : "
+                :action "
                     ${EWW_CMD} update PWR_BUTTON_SELECTED=exit;
-                    ${EWW_CMD} update PWR_COMMAND='hyprctl dispatch exit';
-                    "}
+                    ${EWW_CMD} update PWR_SCRIPT='~/.config/eww/scripts/exit-hyprland.sh';
+                    "
             )
             (dynamic-button
                 :id "lock"
@@ -67,8 +58,8 @@
                 :action "
                     ${EWW_CMD} update PWR_BUTTONS_EXPAND_ALL=false;
                     ${EWW_CMD} update PWR_BUTTON_SELECTED='';
-                    ${EWW_CMD} update PWR_COMMAND='';
-                    sh -c 'sleep 0.5; pidof hyprlock || hyprlock & disown';
+                    ${EWW_CMD} update PWR_SCRIPT='';
+                    ~/.config/eww/scripts/lock-hyprland.sh;
                     "
             )
             (label
@@ -108,7 +99,7 @@
                 :id "confirm"
                 ;; :label ""
                 :label ""
-                :action "${PWR_COMMAND}"
+                :action "${PWR_SCRIPT}"
             )
             (confirm-button
                 :id "cancel"
@@ -116,7 +107,7 @@
                 :label ""
                 :action "
                     ${EWW_CMD} update PWR_BUTTON_SELECTED='';
-                    ${EWW_CMD} update PWR_COMMAND='';
+                    ${EWW_CMD} update PWR_SCRIPT='';
                     "
             )
             (label
@@ -138,7 +129,7 @@
             :onclick "
                 ${EWW_CMD} update PWR_BUTTONS_EXPAND_ALL=${!PWR_BUTTONS_EXPAND_ALL};
                 ${EWW_CMD} update PWR_BUTTON_SELECTED='';
-                ${EWW_CMD} update PWR_COMMAND='';
+                ${EWW_CMD} update PWR_SCRIPT='';
                 "
             (label :text "")
         )
