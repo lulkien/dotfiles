@@ -162,21 +162,23 @@ button {
     }
 
     .reboot {
-      color: $yellow;
+      color: $peach;
     }
 
     .exit {
-      color: $blue;
+      color: $lavender;
     }
 
     .lock {
-      color: $green;
+      color: $blue;
     }
   }
 }
 
 .separator {
   font-size: 25px;
+  margin-left: 5px;
+  margin-right: 6px;
 }
 
 .confirm-button {
@@ -192,7 +194,7 @@ button {
     }
 
     .cancel {
-      color: $mauve;
+      color: $blue;
     }
   }
 }

@@ -2,13 +2,14 @@
 (defvar PWR_BUTTON_SELECTED '')
 (defvar PWR_SCRIPT '')
 
-(defwidget dynamic-button [id label ?action ?transition ?duration]
+(defwidget dynamic-button [id label ?tooltip ?action ?transition ?duration]
     (revealer
         :transition {transition ?: "slideright"}
         :reveal {PWR_BUTTONS_EXPAND_ALL && (PWR_BUTTON_SELECTED == '' || PWR_BUTTON_SELECTED == id)}
         :duration {duration ?: "250ms"}
         (eventbox
             :class "dynamic-button"
+            :tooltip {tooltip ?: ""}
             :onclick {action ?: "${EWW_CMD} update PWR_BUTTON_SELECTED=${id};"}
             (box
                 (label 
@@ -31,6 +32,7 @@
             (dynamic-button
                 :id "poweroff"
                 :label ""
+                :tooltip "Power Off"
                 :action "
                     ${EWW_CMD} update PWR_BUTTON_SELECTED=poweroff;
                     ${EWW_CMD} update PWR_SCRIPT='~/.config/eww/scripts/poweroff.sh';
@@ -39,6 +41,7 @@
             (dynamic-button
                 :id "reboot"
                 :label ""
+                :tooltip "Reboot"
                 :action "
                     ${EWW_CMD} update PWR_BUTTON_SELECTED=reboot;
                     ${EWW_CMD} update PWR_SCRIPT='~/.config/eww/scripts/reboot.sh';
@@ -46,7 +49,8 @@
             )
             (dynamic-button
                 :id "exit"
-                :label "󰈆"
+                :label "󰗽"
+                :tooltip "Exit Hyprland"
                 :action "
                     ${EWW_CMD} update PWR_BUTTON_SELECTED=exit;
                     ${EWW_CMD} update PWR_SCRIPT='~/.config/eww/scripts/exit-hyprland.sh';
@@ -54,7 +58,8 @@
             )
             (dynamic-button
                 :id "lock"
-                :label ""
+                :label ""
+                :tooltip "Lock session"
                 :action "
                     ${EWW_CMD} update PWR_BUTTONS_EXPAND_ALL=false;
                     ${EWW_CMD} update PWR_BUTTON_SELECTED='';
@@ -70,9 +75,10 @@
     )
 )
 
-(defwidget confirm-button [id label ?action]
+(defwidget confirm-button [id label ?tooltip ?action]
     (eventbox
         :class "confirm-button"
+        :tooltip {tooltip ?: ""}
         :onclick {action ?: "
             ${EWW_CMD} update PWR_BUTTONS_EXPAND_ALL=false;
             ${EWW_CMD} update PWR_BUTTON_SELECTED='';
@@ -97,14 +103,16 @@
             :space-evenly false
             (confirm-button
                 :id "confirm"
-                ;; :label ""
-                :label ""
+                :label ""
+                :tooltip "Confirm"
+                ;;:label ""
                 :action "${PWR_SCRIPT}"
             )
             (confirm-button
                 :id "cancel"
-                ;; :label "󰜺"
-                :label ""
+                :label "󰜺"
+                ;;:label ""
+                :tooltip "Cancel"
                 :action "
                     ${EWW_CMD} update PWR_BUTTON_SELECTED='';
                     ${EWW_CMD} update PWR_SCRIPT='';
@@ -125,13 +133,17 @@
         :space-evenly false
         (confirm-buttons)
         (hidden-power-buttons)
-        (button
+        (eventbox
+            :class "dynamic-button"
+            :tooltip "Power"
             :onclick "
                 ${EWW_CMD} update PWR_BUTTONS_EXPAND_ALL=${!PWR_BUTTONS_EXPAND_ALL};
                 ${EWW_CMD} update PWR_BUTTON_SELECTED='';
                 ${EWW_CMD} update PWR_SCRIPT='';
                 "
-            (label :text "")
+            (box
+                (label :text "")
+            )
         )
     )
 )
