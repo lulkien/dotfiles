@@ -26,7 +26,7 @@ user_config_dir=${HOME}/.config
 options=('Hyprland' 'General Desktop Environment' 'Windows Subsystem for Linux' 'Cancel')
 
 # Define list of configurations for every options
-hypr_conf=('hypr' 'eww' 'wofi' 'alacritty' 'dunst')
+hypr_conf=('hypr' 'eww' 'anyrun' 'alacritty' 'dunst')
 general_conf=('kitty')
 wsl_conf=
 mac_conf=('alacritty')
