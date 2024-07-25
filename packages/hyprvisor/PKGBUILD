@@ -1,0 +1,22 @@
+# Maintainer: Kien H. Luu <kien.luuhoang.arch@gmail.com>
+
+pkgname=hyprvisor
+pkgver=0.3.0
+pkgrel=1
+pkgdesc="Hyprvisor is a backend watcher for Hyprland."
+arch=('x86_64')
+url="https://github.com/lulkien/hyprvisor"
+license=('UNLICENSE')
+
+# Build target
+BUILD_TARGET=$arch-unknown-linux-gnu
+
+# Define the download URL and the SHA256 checksum
+source=("$pkgname-v$pkgver-$BUILD_TARGET.tar.gz::$url/releases/download/v$pkgver/$pkgname-v$pkgver-$BUILD_TARGET.tar.gz")
+sha256sums=('dfbd9fce89d5da300ebc54b5302862264958716d7581e3b4df83a3169a774dcb')
+
+package() {
+    #    tar -xzf "$srcdir/$pkgname-v$pkgver-$BUILD_TARGET.tar.gz"
+    cd "$srcdir/$pkgname-v$pkgver-$BUILD_TARGET"
+    install -Dm755 hyprvisor "${pkgdir}/usr/local/bin/hyprvisor"
+}
