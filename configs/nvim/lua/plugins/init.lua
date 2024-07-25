@@ -10,8 +10,8 @@ local M = {
 		opts = {
 			git = { enable = true },
 			filters = {
-				git_ignored = false,
-				dotfiles = false,
+				git_ignored = true,
+				dotfiles = true,
 			},
 		},
 	},
