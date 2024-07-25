@@ -1,14 +1,19 @@
 # Append some paths into PATH variable
 if not contains "$HOME/.cargo/bin" $PATH
-    set -p PATH $HOME/.cargo/bin
+    set -Uxp PATH $HOME/.cargo/bin
 end
 
 if not contains "$HOME/.local/bin" $PATH
-    set -p PATH $HOME/.local/bin
+    set -Uxp PATH $HOME/.local/bin
 end
 
 if not contains /opt/homebrew/bin $PATH
-    set -p PATH /opt/homebrew/bin
+    set -Uxp PATH /opt/homebrew/bin
+end
+
+# Set editor
+if command -sq nvim
+    set -Ux EDITOR nvim
 end
 
 # Abbreviations
