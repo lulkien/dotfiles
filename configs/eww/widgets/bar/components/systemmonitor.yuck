@@ -35,25 +35,27 @@
 )
 
 (defwidget system-monitor []
-    (eventbox
+    (box
         :class "bar-container"
-        :onclick "${EWW_CMD} update SYSTEM_MONITOR_EXPANDED=${!SYSTEM_MONITOR_EXPANDED}"
-        (box
-            :orientation "h"
-            :halign "center"
-            :valign "center"
-            :space-evenly false
-            (system-gauge
-                :type "cpu"
-                :name "CPU"
-                :value "${EWW_CPU.avg}"
-                :tooltip "Usage: ${round(EWW_CPU.avg, 1)}%"
-            )
-            (revealer
-                :transition "slideleft"
-                :reveal SYSTEM_MONITOR_EXPANDED
-                :duration "250ms"
-                (hidden-monitor)
+        (eventbox
+            :onclick "${EWW_CMD} update SYSTEM_MONITOR_EXPANDED=${!SYSTEM_MONITOR_EXPANDED}"
+            (box
+                :orientation "h"
+                :halign "center"
+                :valign "center"
+                :space-evenly false
+                (system-gauge
+                    :type "cpu"
+                    :name "CPU"
+                    :value "${EWW_CPU.avg}"
+                    :tooltip "Usage: ${round(EWW_CPU.avg, 1)}%"
+                )
+                (revealer
+                    :transition "slideleft"
+                    :reveal SYSTEM_MONITOR_EXPANDED
+                    :duration "250ms"
+                    (hidden-monitor)
+                )
             )
         )
     )

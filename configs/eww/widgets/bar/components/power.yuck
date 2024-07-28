@@ -129,20 +129,29 @@
 (defwidget power-widget []
     (box
         :class "bar-container"
-        :orientation "h"
-        :space-evenly false
-        (confirm-buttons)
-        (hidden-power-buttons)
         (eventbox
-            :class "dynamic-button"
-            :tooltip "Power"
-            :onclick "
-                ${EWW_CMD} update PWR_BUTTONS_EXPAND_ALL=${!PWR_BUTTONS_EXPAND_ALL};
-                ${EWW_CMD} update PWR_BUTTON_SELECTED='';
-                ${EWW_CMD} update PWR_SCRIPT='';
+            :onhoverlost "
+                ${EWW_CMD} update PWR_BUTTONS_EXPAND_ALL=false;
+                ${EWW_CMD} update PWR_BUTTON_SELECTED=''
+                ${EWW_CMD} update PWR_SCRIPT=''
                 "
             (box
-                (label :text "")
+                :orientation "h"
+                :space-evenly false
+                (confirm-buttons)
+                (hidden-power-buttons)
+                (eventbox
+                    :class "dynamic-button"
+                    :tooltip "Power"
+                    :onclick "
+                        ${EWW_CMD} update PWR_BUTTONS_EXPAND_ALL=${!PWR_BUTTONS_EXPAND_ALL};
+                        ${EWW_CMD} update PWR_BUTTON_SELECTED='';
+                        ${EWW_CMD} update PWR_SCRIPT='';
+                        "
+                    (box
+                        (label :text "")
+                    )
+                )
             )
         )
     )
