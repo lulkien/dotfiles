@@ -1,22 +1,18 @@
 # Maintainer: Kien H. Luu <kien.luuhoang.arch@gmail.com>
 
 pkgname=hyprvisor
-pkgver=0.3.0
+pkgver=0.3.1
 pkgrel=1
 pkgdesc="Hyprvisor is a backend watcher for Hyprland."
-arch=('x86_64')
+arch=("x86_64")
 url="https://github.com/lulkien/hyprvisor"
 license=('UNLICENSE')
-
-# Build target
-BUILD_TARGET=$arch-unknown-linux-gnu
-
-# Define the download URL and the SHA256 checksum
-source=("$pkgname-v$pkgver-$BUILD_TARGET.tar.gz::$url/releases/download/v$pkgver/$pkgname-v$pkgver-$BUILD_TARGET.tar.gz")
-sha256sums=('dfbd9fce89d5da300ebc54b5302862264958716d7581e3b4df83a3169a774dcb')
+source=("$pkgname-v$pkgver-$arch-unknown-linux-gnu.tar.gz::$url/releases/download/v$pkgver/$pkgname-v$pkgver-$arch-unknown-linux-gnu.tar.gz")
+sha256sums=('f4ebf4ff73f6c5cd64eff01da915f26059e0a179ee9e815bd4bd8ec744d2bb77')
+provides=()
+depends=()
 
 package() {
-    #    tar -xzf "$srcdir/$pkgname-v$pkgver-$BUILD_TARGET.tar.gz"
-    cd "$srcdir/$pkgname-v$pkgver-$BUILD_TARGET"
-    install -Dm755 hyprvisor "${pkgdir}/usr/local/bin/hyprvisor"
+    cd "$srcdir/$pkgname-v$pkgver-$arch-unknown-linux-gnu"
+    install -Dm 755 hyprvisor "${pkgdir}/usr/bin/hyprvisor"
 }
