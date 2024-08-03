@@ -24,7 +24,7 @@
     # dynamic width from 0 to 300
     # width = (0, 300)
     # constant width of 300
-    width = (0, 400)
+    width = (250, 400)
 
     # The maximum height of a single notification, excluding the frame.
     height = 300
@@ -203,7 +203,7 @@
     # Set icon theme (only used for recursive icon lookup)
     # icon_theme = MoreWaita
     # You can also set multiple icon themes, with the leftmost one being used first.
-    icon_theme = "Papirus-Dark, MoreWaita"
+    icon_theme = Papirus-Dark
 
     # Align icons left/right/top/off
     icon_position = left
