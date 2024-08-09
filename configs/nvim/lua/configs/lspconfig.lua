@@ -6,6 +6,8 @@ local lspconfig = require("lspconfig")
 -- Table of LSP servers
 local language_servers = {
 	"bashls",
+	"clangd",
+	"cmake",
 	"cssls",
 	"jsonls",
 	"lua_ls",
@@ -23,10 +25,10 @@ for _, lsp in ipairs(language_servers) do
 end
 
 -- Config for clangd --
-lspconfig.clangd.setup({
-	on_attach = function(client, bufnr)
-		client.server_capabilities.signatureHelpProvider = false
-		on_attach(client, bufnr)
-	end,
-	capabilities = capabilities,
-})
+-- lspconfig.clangd.setup({
+--     on_attach = function(client, bufnr)
+--         client.server_capabilities.signatureHelpProvider = false
+--         on_attach(client, bufnr)
+--     end,
+--     capabilities = capabilities,
+-- })
