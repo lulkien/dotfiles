@@ -82,6 +82,15 @@ post_hyprland_config() {
         echo "[DEBUG] tar -xzf $pgk -C $user_icons_dir"
         tar -xzf $pgk -C $user_icons_dir
     done
+
+    local user_fonts_dir="$HOME/.fonts"
+    if [[ ! -d ${user_fonts_dir} ]]; then
+        echo "[DEBUG] mkdir -p ${user_fonts_dir}"
+        mkdir -p ${user_fonts_dir}
+    fi
+    echo "[DEBUG] cp -r ${script_path}/packages/fonts/Anurati ${user_fonts_dir}"
+    cp -r ${script_path}/packages/fonts/Anurati ${user_fonts_dir}
+    fc-cache -fv
 }
 
 main() {
