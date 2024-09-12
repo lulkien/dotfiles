@@ -19,11 +19,12 @@ This repository contains configuration files and scripts, known as dotfiles, tai
 
 ## Configurations
 
-- [Hyprland](https://github.com/hyprwm/Hyprland)
-- [Fish Shell](https://github.com/fish-shell/fish-shell)
-- [Kitty](https://github.com/kovidgoyal/kitty)
-- [EWW](https://github.com/elkowar/eww)
-- [Wofi](https://hg.sr.ht/~scoopta/wofi)
+- Hyprland
+- Fish
+- Kitty
+- EWW
+- Anyrun
+- NvChad
 
 ## Getting Started
 
