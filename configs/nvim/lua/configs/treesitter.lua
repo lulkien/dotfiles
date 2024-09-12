@@ -1,4 +1,4 @@
-local M = {
+local opts = {
 	ensure_installed = {
 		"bash",
 		"fish",
@@ -12,8 +12,6 @@ local M = {
 		"scss",
 		"lua",
 		"python",
-		"qmljs",
-		"qmldir",
 		"cmake",
 		"make",
 		"markdown",
@@ -24,4 +22,4 @@ local M = {
 	},
 }
 
-return M
+return opts

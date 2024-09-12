@@ -7,13 +7,9 @@ local M = {
 	},
 	{
 		"nvim-tree/nvim-tree.lua",
-		opts = {
-			git = { enable = true },
-			filters = {
-				git_ignored = true,
-				dotfiles = true,
-			},
-		},
+		opts = function()
+			return require("configs.nvimtree")
+		end,
 	},
 	{
 		"nvim-treesitter/nvim-treesitter",
@@ -35,7 +31,7 @@ local M = {
 	},
 	{
 		"mrcjkb/rustaceanvim",
-		version = "^4",
+		version = "^5",
 		ft = { "rust" },
 	},
 	{

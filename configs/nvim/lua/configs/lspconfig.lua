@@ -13,7 +13,7 @@ local language_servers = {
 	"lua_ls",
 	"slint_lsp",
 	"pyright",
-	"tsserver",
+	"ts_ls",
 }
 
 -- Default configs for lsp
