@@ -53,8 +53,13 @@ function git_push_now --description "Push to current branch"
     set answer ""
 
     while true
-        echo "Push to branch: $current_branch? [yes/no]"
-        read -p 'set_color green; printf "Answer: "; set_color normal' answer
+        echo -n "Push to branch: "
+        set_color yellow
+        echo -n "$current_branch"
+        set_color normal
+        echo "? [yes/no]"
+
+        read -p 'set_color blue; printf "Answer: "; set_color normal' answer
         __interrupt_if_error $status; and return 2
 
         if test "$answer" = yes; or test "$answer" = no
@@ -63,10 +68,15 @@ function git_push_now --description "Push to current branch"
     end
 
     if test "$answer" = yes
+        set_color green
+        echo -n "Run command: "
+        set_color normal
+        echo "git push origin $current_branch"
         if not set -q _flag_skip_countdown
             __print_countdown $current_branch
             __interrupt_if_error $status; and return 2
         end
+
         command git push origin $current_branch
     else
         echo "Canceled!"
