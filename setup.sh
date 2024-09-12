@@ -29,7 +29,7 @@ options=('Hyprland' 'General Desktop Environment' 'Windows Subsystem for Linux' 
 hypr_conf=('hypr' 'eww' 'anyrun' 'kitty' 'dunst')
 general_conf=('kitty')
 wsl_conf=
-mac_conf=('alacritty')
+mac_conf=('kitty')
 root_conf=
 
 # Default list of configurations which every options have
