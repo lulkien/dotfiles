@@ -1,2 +1,0 @@
-# wofi
-Configuration for Wofi
