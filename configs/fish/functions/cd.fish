@@ -1,4 +1,4 @@
-function cd --description 'Wrapper function for change directory'
+function cd --wraps=cd --description 'Wrapper function for change directory'
     # Init cd_history in new shell
     set -q kfc_cd_history || set -g --path kfc_cd_history
     set -q cd_prev_path || set -g cd_prev_path $HOME

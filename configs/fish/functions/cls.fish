@@ -1,3 +1,3 @@
-function cls --description 'Implementation for command cls'
-    command clear
+function cls --wraps=clear --description 'Implementation for command cls'
+    clear $argv
 end

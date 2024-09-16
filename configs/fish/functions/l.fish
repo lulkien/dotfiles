@@ -1,4 +1,4 @@
-function l --description 'Implementation for command l'
+function l --wraps=ls --description 'Implementation for command l'
     set -l OS_TYPE (uname -s)
     if string match -q Linux "$OS_TYPE"
         command ls -lhA --ignore=lost+found --color=always $argv

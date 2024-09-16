@@ -1,4 +1,4 @@
-function ls --description 'Custom implementation for command ls'
+function ls --wraps=ls --description 'Custom implementation for command ls'
     set -l OS_TYPE (uname -s)
     if string match -q Linux "$OS_TYPE"
         command ls --ignore=lost+found --color=always $argv
