@@ -1,16 +1,16 @@
 fork = true
-frame = "full"
-idle = true
+frame = "none"
+idle = false
 maximized = true
 neovim-bin = "nvim"
 no-multigrid = false
 srgb = false
-tabs = true
+tabs = false
 theme = "auto"
 title-hidden = true
 vsync = true
 wsl = false
 
 [font]
-normal = ["CodeNewRoman Nerd Font"]
+normal = ["CodeNewRoman Nerd Font Mono"]
 size = 14.0
