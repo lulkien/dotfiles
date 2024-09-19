@@ -33,7 +33,7 @@ mac_conf=('kitty')
 root_conf=
 
 # Default list of configurations which every options have
-configs=('fish' 'nvim')
+configs=('fish' 'nvim' 'neovide')
 
 # If setup for hyprland
 is_hyprland=false
