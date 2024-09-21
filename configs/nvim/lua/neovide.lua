@@ -47,5 +47,10 @@ if vim.g.neovide then
 
 	vim.g.neovide_cursor_smooth_blink = true
 
-	vim.g.neovide_cursor_vfx_mode = "railgun"
+	vim.g.neovide_cursor_vfx_mode = ""
+
+	vim.keymap.set("n", "<C-S-v>", '"+p')
+	vim.keymap.set("v", "<C-S-v>", '"+p')
+	vim.keymap.set("c", "<C-S-v>", "<C-R>+")
+	vim.keymap.set("i", "<C-S-v>", '<ESC>"+pi')
 end

@@ -1,7 +1,7 @@
 local nvchad_opts = require("nvchad.configs.nvimtree")
 local opts = {
 	view = {
-		width = 40,
+		width = 60,
 	},
 	git = { enable = true },
 	filters = {

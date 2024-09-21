@@ -9,11 +9,11 @@ local language_servers = {
 	"clangd",
 	"cmake",
 	"cssls",
-	"jsonls",
+	-- "jsonls",
 	"lua_ls",
-	"slint_lsp",
+	-- "slint_lsp",
 	"pyright",
-	"ts_ls",
+	-- "ts_ls",
 }
 
 -- Default configs for lsp
