@@ -1,5 +1,5 @@
 if vim.g.neovide then
-	vim.opt.linespace = 1
+	vim.o.linespace = 0
 
 	vim.g.neovide_scale_factor = 1.0
 
