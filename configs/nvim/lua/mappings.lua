@@ -59,6 +59,8 @@ map("n", "<leader>bx", function()
 end, { desc = "Buffer close" })
 
 -- COMMENT
+map("n", "<C-/>", "gcc", { desc = "Toggle Comment", remap = true })
+map("v", "<C-/>", "gc", { desc = "Toggle comment", remap = true })
 map("n", "<leader>/", "gcc", { desc = "Toggle Comment", remap = true })
 map("v", "<leader>/", "gc", { desc = "Toggle comment", remap = true })
 
