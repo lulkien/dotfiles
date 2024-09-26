@@ -1,5 +1,5 @@
 fork = true
-frame = "none"
+frame = "full"
 idle = false
 maximized = true
 neovim-bin = "nvim"
