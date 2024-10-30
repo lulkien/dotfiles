@@ -1,4 +1,4 @@
-cd() {
+function cd() {
     # Global variables for this SHELL session
     declare -p BASH_CD_HISTORY &>/dev/null || export BASH_CD_HISTORY=
     declare -p BASH_CD_PREV &>/dev/null || export BASH_CD_PREV=$HOME

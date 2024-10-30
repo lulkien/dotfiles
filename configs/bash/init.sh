@@ -1,16 +1,22 @@
 RUNTIME_DIR=$HOME/.config/bash
 
-if [[ -d $RUNTIME_DIR/conf.d ]]; then
-    for config in $RUNTIME_DIR/conf.d/*.sh; do
-        source $config
+CONF_DIR=$RUNTIME_DIR/conf.d
+CONF_COUNT=$(ls $CONF_DIR | grep -E '.*\.sh$' | wc -l)
+
+if [[ -d $CONF_DIR ]] && [[ $CONF_COUNT -gt 0 ]]; then
+    for conf in $CONF_DIR/*.sh; do
+        . $conf
     done
 fi
 
-if [[ -d $RUNTIME_DIR/functions ]]; then
-    for func in $RUNTIME_DIR/functions/*.sh; do
-        source $func
+FUNC_DIR=$RUNTIME_DIR/functions
+FUNC_COUNT=$(ls $FUNC_DIR | grep -E '.*\.sh$' | wc -l)
+
+if [[ -d $FUNC_DIR ]] && [[ $FUNC_COUNT -gt 0 ]]; then
+    for func in $FUNC_DIR/*.sh; do
+        . $func
     done
 fi
 
+bash_greeting
 export PS1=$(bash_prompt)
-

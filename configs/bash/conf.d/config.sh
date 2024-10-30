@@ -1,0 +1,2 @@
+export BASH_SHOW_GIT_RELATIVE=true
+export BASH_SHOW_GIT_STATUS=true
