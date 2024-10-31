@@ -1,3 +1,5 @@
+[[ $- != *i* ]] && return
+
 RUNTIME_DIR=$HOME/.config/bash
 
 CONF_DIR=$RUNTIME_DIR/conf.d
