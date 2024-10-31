@@ -17,7 +17,8 @@ function fish_prompt --description 'Write out the prompt'
         set prompt_string $KFC_RED_N"[Remote]"
     end
 
-    set -a prompt_string $user_string$cwd_string$git_string
+    set -a prompt_string $user_string$cwd_string
+    set -a prompt_string "$git_string"
 
     # Output
     printf "$prompt_string\n"

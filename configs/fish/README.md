@@ -27,10 +27,8 @@ set -g KFC_GIT_STATUS true
 ```
 3. **To show relative distance of current commit to HEAD**
 ```fish
-# Set these variables in your user config
-# Both of them are required
-set -g KFC_GIT_STATUS true
-set -g KFC_GIT_RELATIVE_COUNT true
+# Set this variable in your user config
+set -g KFC_SHOW_GIT_RELATIVE true
 ```
 **Note:** Enabling the Git status prompt is not recommended for slow devices as it may result in significant delays.
 
@@ -61,7 +59,7 @@ set -g KFC_GIT_RELATIVE_COUNT true
 |  `cls`  | `clear` | |
 |   `q`  | `exit` | |
 | `quit`  | `exit` | |
-|   `l`   | `ls -lhA --ignore=lost+found --color=always` | |
+|   `l`   | `ls -ohA --ignore=lost+found --color=always` | |
 |  `vim` | `nvim` | Only when `neovim` is installed. |
 
 
