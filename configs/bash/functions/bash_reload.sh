@@ -1,3 +1,3 @@
-bash_reload() {
+function bash_reload() {
     source $HOME/.bashrc
 }
