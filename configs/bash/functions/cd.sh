@@ -19,75 +19,80 @@ function cd() {
         [[ $@ =~ ^[0-9]+$ ]]
     }
 
+    __cd_prepend_history() {
+        [[ -z "$1" ]] && return
+
+        [[ -z "$BASH_CD_HISTORY" ]] &&            # Condition
+            BASH_CD_HISTORY="$1" ||               # Do if true
+            BASH_CD_HISTORY="$1:$BASH_CD_HISTORY" # Do if false
+    }
+
+    __cd_append_history() {
+        [[ -z "$1" ]] && return
+
+        [[ -z "$BASH_CD_HISTORY" ]] &&            # Condition
+            BASH_CD_HISTORY="$1" ||               # Do if true
+            BASH_CD_HISTORY="$BASH_CD_HISTORY:$1" # Do if false
+    }
+
     __cd_update_history() {
-        local path=$1
-
-        if [[ -z "$path" ]] || [[ "$path" = "$HOME" ]]; then
-            return
-        fi
-
-        if [[ -z "$BASH_CD_HISTORY" ]]; then
-            BASH_CD_HISTORY=$path
-        else
-            BASH_CD_HISTORY=$path:$BASH_CD_HISTORY
-        fi
+        [[ -z "$1" || "$1" = "$HOME" ]] && return
+        __cd_prepend_history "$1"
     }
 
     __cd_remove_history() {
-        local path=$1
-        if [[ -z "$path" ]] || [[ "$path" = "$HOME" ]]; then
-            return
-        fi
+        [[ -z "$1" || "$1" = "$HOME" ]] && return
 
-        local history_paths=
+        # Save tmp history
+        local tmp_history=
+        IFS=: read -r -a tmp_history <<<"$BASH_CD_HISTORY"
+
+        # Clean history
+        BASH_CD_HISTORY=
         local history_len=0
 
-        IFS=: read -r -a history_paths <<<"$BASH_CD_HISTORY"
-        BASH_CD_HISTORY=
-
-        for history in "${history_paths[@]}"; do
-
-            if [[ $history = $path ]]; then
-                continue
-            fi
+        # Update history
+        for item in "${tmp_history[@]}"; do
+            [[ $item = $1 ]] && continue
 
             history_len=$(($history_len + 1))
-            if [[ $history_len -ge $BASH_CD_HISTORY_LEN ]]; then
-                break
-            fi
+            [[ $history_len -ge $BASH_CD_HISTORY_LEN ]] && break # Overflow
 
-            if [[ -z "$BASH_CD_HISTORY" ]]; then
-                BASH_CD_HISTORY=$history
-            else
-                BASH_CD_HISTORY=$BASH_CD_HISTORY:$history
-            fi
+            __cd_append_history "$item"
         done
     }
 
     __cd_print_history() {
         local index=0
-        local history_paths=
-        IFS=: read -r -a history_paths <<<"$BASH_CD_HISTORY"
-        for path in "${history_paths[@]}"; do
-            echo "$index - $path"
+        local tmp_history=
+
+        IFS=: read -r -a tmp_history <<<"$BASH_CD_HISTORY"
+
+        for item in "${tmp_history[@]}"; do
+            echo "$index - $item"
             index=$(($index + 1))
         done
     }
 
     __cd_jump() {
-        local history_len=$(echo $BASH_CD_HISTORY | awk -F: '{print NF}')
         local jump_index="$1"
+        local history_len=$(echo $BASH_CD_HISTORY | awk -F: '{print NF}')
 
         if [[ $jump_index -eq 0 ]] && [[ $history_len -eq 0 ]]; then
-            echo '0' "$BASH_CD_PREV"
-        elif [[ $jump_index -ge $history_len ]]; then
-            echo '1' 'Invalid index.'
-        else
-            local history_paths=
-            IFS=: read -r -a history_paths <<<"$BASH_CD_HISTORY"
-
-            echo '0' "${history_paths[$_flag_index]}"
+            echo "$BASH_CD_PREV"
+            return 0
         fi
+
+        if [[ $jump_index -ge $history_len ]]; then
+            echo 'Invalid index.'
+            return 1
+        fi
+
+        local tmp_history=
+        IFS=: read -r -a tmp_history <<<"$BASH_CD_HISTORY"
+
+        echo "${tmp_history[$_flag_index]}"
+        return 0
     }
 
     # ----------------------------------- MAIN -----------------------------------
@@ -130,7 +135,7 @@ function cd() {
     done
 
     if [[ $argument_count -gt 1 ]]; then
-        echo "cd: Too many arguments."
+        echo "cd: Too many arguments. $argument_count"
         return 1
     fi
 
@@ -150,8 +155,13 @@ function cd() {
             return 2
         fi
 
-        read -r jump_status jump_data < <(__cd_jump $_flag_index)
-        if [[ $jump_status -ne 0 ]]; then
+        local jump_data=
+        local jump_code=
+
+        jump_data=$(__cd_jump $_flag_index)
+        jump_code=$?
+
+        if [[ $jump_code -ne 0 ]]; then
             echo "cd: $jump_data"
             return 3
         fi
@@ -159,19 +169,13 @@ function cd() {
         cd_destination=$jump_data
     fi
 
-    if [[ -z "$cd_destination" ]]; then
-        cd_destination=$HOME
-    fi
+    [[ -z "$cd_destination" ]] && cd_destination=$HOME
 
     local current_dir=$(pwd)
-    if [[ "$current_dir" = "$cd_destination" ]]; then
-        return 0
-    fi
+    [[ "$current_dir" = "$cd_destination" ]] && return 0
 
-    cd_destination=$(realpath -qs $cd_destination)
-    if [[ -n "$_flag_index" ]]; then
-        echo "cd $cd_destination"
-    fi
+    cd_destination=$(realpath -q $cd_destination)
+    [[ -n "$_flag_index" ]] && echo "cd $cd_destination"
 
     builtin cd -- $cd_destination
     local cd_status=$?
