@@ -174,15 +174,17 @@ function cd() {
     local current_dir=$(pwd)
     [[ "$current_dir" = "$cd_destination" ]] && return 0
 
-    cd_destination=$(realpath -q $cd_destination)
+    local real_path=
+    real_path=$(realpath -q $cd_destination)
+
+    [[ $? -eq 0 ]] && cd_destination=$real_path
+
     [[ -n "$_flag_index" ]] && echo "cd $cd_destination"
 
     builtin cd -- $cd_destination
-    local cd_status=$?
 
-    __cd_remove_history $cd_destination
-
-    if [[ $cd_status -eq 0 ]]; then
+    if [[ $? -eq 0 ]]; then
+        __cd_remove_history $cd_destination
         BASH_CD_PREV=$current_dir
         __cd_update_history $current_dir
     fi
