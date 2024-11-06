@@ -15,10 +15,6 @@ function cd() {
         echo "    -h, --help            Show this help."
     }
 
-    __cd_number_check() {
-        [[ $@ =~ ^[0-9]+$ ]]
-    }
-
     __cd_update_history() {
         [[ -z "$1" || "$1" = "$HOME" ]] && return
 
@@ -32,11 +28,9 @@ function cd() {
         local history_len=0
 
         for item in "${KBC_CD_HISTORY[@]}"; do
-
             [[ "$item" = "$1" ]] && continue
 
             history_len=$(($history_len + 1))
-
             [[ $history_len -ge $KBC_CD_HISTORY_LEN ]] && break
 
             new_history+=("$item")
@@ -48,13 +42,18 @@ function cd() {
     __cd_print_list() {
         local index=1
         for history in "${KBC_CD_HISTORY[@]}"; do
-            echo "${index} - ${history}"
+            echo "${index}) ${history}"
             index=$(($index + 1))
         done
     }
 
     __cd_jump() {
         local history_len="${#KBC_CD_HISTORY[@]}"
+
+        if [[ $history_len -eq 0 ]]; then
+            echo "History empty"
+            return 2
+        fi
 
         COLUMNS=30
         select history_dir in "${KBC_CD_HISTORY[@]}"; do
@@ -76,38 +75,31 @@ function cd() {
 
     # ----------------------------------- MAIN -----------------------------------
     # Variables for CD script
-    cd_destination=
-    _flag_help=false
-    _flag_jump=false
-    _flag_list=false
-    argument_count=0
+    local cd_destination=
+    local _flag_help=false
+    local _flag_jump=false
+    local _flag_list=false
+    local current_dir=$(pwd)
 
-    while [[ $# -gt 0 ]]; do
-        case $1 in
-        -h | --help)
-            _flag_help=true
-            argument_count=$(($argument_count + 1))
-            ;;
-        -l | --list)
-            _flag_list=true
-            argument_count=$(($argument_count + 1))
-            ;;
-        -j | --jump)
-            _flag_jump=true
-            argument_count=$(($argument_count + 1))
-            ;;
-        *)
-            cd_destination="$1"
-            argument_count=$(($argument_count + 1))
-            ;;
-        esac
-        shift
-    done
-
-    if [[ $argument_count -gt 1 ]]; then
+    if [[ $# -gt 1 ]]; then
         echo "cd: Too many arguments."
         return 1
     fi
+
+    case $1 in
+    -h | --help)
+        _flag_help=true
+        ;;
+    -l | --list)
+        _flag_list=true
+        ;;
+    -j | --jump)
+        _flag_jump=true
+        ;;
+    *)
+        cd_destination="$1"
+        ;;
+    esac
 
     if $_flag_help; then
         __cd_print_help
@@ -147,16 +139,19 @@ function cd() {
         fi
     fi
 
-    local current_dir=$(pwd)
     [[ "$current_dir" = "$cd_destination" ]] && return 0
 
     builtin cd -- "$cd_destination"
+    local cd_status=$?
 
-    if [[ $? -eq 0 ]]; then
-        __cd_remove_history "$cd_destination"
-        KBC_CD_PREV="$current_dir"
-        __cd_update_history "$current_dir"
-    fi
+    # remove history no matter what
+    # because of that history may not exist anymore
+    __cd_remove_history "$cd_destination"
 
-    return $cd_status
+    [[ $cd_status -ne 0 ]] && return $cd_status
+
+    KBC_CD_PREV="$current_dir"
+    __cd_update_history "$current_dir"
+
+    return 0
 }
