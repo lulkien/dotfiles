@@ -1,8 +1,8 @@
 function cd() {
     # Global variables for this SHELL session
-    declare -p KBC_CD_HISTORY &>/dev/null || export KBC_CD_HISTORY=()
-    declare -p KBC_CD_PREV &>/dev/null || export KBC_CD_PREV=$HOME
-    declare -p KBC_CD_HISTORY_LEN &>/dev/null || export KBC_CD_HISTORY_LEN=15
+    declare -p KBC_CD_HISTORY &>/dev/null || declare -g -a KBC_CD_HISTORY=()
+    declare -p KBC_CD_PREV &>/dev/null || declare -g KBC_CD_PREV=$HOME
+    declare -p KBC_CD_HISTORY_LEN &>/dev/null || declare -g -i KBC_CD_HISTORY_LEN=15
 
     __cd_print_help() {
         echo "Usage: cd [OPTION]"
@@ -10,8 +10,9 @@ function cd() {
         echo "Change directory to a specific path or a history index."
         echo
         echo "Options:"
-        echo "    -l, --list            Show cd history list and jump"
-        echo "    -h, --help            Show help"
+        echo "    -j, --jump            Show cd jump list."
+        echo "    -l, --list            Print cd history list."
+        echo "    -h, --help            Show this help."
     }
 
     __cd_number_check() {
@@ -27,22 +28,21 @@ function cd() {
     __cd_remove_history() {
         [[ -z "$1" || "$1" = "$HOME" ]] && return
 
-        # Save tmp history
-        local tmp_history=("${KBC_CD_HISTORY[@]}")
-
-        # Clean history
-        KBC_CD_HISTORY=()
+        local new_history=()
         local history_len=0
 
-        # Update history
-        for item in "${tmp_history[@]}"; do
-            [[ $item = $1 ]] && continue
+        for item in "${KBC_CD_HISTORY[@]}"; do
+
+            [[ "$item" = "$1" ]] && continue
 
             history_len=$(($history_len + 1))
-            [[ $history_len -ge $KBC_CD_HISTORY_LEN ]] && break # Overflow
 
-            KBC_CD_HISTORY+=("$item")
+            [[ $history_len -ge $KBC_CD_HISTORY_LEN ]] && break
+
+            new_history+=("$item")
         done
+
+        KBC_CD_HISTORY=("${new_history[@]}")
     }
 
     __cd_print_list() {
@@ -71,7 +71,6 @@ function cd() {
 
             echo "$history_dir"
             return 0
-
         done
     }
 
@@ -106,7 +105,7 @@ function cd() {
     done
 
     if [[ $argument_count -gt 1 ]]; then
-        echo "cd: Too many arguments. $argument_count"
+        echo "cd: Too many arguments."
         return 1
     fi
 
@@ -123,8 +122,10 @@ function cd() {
     if $_flag_jump; then
         local jump_msg=
         local jump_err=
+
         jump_msg=$(__cd_jump)
         jump_err=$?
+
         if [[ $jump_err -ne 0 ]]; then
             echo "cd: $jump_msg"
             return $jump_err
@@ -132,8 +133,9 @@ function cd() {
 
         cd_destination="$jump_msg"
         echo "----------------------------"
-        echo -e "\e[1;33mJump to\e[00m: $cd_destination"
+        echo -e "\e[1;33mcd\e[00m: $cd_destination"
     else
+
         if [[ -z "$cd_destination" ]]; then
             cd_destination="$HOME"
         elif [[ "$cd_destination" = '-' ]]; then
