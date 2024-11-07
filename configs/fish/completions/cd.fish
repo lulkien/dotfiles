@@ -1,2 +1,3 @@
-complete -c cd -s l -l list -x -d 'Show cd history'
-complete -c cd -s i -l index -x -d 'Change directory to history at <index>'
+complete -c cd -s h -l help -x -d 'Print cd help'
+complete -c cd -s j -l jump -x -d 'Show cd jump list'
+complete -c cd -s l -l list -x -d 'Print cd history'
