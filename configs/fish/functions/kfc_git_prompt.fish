@@ -73,19 +73,19 @@ function kfc_git_prompt
                 set untrack true
             end
         end
-    end
 
-    set git_string $git_string$KFC_WHITE_N' '
-    if not $dirty && not $untrack
-        set git_string $git_string' '$KFC_GREEN_N''
-    end
+        set git_string $git_string$KFC_WHITE_N' '
+        if not $dirty && not $untrack
+            set git_string $git_string' '$KFC_GREEN_N''
+        end
 
-    if $dirty
-        set git_string $git_string' '$KFC_YELLOW_N''
-    end
+        if $dirty
+            set git_string $git_string' '$KFC_YELLOW_N''
+        end
 
-    if $untrack
-        set git_string $git_string' '$KFC_BLUE_N''
+        if $untrack
+            set git_string $git_string' '$KFC_BLUE_N''
+        end
     end
 
     echo "$git_string"
