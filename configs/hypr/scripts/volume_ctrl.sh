@@ -2,7 +2,9 @@
 
 VOLUME=0
 MUTED=false
-MAXIMUM_VOLUME=0.4
+MAXIMUM_VOLUME=1.0
+DELTA_VOLUME=5
+MID_VOLUME=45
 
 # For dunstify
 NOTIFY_ID=865863
@@ -52,7 +54,7 @@ send_notify() {
 }
 
 play_sound() {
-    pw-play /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga
+    pw-play /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga &
 }
 
 do_process() {
@@ -65,16 +67,16 @@ do_process() {
 
     case "$cmd" in
     '+' | 'inc')
-        wpctl set-volume -l $MAXIMUM_VOLUME @DEFAULT_AUDIO_SINK@ 5%+
+        wpctl set-volume -l $MAXIMUM_VOLUME @DEFAULT_AUDIO_SINK@ ${DELTA_VOLUME}%+
         play_sound
         ;;
     '-' | 'dec')
-        wpctl set-volume -l $MAXIMUM_VOLUME @DEFAULT_AUDIO_SINK@ 5%-
+        wpctl set-volume -l $MAXIMUM_VOLUME @DEFAULT_AUDIO_SINK@ ${DELTA_VOLUME}%-
         play_sound
         ;;
     'toggle')
-        if $MUTED && [[ $VOLUME -gt 50 ]]; then
-            wpctl set-volume @DEFAULT_AUDIO_SINK@ 50%
+        if $MUTED && [[ $VOLUME -gt $MID_VOLUME ]]; then
+            wpctl set-volume @DEFAULT_AUDIO_SINK@ ${MID_VOLUME}%
         fi
         wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
         ;;
