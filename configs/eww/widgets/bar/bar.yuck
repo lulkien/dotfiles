@@ -13,7 +13,7 @@
         :orientation "h"
         :halign "start"
         :space-evenly false
-        :spacing 5
+        :spacing 10
         (arch-button)
         (system-tray)
     )
@@ -24,7 +24,7 @@
         :halign "center"
         :orientation "h"
         :space-evenly false
-        :spacing 5
+        :spacing 10
         (workspaces)
     )
 )

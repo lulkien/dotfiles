@@ -1,17 +1,17 @@
 ;; Listener
-(deflisten WIFI_DATA :initial "[]"
-    `hyprvisor wf`)
+(deflisten BLUETOOTH_DATA :initial "[]"
+    `echo "{}"`)
 
-(defwidget wifi []
+(defwidget bluetooth []
     (box
         :space-evenly false
 
-        (box :class "icon-container wifi-icon ${WIFI_DATA.state}"
+        (box :class "icon-container bluetooth-icon"
             (label :text "${WIFI_DATA.icon}")
         )
         
         (box
-            :class "info-container wifi-ssid ${WIFI_DATA.state}"
+            :class "info-container bluetooth-ssid"
             (revealer 
                 :transition "slideright"
                 :reveal { WIFI_DATA.ssid != '' }

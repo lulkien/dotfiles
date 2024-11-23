@@ -72,25 +72,6 @@ button {
   color: $base;
 }
 
-.workspaces {
-  button {
-    padding: 0px 5px;
-    background-color: transparent;
-
-    label {
-      font-size: 30px;
-    }
-
-    label.active {
-      color: $sky;
-    }
-
-    label.deactive {
-      color: $overlay0;
-    }
-  }
-}
-
 // ---------------------------------- Central section ----------------------------------
 .date-time {
   padding: 0px 15px;
@@ -221,6 +202,36 @@ button {
   }
 }
 
+// ------------------------------ WORKSPACES ------------------------------
+
+.workspaces {
+  &-icon {
+    background-color: $pink;
+  }
+
+  &-info {
+    padding-left: 6px;
+    padding-right: 10px;
+
+    button {
+      padding: 0px 5px;
+      background-color: transparent;
+
+      label {
+        font-size: 30px;
+      }
+
+      label.active {
+        color: $pink;
+      }
+
+      label.deactive {
+        color: $overlay0;
+      }
+    }
+  }
+}
+
 // ------------------------------ DATE ------------------------------
 .datetime {
   &-icon {
@@ -231,8 +242,8 @@ button {
     label {
       color: $mauve;
       font-weight: bold;
-      padding-left: 8px;
-      padding-right: 8px;
+      padding-left: 6px;
+      padding-right: 10px;
     }
   }
 }
@@ -297,8 +308,8 @@ button {
 
     label {
       color: $green;
-      padding-left: 8px;
-      padding-right: 8px;
+      padding-left: 6px;
+      padding-right: 10px;
     }
   }
 }
