@@ -1,5 +1,5 @@
 ;; Modules
-(include "widgets/bar/components/archbutton.yuck")
+(include "widgets/bar/components/dashboard-button.yuck")
 (include "widgets/bar/components/datetime.yuck")
 (include "widgets/bar/components/power.yuck")
 (include "widgets/bar/components/systemmonitor.yuck")
@@ -14,7 +14,7 @@
         :halign "start"
         :space-evenly false
         :spacing 10
-        (arch-button)
+        (dashboard-button)
         (workspaces)
         (system-tray)
     )

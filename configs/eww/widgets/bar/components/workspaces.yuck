@@ -7,11 +7,14 @@
 (defwidget workspaces []
     (box
         :space-evenly false
-        (box :class "icon-container workspaces-icon"
+        (box
+            :class "icon-container workspaces-icon"
+            :tooltip "Workspaces"
             (label :text "")
         )
 
-        (box :class "info-container workspaces-info"
+        (box
+            :class "info-container workspaces-info"
             (for ws in WS_DATA
                 (button
                     :onclick "hyprctl dispatch workspace ${ws.id}"

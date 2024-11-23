@@ -1,12 +1,14 @@
 ;; Listener
 (deflisten WIFI_DATA :initial "[]"
-    `hyprvisor wf`)
+    `hyprvisor wifi`)
 
 (defwidget wifi []
     (box
         :space-evenly false
 
-        (box :class "icon-container wifi-icon ${WIFI_DATA.state}"
+        (box
+            :class "icon-container wifi-icon ${WIFI_DATA.state}"
+            :tooltip "Wifi: ${WIFI_DATA.state}"
             (label :text "${WIFI_DATA.icon}")
         )
         
