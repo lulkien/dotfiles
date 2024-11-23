@@ -1,7 +1,7 @@
 // ---------------------------------- Global ----------------------------------
 window {
   // background-color: rgba($color: $lavender, $alpha: 0.4);
-  background-color: transparent;
+  background-color: $crust;
 }
 
 box {
@@ -26,10 +26,13 @@ box {
   }
 
   .icon-container {
-    background-color: $base;
     border-radius: 8px 0px 0px 8px;
     padding: 0px 10px;
     font-size: 30px;
+
+    label {
+      color: $base;
+    }
   }
 
   .info-container {
@@ -65,7 +68,8 @@ button {
 
 // ---------------------------------- Left section ----------------------------------
 .archbutton {
-  color: $blue;
+  background-color: $blue;
+  color: $base;
 }
 
 .workspaces {
@@ -217,62 +221,84 @@ button {
   }
 }
 
-// ------------------------------ WIFI --------------------------------
-.wifi-icon {
-
-  &.disconnected,
-  &.disabled,
-  &.connecting,
-  &.unknown {
-    border-radius: 8px;
+// ------------------------------ DATE ------------------------------
+.datetime {
+  &-icon {
+    background-color: $mauve;
   }
 
-  &.disabled {
+  &-info {
     label {
-      color: $red;
+      color: $mauve;
+      font-weight: bold;
+      padding-left: 8px;
+      padding-right: 8px;
     }
   }
-
-  &.disconnected {
-    background-color: $red;
-  }
-
-  &.connecting {
-    background-color: $yellow;
-  }
-
-  &.connected {
-    border-radius: 8px 0px 0px 8px;
-    background-color: $green;
-  }
-
-  &.unknown {
-    label {
-      color: $text;
-    }
-  }
-
-  label {
-    color: $base;
-  }
-
 }
 
-.wifi-ssid {
 
-  &.disconnected,
-  &.disabled,
-  &.connecting,
-  &.unknown {
-    background-color: transparent;
+
+// ------------------------------ WIFI ------------------------------
+.wifi {
+  &-icon {
+
+    &.disconnected,
+    &.disabled,
+    &.connecting,
+    &.unknown {
+      border-radius: 8px;
+    }
+
+    &.disabled {
+      background-color: $base;
+
+      label {
+        color: $red;
+      }
+    }
+
+    &.disconnected {
+      background-color: $red;
+    }
+
+    &.connecting {
+      background-color: $yellow;
+    }
+
+    &.connected {
+      border-radius: 8px 0px 0px 8px;
+      background-color: $green;
+    }
+
+    &.unknown {
+      label {
+        color: $text;
+      }
+    }
+
+    label {
+      color: $base;
+    }
   }
 
-  &.connected {
-    background-color: $base;
-  }
+  &-ssid {
 
-  label {
-    padding-left: 8px;
-    padding-right: 8px;
+    &.disconnected,
+    &.disabled,
+    &.connecting,
+    &.unknown {
+      background-color: transparent;
+    }
+
+    &.connected {
+      background-color: $base;
+    }
+
+    label {
+      color: $green;
+      padding-left: 8px;
+      padding-right: 8px;
+    }
   }
 }

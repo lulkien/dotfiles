@@ -15,7 +15,7 @@
         :space-evenly false
         :spacing 5
         (arch-button)
-        (workspaces)
+        (system-tray)
     )
 )
 
@@ -25,7 +25,7 @@
         :orientation "h"
         :space-evenly false
         :spacing 5
-        (date-time)
+        (workspaces)
     )
 )
 
@@ -33,12 +33,10 @@
     (box :class "right-group bar-groups"
         :orientation "h"
         :space-evenly false
-        :spacing 5
+        :spacing 10
         :halign "end"
         (wifi)
-        (system-tray)
-        (system-monitor)
-        (power-widget)
+        (date-time)
     )
 )
 

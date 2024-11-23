@@ -3,17 +3,17 @@
     `hyprvisor wf`)
 
 (defwidget wifi []
-    (box :class "wifi "
+    (box
         :space-evenly false
 
-        (box :class "wifi-icon icon-container ${WIFI_DATA.state}"
+        (box :class "icon-container wifi-icon ${WIFI_DATA.state}"
             (label
                 :text "${WIFI_DATA.icon}"
             )
         )
         
         (box
-            :class "wifi-ssid info-container ${WIFI_DATA.state}"
+            :class "info-container wifi-ssid ${WIFI_DATA.state}"
             (revealer 
                 :transition "slideright"
                 :reveal { WIFI_DATA.ssid != '' }
