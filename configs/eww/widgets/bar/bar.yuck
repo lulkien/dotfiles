@@ -15,6 +15,7 @@
         :space-evenly false
         :spacing 10
         (arch-button)
+        (workspaces)
         (system-tray)
     )
 )
@@ -25,7 +26,6 @@
         :orientation "h"
         :space-evenly false
         :spacing 10
-        (workspaces)
     )
 )
 
