@@ -24,6 +24,20 @@ box {
     color: $text;
     font-size: 18px;
   }
+
+  .icon-container {
+    background-color: $base;
+    border-radius: 8px 0px 0px 8px;
+    padding: 0px 10px;
+    font-size: 30px;
+  }
+
+  .info-container {
+    border-radius: 0px 8px 8px 0px;
+    background-color: $base;
+    color: $text;
+    font-size: 16px;
+  }
 }
 
 // ---------------------------------- Builtin ----------------------------------
@@ -200,5 +214,65 @@ button {
     .cancel {
       color: $blue;
     }
+  }
+}
+
+// ------------------------------ WIFI --------------------------------
+.wifi-icon {
+
+  &.disconnected,
+  &.disabled,
+  &.connecting,
+  &.unknown {
+    border-radius: 8px;
+  }
+
+  &.disabled {
+    label {
+      color: $red;
+    }
+  }
+
+  &.disconnected {
+    background-color: $red;
+  }
+
+  &.connecting {
+    background-color: $yellow;
+  }
+
+  &.connected {
+    border-radius: 8px 0px 0px 8px;
+    background-color: $green;
+  }
+
+  &.unknown {
+    label {
+      color: $text;
+    }
+  }
+
+  label {
+    color: $base;
+  }
+
+}
+
+.wifi-ssid {
+
+  &.disconnected,
+  &.disabled,
+  &.connecting,
+  &.unknown {
+    background-color: transparent;
+  }
+
+  &.connected {
+    background-color: $base;
+  }
+
+  label {
+    padding-left: 8px;
+    padding-right: 8px;
   }
 }
