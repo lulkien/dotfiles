@@ -7,18 +7,18 @@
         :space-evenly false
 
         (box
-            :class "icon-container wifi-icon ${WIFI_DATA.state}"
+            :class "icon-container wifi-icon-${WIFI_DATA.state}"
             :tooltip "Wifi: ${WIFI_DATA.state}"
             (label :text "${WIFI_DATA.icon}")
         )
         
         (box
-            :class "info-container wifi-ssid ${WIFI_DATA.state}"
+            :class "info-container wifi-ssid-${WIFI_DATA.state}"
             (revealer 
                 :transition "slideright"
                 :reveal { WIFI_DATA.ssid != '' }
-                :duration "250ms"
-                (label :text "${WIFI_DATA.ssid}")
+                :duration "300ms"
+                (label :text "${WIFI_DATA.ssid ?: "-------------"}")
             )
         )
     )

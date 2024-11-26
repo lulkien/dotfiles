@@ -242,65 +242,100 @@ separator {
   }
 }
 
-.wifi {
+.bluetooth {
   &-icon {
 
-    &.disconnected,
-    &.disabled,
-    &.connecting,
-    &.unknown {
-      border-radius: 8px;
-    }
-
-    &.disabled {
-      background-color: $base;
-
-      label {
-        color: $red;
+    &-off,
+    &-no-device,
+    &-on {
+      &:hover {
+        background-color: $sky;
       }
     }
 
-    &.disconnected {
+    &-off {
+      border-radius: 8px;
       background-color: $red;
     }
 
-    &.connecting {
-      background-color: $yellow;
-    }
+    &-no-device {
+      border-radius: 8px;
+      background-color: $blue;
 
-    &.connected {
-      border-radius: 8px 0px 0px 8px;
-      background-color: $green;
-    }
-
-    &.unknown {
       label {
-        color: $text;
+        font-size: 25px;
+        padding: 0px 1px;
       }
     }
 
-    label {
-      color: $base;
+    &-on {
+      background-color: $blue;
+    }
+
+  }
+
+  &-devices {
+
+    &-show {
+      label {
+        padding-left: 8px;
+        padding-right: 8px;
+        color: $blue;
+        font-weight: bold;
+      }
+    }
+
+    &-hide {
+      background-color: transparent;
+    }
+  }
+}
+
+.wifi {
+  &-icon {
+
+    &-disabled,
+    &-disconnected,
+    &-connecting,
+    &-unknown {
+      border-radius: 8px;
+    }
+
+    &-disabled {
+      background-color: $base;
+    }
+
+    &-disconnected {
+      background-color: $red;
+    }
+
+    &-connecting {
+      background-color: $yellow;
+    }
+
+    &-connected {
+      background-color: $green;
     }
   }
 
   &-ssid {
 
-    &.disconnected,
-    &.disabled,
-    &.connecting,
-    &.unknown {
+    &-disconnected,
+    &-disabled,
+    &-connecting,
+    &-unknown {
       background-color: transparent;
     }
 
-    &.connected {
+    &-connected {
       background-color: $base;
-    }
 
-    label {
-      color: $green;
-      padding-left: 6px;
-      padding-right: 10px;
+      label {
+        padding-left: 6px;
+        padding-right: 10px;
+        color: $green;
+        font-weight: bold;
+      }
     }
   }
 }
@@ -312,10 +347,10 @@ separator {
 
   &-info {
     label {
-      color: $mauve;
-      font-weight: bold;
       padding-left: 6px;
       padding-right: 10px;
+      color: $mauve;
+      font-weight: bold;
     }
   }
 }
