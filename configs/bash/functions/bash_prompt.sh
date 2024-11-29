@@ -1,3 +1,4 @@
 function bash_prompt() {
-    echo '\e[1;36m \u \e[1;34m󰉋 `cwd`\e[00m `bash_git_prompt`\n \$ '
+    declare -p SSH_TTY &>/dev/null && KBC_SESSION='\e[31m[Remote]\e[00m' || KBC_SESSION=''
+    echo $KBC_SESSION'\e[1;36m  \u \e[1;34m󰉋 `cwd`\e[00m `bash_git_prompt`\n  '
 }
