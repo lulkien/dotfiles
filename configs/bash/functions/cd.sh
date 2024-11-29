@@ -6,7 +6,7 @@ function cd() {
     HISTORY_FILE=$HOME/.cd_history
     HISTORY_TEMP=$HISTORY_FILE.temp
 
-    [[ ! -f $HOME/.cd_history ]] && (
+    [[ ! -f $HISTORY_FILE ]] && (
         umask 077
         touch $HISTORY_FILE
     )
@@ -28,9 +28,11 @@ function cd() {
         {
             echo "$1"
             cat "$HISTORY_FILE"
-        } | awk '!seen[$0]++' >"$HISTORY_TEMP" && mv "$HISTORY_TEMP" "$HISTORY_FILE"
-
-        head -n $KBC_CD_HISTORY_LEN "$HISTORY_FILE" >"$HISTORY_TEMP" && mv "$HISTORY_TEMP" "$HISTORY_FILE"
+        } |
+            awk '!seen[$0]++' |
+            head -n $KBC_CD_HISTORY_LEN |
+            tee $HISTORY_TEMP >/dev/null &&
+            mv $HISTORY_TEMP $HISTORY_FILE
 
     }
 
@@ -38,23 +40,24 @@ function cd() {
 
         [[ -z "$1" || "$1" = "$HOME" ]] && return
 
-        awk -v line="$1" '$0 != line' "$HISTORY_FILE" >"$HISTORY_TEMP" && mv "$HISTORY_TEMP" "$HISTORY_FILE"
+        awk -v line="$1" '$0 != line' $HISTORY_FILE |
+            tee $HISTORY_TEMP >/dev/null &&
+            mv $HISTORY_TEMP $HISTORY_FILE
 
     }
 
     __cd_show_jump_list() {
 
         if [[ ! -s "$HISTORY_FILE" ]]; then
-            echo "cd: History empty"
-            return 0
+            echo "History empty."
+            return 1
         fi
 
-        declare -i index=1
         declare -a cd_history=()
 
         while IFS= read -r line; do
             cd_history+=("$line")
-        done <"$HISTORY_FILE"
+        done <$HISTORY_FILE
 
         COLUMNS=30
         select history_path in "${cd_history[@]}"; do
