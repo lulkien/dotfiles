@@ -1,16 +1,28 @@
 ;; Listener
 (deflisten WS_DATA :initial "[]"
-    `hyprvisor ws 10`)
+    `hyprvisor workspaces 5`)
+
+(defvar WS_ICON_ARRAY '[ "", "󰲠", "󰲢", "󰲤", "󰲦", "󰲨", "󰲪", "󰲬", "󰲮", "󰲰", "󰿬" ]')
 
 (defwidget workspaces []
-    (box :class "workspaces bar-container"
-        (for ws in WS_DATA
-            (button
-                :onclick "hyprctl dispatch workspace ${ws.id}"
-                :tooltip "Workspace ${ws.id}"
-                (label
-                    :class "${ws.active ? "active" : "deactive"}"
-                    :text "${ws.occupied ? "" : ""}"
+    (box
+        :space-evenly false
+        (box
+            :class "icon-container workspaces-icon"
+            :tooltip "Workspaces"
+            (label :text "")
+        )
+
+        (box
+            :class "info-container workspaces-info"
+            (for ws in WS_DATA
+                (button
+                    :onclick "hyprctl dispatch workspace ${ws.id}"
+                    :tooltip "Workspace ${ws.id}"
+                    (label
+                        :class "${ws.active ? "active" : "deactive"}"
+                        :text "${ws.occupied ? WS_ICON_ARRAY[ws.id] : WS_ICON_ARRAY[0]}"
+                    )
                 )
             )
         )

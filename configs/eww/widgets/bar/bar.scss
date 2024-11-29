@@ -1,49 +1,7 @@
-// ---------------------------------- Global ----------------------------------
+// ---------------------------------- Builtin ----------------------------------
 window {
-  // background-color: rgba($color: $lavender, $alpha: 0.4);
   background-color: $crust;
 }
-
-box {
-  .bar-groups {
-    padding: 7px 0px;
-  }
-
-  .left-group {
-    margin-left: 10px;
-  }
-
-  .right-group {
-    margin-right: 10px;
-  }
-
-  .bar-container {
-    background-color: $base;
-    border-radius: 8px;
-    padding: 0px 10px;
-    color: $text;
-    font-size: 18px;
-  }
-
-  .icon-container {
-    border-radius: 8px 0px 0px 8px;
-    padding: 0px 10px;
-    font-size: 30px;
-
-    label {
-      color: $base;
-    }
-  }
-
-  .info-container {
-    border-radius: 0px 8px 8px 0px;
-    background-color: $base;
-    color: $text;
-    font-size: 16px;
-  }
-}
-
-// ---------------------------------- Builtin ----------------------------------
 
 tooltip {
   label {
@@ -66,83 +24,146 @@ button {
   font-size: 30px;
 }
 
+menu {
+  padding: 0.4em 0.5em;
+  background-color: $base;
+  border: 2px solid $pink;
+  border-radius: 8px;
+  font-size: 16px;
+
+  menuitem {
+    border-radius: 5px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    padding: 0.25em;
+
+    arrow {
+      -gtk-icon-source: -gtk-icontheme("pan-end-symbolic");
+      color: $text;
+
+      min-width: 1em;
+      min-height: 1em;
+    }
+
+    &:disabled {
+      label {
+        color: $subtext0;
+      }
+    }
+
+    &:hover {
+      background-color: $surface2;
+    }
+  }
+}
+
+separator {
+  background-color: $text;
+  padding-top: 0.06em;
+
+  &:last-child {
+    padding: unset;
+  }
+}
+
+// ---------------------------------- GROUPS ----------------------------------
+
+.bar-groups {
+  padding: 7px 0px;
+}
+
+.left-group {
+  margin-left: 10px;
+}
+
+.right-group {
+  margin-right: 10px;
+}
+
+.bar-container {
+  background-color: $base;
+  border-radius: 8px;
+  padding: 0px 10px;
+  color: $text;
+  font-size: 18px;
+}
+
+.icon-container {
+  border-radius: 8px 0px 0px 8px;
+  padding: 0px 10px;
+  font-size: 30px;
+
+  label {
+    color: $base;
+  }
+}
+
+.info-container {
+  border-radius: 0px 8px 8px 0px;
+  background-color: $base;
+  color: $text;
+  font-size: 16px;
+}
+
 // ---------------------------------- Left section ----------------------------------
-.archbutton {
-  background-color: $blue;
-  color: $base;
+
+.dashboard-button {
+  background-color: $yellow;
+  border-radius: 8px;
+
+  &:hover {
+    background-color: $sky;
+  }
 }
 
 .workspaces {
-  button {
-    padding: 0px 5px;
-    background-color: transparent;
+  &-icon {
+    background-color: $pink;
+  }
 
-    label {
-      font-size: 30px;
-    }
+  &-info {
+    padding-left: 6px;
+    padding-right: 10px;
 
-    label.active {
-      color: $sky;
-    }
+    button {
+      padding: 0px 5px;
+      background-color: transparent;
 
-    label.deactive {
-      color: $overlay0;
+      &:hover {
+        background-color: $surface0;
+      }
+
+      label {
+        font-size: 30px;
+      }
+
+      label.active {
+        color: $pink;
+      }
+
+      label.deactive {
+        color: $overlay0;
+      }
     }
+  }
+}
+
+.systray {
+  &-icon {
+    background-color: $flamingo;
+  }
+
+  &-tray {
+    background-color: $base;
+    padding-left: 13px;
+    padding-right: 10px;
   }
 }
 
 // ---------------------------------- Central section ----------------------------------
-.date-time {
-  padding: 0px 15px;
-}
+
 
 // ---------------------------------- Right section ----------------------------------
-.system-tray {
-  font-size: 20px;
-  color: $text;
-
-  menu {
-    padding: 0.4em 0.5em;
-    background-color: $base;
-    border: 2px solid $pink;
-    border-radius: 8px;
-    font-size: 16px;
-
-    menuitem {
-      border-radius: 5px;
-      margin-top: 2px;
-      margin-bottom: 2px;
-      padding: 0.25em;
-
-      arrow {
-        -gtk-icon-source: -gtk-icontheme("pan-end-symbolic");
-        color: $text;
-
-        min-width: 1em;
-        min-height: 1em;
-      }
-
-      &:disabled {
-        label {
-          color: $subtext0;
-        }
-      }
-
-      &:hover {
-        background-color: $surface2;
-      }
-    }
-  }
-
-  separator {
-    background-color: $text;
-    padding-top: 0.06em;
-
-    &:last-child {
-      padding: unset;
-    }
-  }
-}
 
 .system-gauge {
   padding: 0px 2px 0px 5px;
@@ -221,7 +242,104 @@ button {
   }
 }
 
-// ------------------------------ DATE ------------------------------
+.bluetooth {
+  &-icon {
+
+    &-off,
+    &-no-device,
+    &-on {
+      &:hover {
+        background-color: $sky;
+      }
+    }
+
+    &-off {
+      border-radius: 8px;
+      background-color: $red;
+    }
+
+    &-no-device {
+      border-radius: 8px;
+      background-color: $blue;
+
+      label {
+        font-size: 25px;
+        padding: 0px 1px;
+      }
+    }
+
+    &-on {
+      background-color: $blue;
+    }
+
+  }
+
+  &-devices {
+
+    &-show {
+      label {
+        padding-left: 8px;
+        padding-right: 8px;
+        color: $blue;
+        font-weight: bold;
+      }
+    }
+
+    &-hide {
+      background-color: transparent;
+    }
+  }
+}
+
+.wifi {
+  &-icon {
+
+    &-disabled,
+    &-disconnected,
+    &-connecting,
+    &-unknown {
+      border-radius: 8px;
+    }
+
+    &-disabled {
+      background-color: $base;
+    }
+
+    &-disconnected {
+      background-color: $red;
+    }
+
+    &-connecting {
+      background-color: $yellow;
+    }
+
+    &-connected {
+      background-color: $green;
+    }
+  }
+
+  &-ssid {
+
+    &-disconnected,
+    &-disabled,
+    &-connecting,
+    &-unknown {
+      background-color: transparent;
+    }
+
+    &-connected {
+      background-color: $base;
+
+      label {
+        padding-left: 6px;
+        padding-right: 10px;
+        color: $green;
+        font-weight: bold;
+      }
+    }
+  }
+}
+
 .datetime {
   &-icon {
     background-color: $mauve;
@@ -229,76 +347,10 @@ button {
 
   &-info {
     label {
+      padding-left: 6px;
+      padding-right: 10px;
       color: $mauve;
       font-weight: bold;
-      padding-left: 8px;
-      padding-right: 8px;
-    }
-  }
-}
-
-
-
-// ------------------------------ WIFI ------------------------------
-.wifi {
-  &-icon {
-
-    &.disconnected,
-    &.disabled,
-    &.connecting,
-    &.unknown {
-      border-radius: 8px;
-    }
-
-    &.disabled {
-      background-color: $base;
-
-      label {
-        color: $red;
-      }
-    }
-
-    &.disconnected {
-      background-color: $red;
-    }
-
-    &.connecting {
-      background-color: $yellow;
-    }
-
-    &.connected {
-      border-radius: 8px 0px 0px 8px;
-      background-color: $green;
-    }
-
-    &.unknown {
-      label {
-        color: $text;
-      }
-    }
-
-    label {
-      color: $base;
-    }
-  }
-
-  &-ssid {
-
-    &.disconnected,
-    &.disabled,
-    &.connecting,
-    &.unknown {
-      background-color: transparent;
-    }
-
-    &.connected {
-      background-color: $base;
-    }
-
-    label {
-      color: $green;
-      padding-left: 8px;
-      padding-right: 8px;
     }
   }
 }

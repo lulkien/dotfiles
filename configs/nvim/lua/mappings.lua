@@ -45,6 +45,15 @@ map("n", "<leader>ca", function()
 	vim.cmd.RustLsp("codeAction")
 end, { desc = "Rusty code action" })
 
+map(
+	"n",
+	"K", -- Override Neovim's built-in hover keymap with rustaceanvim's hover actions
+	function()
+		vim.cmd.RustLsp({ "hover", "actions" })
+	end,
+	{ silent = true, buffer = vim.api.nvim_get_current_buf() }
+)
+
 -- TAB BUFLINE
 map("n", "<tab>", function()
 	require("nvchad.tabufline").next()

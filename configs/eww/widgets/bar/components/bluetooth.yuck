@@ -1,0 +1,41 @@
+;; Listener
+(deflisten BLUETOOTH_DATA :initial "[]"
+    `hyprvisor bluetooth`)
+
+(defwidget bluetooth []
+    (box
+        :space-evenly false
+
+        (button 
+            :class "icon-container \
+                bluetooth-icon-${BLUETOOTH_DATA.powered 
+                    ? arraylength(BLUETOOTH_DATA.connected_devices) == 0 
+                        ? "no-device"
+                        : "on"
+                    : "off"}"
+            :onclick "blueman-manager & disown"
+            :tooltip "Open bluetooth manager"
+
+            (label
+                :text "${BLUETOOTH_DATA.powered
+                    ? "${arraylength(BLUETOOTH_DATA.connected_devices) == 0
+                        ? "󰂯"
+                        : "󰂱"}"
+                    : "󰂲"}")
+        )
+        
+        (box
+            :class "info-container \
+                bluetooth-devices-${(BLUETOOTH_DATA.powered && arraylength(BLUETOOTH_DATA.connected_devices) != 0)
+                    ? "show"
+                    : "hide"}"
+
+            (revealer 
+                :transition "slideright"
+                :reveal { BLUETOOTH_DATA.powered && arraylength(BLUETOOTH_DATA.connected_devices) != 0 }
+                :duration "250ms"
+                (label :text "${arraylength(BLUETOOTH_DATA.connected_devices)} device(s)")
+            )
+        )
+    )
+)

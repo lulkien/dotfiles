@@ -1,12 +1,21 @@
 (defwidget system-tray []
     (box
-        :class "bar-container"
-        (systray
-            :class "system-tray"
-            :spacing 13
-            :orientation "h"
-            :prepend-new false
-            :icon-size 20
+        :space-evenly false
+
+        (box
+            :class "icon-container systray-icon"
+            :tooltip "System tray"
+            (label :text "󰣖")
+        )
+
+        (box
+            :class "info-container systray-tray"
+            (systray
+                :spacing 13
+                :orientation "h"
+                :prepend-new false
+                :icon-size 18
+            )
         )
     )
 )

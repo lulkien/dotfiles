@@ -1,5 +1,6 @@
 ;; Modules
-(include "widgets/bar/components/archbutton.yuck")
+(include "widgets/bar/components/bluetooth.yuck")
+(include "widgets/bar/components/dashboard-button.yuck")
 (include "widgets/bar/components/datetime.yuck")
 (include "widgets/bar/components/power.yuck")
 (include "widgets/bar/components/systemmonitor.yuck")
@@ -13,8 +14,9 @@
         :orientation "h"
         :halign "start"
         :space-evenly false
-        :spacing 5
-        (arch-button)
+        :spacing 10
+        (dashboard-button)
+        (workspaces)
         (system-tray)
     )
 )
@@ -24,8 +26,7 @@
         :halign "center"
         :orientation "h"
         :space-evenly false
-        :spacing 5
-        (workspaces)
+        :spacing 10
     )
 )
 
@@ -35,6 +36,7 @@
         :space-evenly false
         :spacing 10
         :halign "end"
+        (bluetooth)
         (wifi)
         (date-time)
     )

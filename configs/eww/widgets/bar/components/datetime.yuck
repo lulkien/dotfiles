@@ -5,7 +5,9 @@
     (box
         :space-evenly false
 
-        (box :class "icon-container datetime-icon"
+        (box
+            :class "icon-container datetime-icon"
+            :tooltip "Date | Time"
             (label :text "󰸗")
         )
         

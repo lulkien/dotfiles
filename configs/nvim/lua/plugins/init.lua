@@ -32,7 +32,7 @@ local M = {
 	{
 		"mrcjkb/rustaceanvim",
 		version = "^5",
-		ft = { "rust" },
+		lazy = false,
 	},
 	{
 		"saecki/crates.nvim",

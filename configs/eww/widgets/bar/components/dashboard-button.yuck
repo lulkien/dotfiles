@@ -1,0 +1,7 @@
+(defwidget dashboard-button []
+    (button
+        :class "icon-container dashboard-button"
+        :tooltip "Dashboard"
+        (label :text "󰣇")
+    )
+)
