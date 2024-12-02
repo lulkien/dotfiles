@@ -1,6 +1,6 @@
 ;; Listener
 (deflisten BLUETOOTH_DATA :initial "[]"
-    `hyprvisor bluetooth`)
+    `uwsm app -- hyprvisor bluetooth`)
 
 (defwidget bluetooth []
     (box
