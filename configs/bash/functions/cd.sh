@@ -150,7 +150,7 @@ function cd() {
     [[ $cd_status -ne 0 ]] && return $cd_status
 
     KBC_CD_PREV="$current_dir"
-    __cd_update_history "$current_dir"
+    __cd_update_history "$cd_destination"
 
     return 0
 }

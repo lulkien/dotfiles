@@ -65,6 +65,11 @@ function cd --wraps=cd --description 'Wrapper function for change directory'
     function __cd_jump
         read -f -p 'printf "#? "' REPLY
 
+        if test $status -ne 0
+            echo "Canceled."
+            return 1
+        end
+
         if not string match -qr '^[0-9]+$' -- "$REPLY"
             echo "Index must be a number."
             return 1
@@ -152,7 +157,7 @@ function cd --wraps=cd --description 'Wrapper function for change directory'
     test $cd_status -ne 0; and return $cd_status
 
     set KFC_CD_PREV "$current_dir"
-    __cd_update_history "$current_dir"
+    __cd_update_history "$cd_destination"
 
     set -e -g CD_HISTORY
 
