@@ -42,6 +42,7 @@ Config(
     // `<anyrun config dir>/plugins` directory or with an absolute path to just load the file the path points to.
     plugins: [
         "libuwsm_launcher.so",
+        "libpower_menu.so",
         // "libapplications.so",
         // "libsymbols.so",
         // "libshell.so",
