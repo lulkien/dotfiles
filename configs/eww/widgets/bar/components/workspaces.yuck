@@ -1,6 +1,6 @@
 ;; Listener
 (deflisten WS_DATA :initial "[]"
-    `hyprvisor workspaces 5`)
+    `uwsm app -- hyprvisor workspaces 5`)
 
 (defvar WS_ICON_ARRAY '[ "", "󰲠", "󰲢", "󰲤", "󰲦", "󰲨", "󰲪", "󰲬", "󰲮", "󰲰", "󰿬" ]')
 
