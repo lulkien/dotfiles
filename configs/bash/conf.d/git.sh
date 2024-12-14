@@ -7,7 +7,6 @@ alias gst='do_command "git status"'
 alias gdf='do_command "git diff"'
 
 alias gad='do_command "git add"'
-alias gcm='do_command "git commit"'
 
 alias gco='do_command "git checkout"'
 alias gbr='do_command "git branch"'
