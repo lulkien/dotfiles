@@ -16,7 +16,7 @@ function wl-capture-region
 
     set -l record_region (slurp)
     if test $status -ne 0
-        eecho Canceled.
+        echo Canceled.
         return 4
     end
 

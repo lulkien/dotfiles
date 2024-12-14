@@ -1,0 +1,4 @@
+Config (
+    show_description: false,
+    max_entries: 7,
+)
