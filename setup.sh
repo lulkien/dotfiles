@@ -71,26 +71,47 @@ setup_dotfiles() {
 
 post_hyprland_config() {
     echo "[INFO] Run post config for Hyprland"
-    local user_icons_dir=$HOME/.local/share/icons
-    local hyprcursor_packages_dir=$script_path/packages/hyprcursor
-    if [[ ! -d $user_icons_dir ]]; then
-        echo "[DEBUG] mkdir -p $user_icons_dir"
-        mkdir -p $user_icons_dir
+
+    # Setup icons
+    local user_icons=$HOME/.local/share/icons
+    local hyprcursor_packages=$script_path/packages/hyprcursor
+
+    if [[ ! -d $user_icons ]]; then
+        echo "[DEBUG] mkdir -p $user_icons"
+        mkdir -p $user_icons
     fi
 
-    for pgk in $hyprcursor_packages_dir/*.tar.gz; do
-        echo "[DEBUG] tar -xzf $pgk -C $user_icons_dir"
-        tar -xzf $pgk -C $user_icons_dir
+    for pgk in $hyprcursor_packages/*.tar.gz; do
+        echo "[DEBUG] tar -xzf $pgk -C $user_icons"
+        tar -xzf $pgk -C $user_icons
     done
 
-    local user_fonts_dir="$HOME/.fonts"
-    if [[ ! -d ${user_fonts_dir} ]]; then
-        echo "[DEBUG] mkdir -p ${user_fonts_dir}"
-        mkdir -p ${user_fonts_dir}
+    # Setup fonts
+    local user_fonts="$HOME/.fonts"
+
+    if [[ ! -d $user_fonts ]]; then
+        echo "[DEBUG] mkdir -p $user_fonts"
+        mkdir -p $user_fonts
     fi
-    echo "[DEBUG] cp -r ${script_path}/packages/fonts/Anurati ${user_fonts_dir}"
-    cp -r ${script_path}/packages/fonts/Anurati ${user_fonts_dir}
+
+    echo "[DEBUG] cp -r $script_path/packages/fonts/Anurati $user_fonts"
+    cp -r $script_path/packages/fonts/Anurati $user_fonts
     fc-cache -fv
+
+    # Setup bin
+    local user_bin="$HOME/.local/bin"
+    if [[ ! -d ${user_bin} ]]; then
+        echo "[DEBUG] mkdir -p ${user_bin}"
+        mkdir -p ${user_bin}
+    fi
+
+    if [[ -L $user_bin/Hyprland ]]; then
+        unlink $user_bin/Hyprland
+    elif [[ -e $user_bin/Hyprland ]]; then
+        mv $user_bin/Hyprland $user_bin/Hyprland.bak
+    fi
+
+    ln -s $script_path/bin/Hyprland $user_bin/Hyprland
 }
 
 main() {

@@ -1,0 +1,3 @@
+#!/usr/bin/env fish
+
+uwsm start -S hyprland.desktop
