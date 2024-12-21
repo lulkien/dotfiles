@@ -5,16 +5,16 @@ function fish_prompt --description 'Write out the prompt'
     set cwd_string $KFC_BLUE_N' 󰉋 '(prompt_pwd --full-length-dirs=2 --dir-length=3)
     set git_string (kfc_git_prompt)
 
-    set command_prefix $KFC_WHITE_N'   '$KFC_CL_NONE
+    set command_prefix $KFC_GREEN_N'  '$KFC_CL_NONE
 
     # OVERRIDE ROOT PREFIX IS A BAD IDEA, TRUST ME
     if test (whoami) = root
-        set command_prefix $KFC_RED_N' #   '$KFC_CL_NONE
+        set command_prefix $KFC_RED_N' #  '$KFC_CL_NONE
     end
 
     # Check being remoted via ssh
     if set -q SSH_TTY
-        set prompt_string $KFC_RED_N"[Remote]"
+        set prompt_string $KFC_RED_N" "
     end
 
     set -a prompt_string $user_string$cwd_string
