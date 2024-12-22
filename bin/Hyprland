@@ -1,3 +1,22 @@
-#!/usr/bin/env fish
+#!/usr/bin/env bash
 
-uwsm start -S hyprland.desktop
+function start_hyprland {
+    if [[ $(tty) != '/dev/tty1' ]]; then
+        printf "Should run this script on tty1.\n"
+        return 1
+    fi
+
+    pidof Hyprland
+    if [[ $? -eq 0 ]]; then
+        printf "Hyprland is running.\n"
+        return 2
+    fi
+
+    if command -v uwsm &>/dev/null; then
+        uwsm start -S hyprland.desktop
+    else
+        Hyprland
+    fi
+}
+
+start_hyprland

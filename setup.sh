@@ -38,7 +38,9 @@ configs=('fish' 'nvim' 'neovide' 'bash')
 # If setup for hyprland
 is_hyprland=false
 
-setup_dotfiles() {
+# --------------------------------------------------------------------------------------------------------------------------------------------
+
+function setup_dotfiles {
     if test $(pwd) != "${script_path}"; then
         echo "[DEBUG] cd ${script_path}"
         cd ${script_path}
@@ -69,7 +71,7 @@ setup_dotfiles() {
     echo "--------------------------------------"
 }
 
-post_hyprland_config() {
+function post_hyprland_config {
     echo "[INFO] Run post config for Hyprland"
 
     # Setup icons
@@ -114,7 +116,7 @@ post_hyprland_config() {
     ln -s $script_path/bin/Hyprland $user_bin/Hyprland
 }
 
-main() {
+function main {
     if $is_root_user; then
         echo -e '\e[1;32mTarget: \e[00mRoot'
         # keep configs for root
@@ -165,8 +167,8 @@ main() {
     read -r -p 'Answer: ' response
 
     echo
-    case "$response" in
-    [Y/y])
+    case "${response,,}" in
+    y)
         echo -e '\e[1;32mSetting up...\e[00m'
         setup_dotfiles
         if $is_hyprland; then
@@ -181,5 +183,7 @@ main() {
         ;;
     esac
 }
+
+# ------------------------------------------------------------------------------------------------------------
 
 main

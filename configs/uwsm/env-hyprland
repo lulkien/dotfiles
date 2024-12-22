@@ -1,4 +1,4 @@
-export HYPRCURSOR_THEME=catppuccin-macchiato-light-cursors
+export HYPRCURSOR_THEME=catppuccin-mocha-red-cursors
 export HYPRCURSOR_SIZE=30
  
 export HYPRLAND_NO_SD_VARS=1
