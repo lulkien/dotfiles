@@ -1,41 +1,47 @@
-vim.g.mapleader = " "
+require("core.options")
+require("core.keymaps")
+require("core.autocmds")
 
--- Setup neovide before all
-require("neovide")
-
-vim.g.base46_cache = vim.fn.stdpath("data") .. "/nvchad/base46/"
-
--- bootstrap lazy and all plugins
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-
-if not vim.loop.fs_stat(lazypath) then
-	local repo = "https://github.com/folke/lazy.nvim.git"
-	vim.fn.system({ "git", "clone", "--filter=blob:none", repo, "--branch=stable", lazypath })
-end
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+  local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+  local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
+  if vim.v.shell_error ~= 0 then
+    error("Error cloning lazy.nvim:\n" .. out)
+  end
+end ---@diagnostic disable-next-line: undefined-field
 
 vim.opt.rtp:prepend(lazypath)
 
-local lazy_config = require("configs.lazy")
-
--- load plugins
 require("lazy").setup({
-	{
-		"NvChad/NvChad",
-		lazy = false,
-		branch = "v2.5",
-		import = "nvchad.plugins",
-		config = function()
-			require("options")
-		end,
-	},
+  spec = {
+    -- Theme
+    require("plugins.catppuccin"),
 
-	{ import = "plugins" },
-}, lazy_config)
+    -- UI
+    require("plugins.nvim-tree"),
+    require("plugins.bufferline"),
+    require("plugins.lualine"),
+    require("plugins.alpha"),
+    require("plugins.indent-blankline"),
+    require("plugins.gitsigns"),
 
--- load theme
-dofile(vim.g.base46_cache .. "defaults")
-dofile(vim.g.base46_cache .. "statusline")
+    -- Functionality
+    require("plugins.telescope"),
+    require("plugins.conform"),
+    require("plugins.comment"),
+    require("plugins.misc"),
 
-require("options")
-require("autocmds")
-require("mappings")
+    -- Devlopment
+    require("plugins.treesitter"),
+    require("plugins.cmp"),
+    require("plugins.lsp"),
+
+    -- Rust devlopment
+    require("plugins.rustaceanvim"),
+    require("plugins.crates"),
+  },
+
+  install = { colorscheme = { "catppuccin" } },
+  checker = { enabled = false },
+})
