@@ -110,7 +110,7 @@ return {
     local servers = {
       clangd = {},
       bashls = {},
-      cmake = {},
+      -- cmake = {},
       cssls = {},
       html = { filetypes = { "html", "twig", "hbs" } },
       jsonls = {},

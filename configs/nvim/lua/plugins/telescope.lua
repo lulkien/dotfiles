@@ -76,5 +76,8 @@ return {
         prompt_title = "Find in opening buffers",
       })
     end, { desc = "[F]ind [I]n [O]pening buffers" })
+
+    -- Git keymap
+    vim.keymap.set("n", "<leader>gst", "<cmd>Telescope git_status<CR>", { desc = "Show git status" })
   end,
 }
