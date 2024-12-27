@@ -46,16 +46,16 @@ return {
         theme = "catppuccin",
         -- Some useful glyphs:
         -- https://www.nerdfonts.com/cheat-sheet
-        --        
+        --          
         section_separators = { left = "", right = "" },
         component_separators = { left = "", right = "" },
-        disabled_filetypes = { "alpha", "neo-tree", "NvimTree" },
+        disabled_filetypes = { "alpha", "neo-tree", "NvimTree", "qf" },
         always_divide_middle = true,
       },
       sections = {
         lualine_a = { mode },
-        lualine_b = { "branch" },
-        lualine_c = { filename },
+        lualine_b = { filename },
+        lualine_c = { "branch" },
         lualine_x = {
           diagnostics,
           diff,

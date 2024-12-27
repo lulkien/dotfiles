@@ -2,6 +2,7 @@ return {
   "nvim-telescope/telescope.nvim",
   event = "VimEnter",
   branch = "0.1.x",
+
   dependencies = {
     "nvim-lua/plenary.nvim",
     {
@@ -15,6 +16,7 @@ return {
 
     { "nvim-tree/nvim-web-devicons", enabled = vim.g.have_nerd_font },
   },
+
   config = function()
     require("telescope").setup({
       defaults = {
@@ -50,17 +52,17 @@ return {
 
     local builtin = require("telescope.builtin")
 
-    vim.keymap.set("n", "<leader>fw", builtin.grep_string, { desc = "[F]ind current [W]ord" })
-    vim.keymap.set("n", "<leader>lg", builtin.live_grep, { desc = "[L]ive [G]rep" })
-    vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "[F]ind [F]iles" })
-    vim.keymap.set("n", "<leader>fd", builtin.diagnostics, { desc = "[F]ind [D]iagnostics" })
+    vim.keymap.set("n", "<leader>fw", builtin.grep_string, { desc = "Find word" })
+    vim.keymap.set("n", "<leader>lg", builtin.live_grep, { desc = "Live grep" })
+    vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Find files" })
+    vim.keymap.set("n", "<leader>fd", builtin.diagnostics, { desc = "Find diagnostics" })
 
     vim.keymap.set("n", "<leader>fb", function()
       builtin.buffers(require("telescope.themes").get_dropdown({
         winblend = 5,
         previewer = false,
       }))
-    end, { desc = "[F]ind [B]uffers" })
+    end, { desc = "Find buffers" })
 
     vim.keymap.set("n", "<leader>fib", function()
       builtin.current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
@@ -68,16 +70,16 @@ return {
         previewer = false,
         prompt_title = "Find in current buffer",
       }))
-    end, { desc = "[F]ind [I]n [B]uffer" })
+    end, { desc = "Find in current buffer" })
 
     vim.keymap.set("n", "<leader>fio", function()
       builtin.live_grep({
         grep_open_files = true,
         prompt_title = "Find in opening buffers",
       })
-    end, { desc = "[F]ind [I]n [O]pening buffers" })
+    end, { desc = "Find in opening buffers" })
 
     -- Git keymap
-    vim.keymap.set("n", "<leader>gst", "<cmd>Telescope git_status<CR>", { desc = "Show git status" })
+    vim.keymap.set("n", "<leader>gs", "<cmd>Telescope git_status<CR>", { desc = "Git status" })
   end,
 }

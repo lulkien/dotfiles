@@ -8,14 +8,6 @@ return {
 
     vim.keymap.set("n", "<leader>rcu", function()
       require("crates").upgrade_all_crates()
-    end, { desc = "Rust crates update" })
-
-    vim.keymap.set("n", "<leader>ca", function()
-      vim.cmd.RustLsp("codeAction")
-    end, { desc = "Rusty code action" })
-
-    vim.keymap.set("n", "K", function()
-      vim.cmd.RustLsp({ "hover", "actions" })
-    end, { silent = true, buffer = vim.api.nvim_get_current_buf() })
+    end, { desc = "Rust: Update all crates" })
   end,
 }

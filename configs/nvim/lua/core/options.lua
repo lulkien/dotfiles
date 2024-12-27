@@ -40,4 +40,4 @@ vim.opt.undofile = true
 vim.opt.swapfile = false
 
 vim.opt.whichwrap:append("bs<>[]hl")
-vim.opt.fileencoding = 'utf-8'
+vim.opt.fileencoding = "utf-8"
