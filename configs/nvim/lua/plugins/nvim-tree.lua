@@ -1,13 +1,16 @@
 return {
   "nvim-tree/nvim-tree.lua",
+  dependencies = {
+    "catppuccin/nvim",
+  },
   config = function()
     vim.g.loaded_netrw = 1
     vim.g.loaded_netrwPlugin = 1
 
     require("nvim-tree").setup({
       filters = {
-        dotfiles = true,
-        git_ignored = false,
+        dotfiles = false,
+        git_ignored = true,
       },
 
       disable_netrw = true,

@@ -43,11 +43,34 @@ return {
         gitsigns = true,
         nvimtree = true,
         treesitter = true,
-        notify = false,
-        mini = {
+        alpha = true,
+        indent_blankline = {
           enabled = true,
-          indentscope_color = "",
+          scope_color = "text",
+          colored_indent_levels = false,
         },
+        mason = true,
+        native_lsp = {
+          enabled = true,
+          virtual_text = {
+            errors = { "italic" },
+            hints = { "italic" },
+            warnings = { "italic" },
+            information = { "italic" },
+            ok = { "italic" },
+          },
+          underlines = {
+            errors = { "underline" },
+            hints = { "underline" },
+            warnings = { "underline" },
+            information = { "underline" },
+            ok = { "underline" },
+          },
+          inlay_hints = {
+            background = true,
+          },
+        },
+        which_key = false,
       },
     })
 
