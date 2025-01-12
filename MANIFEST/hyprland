@@ -1,0 +1,14 @@
+# Format: <config>|<operation>|<destination>
+# <destination> is the part after $HOME
+# <destination> can be empty, default destination will be used: $HOME/.config/<config>
+
+fish|symlink|
+bash|symlink|
+nvim|symlink|
+vim|symlink|.vim
+kitty|symlink|
+hypr|symlink|
+eww|symlink|
+anyrun|symlink|
+dunst|symlink|
+uwsm|symlink|
