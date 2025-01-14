@@ -1,76 +1,123 @@
 #!/usr/bin/env bash
 
-set +e
-
 SCRIPT_DIR=$(realpath "$(dirname ${BASH_SOURCE[0]})")
 
 make_symlink() {
     local src=$1
     local dest=$2
 
+    local dest_dir=$(dirname $dest)
+    if [[ ! -d $dest_dir ]]; then
+        mkdir -p $dest_dir || return 1
+    fi
+
     if [[ -L $dest ]]; then
-        local current_target="$(realpath $dest)"
-        if [[ $current_target = $src ]]; then
-            echo "[WARNING] Already linked: $dest -> $src"
-            return
+        local target="$(realpath $dest)"
+        if [[ $target = $src ]]; then
+            echo "[INFO] Already linked $dest -> $src"
+            return 0
         else
-            echo "[WARNING] Unlink: $dest | $current_target"
-            unlink $dest
+            echo "[WARN] Unlink $dest x $target"
+            unlink $dest || return 1
         fi
-        return
     elif [[ -d $dest ]]; then
-        local dest_backup=$dest.bak
-        rm -rf $dest_backup
-        mv $dest $dest_backup
-        echo "[WARNING] Backup current directory: $dest_backup"
+        local dest_backup="${dest}_old"
+        if [[ -d $dest_backup ]]; then
+            rm -r $dest_backup || return 1
+        fi
+
+        mv $dest $dest_backup || return 1
+        echo "[INFO] Rename $dest -> $dest_backup"
     fi
 
     ln -s $src $dest
 
-    if [[ $? -eq 0 ]]; then
-        echo "[OK] Linked: $dest -> $src"
-    else
-        echo "[ERROR] Can't link: $dest | $src"
+    if [[ $? -ne 0 ]]; then
+        echo "[ERROR] Failed to link $dest -> $src"
+        return 1
     fi
+
+    echo "[OK] Linked $dest -> $src"
+    return 0
+}
+
+make_copy() {
+    local src=$1
+    local dest=$2
+    local status=
+
+    local dest_dir=$(dirname $dest)
+    if [[ ! -d $dest_dir ]]; then
+        mkdir -p $dest_dir || return 1
+    fi
+
+    if [[ -d $src ]]; then
+        cp -r $src $dest
+        status=$?
+    elif [[ -e $src ]]; then
+        cp $src $dest
+        status=$?
+    fi
+
+    if [[ $status -ne 0 ]]; then
+        echo "[ERROR] Failed to copy $src -> $dest"
+        return 1
+    fi
+
+    echo "[OK] Copied $src -> $dest"
+    return 0
 }
 
 do_manifest() {
-    local config=
+    local source=
     local operation=
     local destination=
+    local ret_code=0
 
-    IFS="|" read -r config operation destination <<<"$1"
+    IFS="|" read -r source operation destination <<<"$2"
 
-    if [[ -z "$config" || -z "$operation" ]]; then
-        echo "[ERROR] Manifest invalid: $1"
-        return
+    if [[ -z "$source" || -z "$operation" || -z "$destination" ]]; then
+        echo "[ERROR] Invalid format at line $1: $2"
+        return 1
     fi
 
-    local source=$SCRIPT_DIR/configs/$config
-    if [[ -z "$destination" ]]; then
-        destination=$HOME/.config/$config
-    else
-        destination=$HOME/$destination
-    fi
+    source=$SCRIPT_DIR/$source
+    destination=$HOME/$destination
 
     case $operation in
     symlink)
         make_symlink $source $destination
+        ret_code=$?
         ;;
-
+    copy)
+        make_copy $source $destination
+        ret_code=$?
+        ;;
+    extract)
+        do_extract $source $destination
+        ret_code=$?
+        ;;
     *)
-        echo "[WARNING] Unknown operation $operation. Skipping..."
+        echo "[WARNING] Unknown operation $operation. Skipping line $1"
+        return 1
         ;;
     esac
+
+    if [[ $ret_code -ne 0 ]]; then
+        echo "[ERROR] Failed to process line $1: $2"
+        return 1
+    fi
 }
 
 load_manifest_file() {
+    local line_numer=0
     while read -r line; do
-        if [[ "$line" =~ ^#.* || -z "$line" ]]; then
+        line_number=$(($line_number + 1))
+        if [[ -z "$line" || "$line" =~ ^#.* ]]; then
             continue
         fi
 
-        do_manifest "$line"
+        do_manifest "$line_number" "$line"
     done <$1
 }
 
