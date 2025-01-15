@@ -2,6 +2,7 @@ function fish_prompt --description 'Write out the prompt'
     set prompt_string ''
 
     set user_string $KFC_CYAN_N' '(whoami)
+    set host_string ''
     set cwd_string $KFC_BLUE_N' 󰉋 '(prompt_pwd --full-length-dirs=2 --dir-length=3)
     set git_string (kfc_git_prompt)
 
@@ -17,7 +18,15 @@ function fish_prompt --description 'Write out the prompt'
         set prompt_string $KFC_RED_N" "
     end
 
-    set -a prompt_string $user_string$cwd_string
+    if string match --regex --quiet -- '^(true|yes|ok|1)$' "$KFC_SHOW_HOSTNAME"
+        if test -n "$KFC_OVERRIDE_HOSTNAME"
+            set host_string $KFC_ORANGE_N' 󰍹 '$KFC_OVERRIDE_HOSTNAME
+        else
+            set host_string $KFC_ORANGE_N' 󰍹 '(hostname)
+        end
+    end
+
+    set -a prompt_string $user_string$host_string$cwd_string
     set -a prompt_string "$git_string"
 
     # Output
