@@ -51,7 +51,7 @@ class ProcessingError(Exception): ...
 SCRIPT_NAME = os.path.basename(__file__)
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 HOME = os.path.expanduser("~")
-LOG_LEVEL = LogLevel.DEBUG
+LOG_LEVEL = LogLevel.WARN
 
 
 # -------------------- UTILITIES --------------------------
@@ -80,10 +80,13 @@ def print_help():
 def remove_item(path):
     if os.path.islink(path):
         os.unlink(path)
+        print_log(LogLevel.DEBUG, f"Unlinked: {path}")
     elif os.path.isfile(path):
         os.remove(path)
+        print_log(LogLevel.DEBUG, f"Remove file: {path}")
     elif os.path.isdir(path):
         shutil.rmtree(path)
+        print_log(LogLevel.DEBUG, f"Remove directory: {path}")
     else:
         raise Exception("Not supported item type")
 
@@ -109,16 +112,15 @@ def remove_or_backup(path):
         raise Exception(f"{path} not found")
 
     if os.path.islink(path):
-        os.unlink(path)
+        remove_item(path)
 
     elif os.path.isdir(path) or os.path.isfile(path):
         backup = f"{path}_old"
         if os.path.exists(backup):
-            print_log(LogLevel.DEBUG, f"Remove: {backup}")
             remove_item(backup)
 
-        print_log(LogLevel.DEBUG, f"Rename: {path} -> {backup}")
         shutil.move(path, backup)
+        print_log(LogLevel.DEBUG, f"Renamed: {path} -> {backup}")
 
     else:
         raise Exception("Not supported item type")
@@ -161,29 +163,20 @@ def make_copy(source, destination, force=False):
         raise ManifestError(f'Invalid source "{source}"')
 
     try:
-        if os.path.islink(destination):
-            target = os.path.realpath(destination)
-            if os.path.isfile(target):
-                if force:
-                    print_log(LogLevel.WARN, f"Force unlink: {destination}")
-                    remove_item(destination)
-                else:
-                    raise Exception("Linked to other file")
+        destination_parent = Path(os.path.dirname(destination))
 
-        elif os.path.isfile(destination):
-            if force:
-                print_log(LogLevel.WARN, f"Force remove: {destination}")
-                remove_item(destination)
-            else:
-                destination_backup = f"{destination}_old"
-                if os.path.exists(destination_backup):
-                    print_log(LogLevel.DEBUG, f"Remove: {destination_backup}")
-                    remove_item(destination_backup)
+        if not destination_parent.exists():
+            if not force:
+                raise Exception(f"{str(destination_parent)} not found")
 
-                print_log(
-                    LogLevel.DEBUG, f"Rename: {destination} -> {destination_backup}"
-                )
-                shutil.move(destination, destination_backup)
+            destination_parent.mkdir(parents=True)
+
+        else:
+            if os.path.exists(destination):
+                if not force:
+                    raise Exception("Destination existed.")
+
+                remove_or_backup(destination)
 
         copy_item(source, destination)
         print_log(LogLevel.OK, f"Copied: {source} -> {destination}")
@@ -209,8 +202,8 @@ def process(line, force=False):
 
     if operation == "symlink":
         make_symlink(source, destination, force)
-    # elif operation == "copy":
-    #     make_copy(source, destination, force)
+    elif operation == "copy":
+        make_copy(source, destination, force)
     else:
         raise ManifestError(f'Unknown operation "{operation}"')
 
