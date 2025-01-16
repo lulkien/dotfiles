@@ -1,3 +1,4 @@
 symlink|link|test_symlink
 symlink|link|test_symlink2
-copy|link|test_copy
+copy|link|test_copy                # copy
+extract|link.tar.gz|test_extract

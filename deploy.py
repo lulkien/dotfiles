@@ -51,7 +51,7 @@ class ProcessingError(Exception): ...
 SCRIPT_NAME = os.path.basename(__file__)
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 HOME = os.path.expanduser("~")
-LOG_LEVEL = LogLevel.WARN
+LOG_LEVEL = LogLevel.DEBUG
 
 
 # -------------------- UTILITIES --------------------------
@@ -126,6 +126,11 @@ def remove_or_backup(path):
         raise Exception("Not supported item type")
 
 
+def process_extract(source, destination):
+    SUPPORTED_EXT = [".tar.gz", ".tar.bz", ".zip"]
+    pass
+
+
 # -------------------- CORE --------------------------
 
 
@@ -184,8 +189,35 @@ def make_copy(source, destination, force=False):
         raise ProcessingError(str(e))
 
 
+def extract_archive(archive_path, extract_location, force=False):
+    if not os.path.exists(archive_path):
+        raise ManifestError("Invalid archive path")
+
+    try:
+        destination = Path(extract_location)
+
+        if not destination.exists():
+            if not force:
+                raise Exception("Extract location not found")
+
+            destination.mkdir(parents=True)
+
+        else:
+            if not destination.is_dir():
+                if not force:
+                    raise Exception("Extract location existed and not a directory")
+
+                remove_or_backup(extract_location)
+
+        process_extract(archive_path, extract_location)
+        print_log(LogLevel.OK, f"Extracted: {archive_path} -> {extract_location}")
+    except Exception as e:
+        raise ProcessingError(str(e))
+
+
 def process(line, force=False):
-    parts = line.split("|")
+    parts = [part.strip() for part in line.split("#")[0].split("|")]
+
     if len(parts) != 3:
         raise ManifestError("Invalid format")
 
@@ -204,6 +236,8 @@ def process(line, force=False):
         make_symlink(source, destination, force)
     elif operation == "copy":
         make_copy(source, destination, force)
+    elif operation == "extract":
+        extract_archive(source, destination, force)
     else:
         raise ManifestError(f'Unknown operation "{operation}"')
 
