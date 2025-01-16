@@ -89,6 +89,9 @@ def remove_item(path):
 
 
 def copy_item(source, destination):
+    if os.path.exists(destination):
+        raise Exception("Destination still existed")
+
     if os.path.isfile(source):
         shutil.copy(source, destination)
     elif os.path.isdir(source):
@@ -97,54 +100,31 @@ def copy_item(source, destination):
         raise Exception("Not supported item type")
 
 
-def backup_and_rename(path):
-    backup = f"{path}_old"
-    if os.path.exists(backup):
-        print_log(LogLevel.DEBUG, f"Remove: {backup}")
-        remove_item(backup)
-
-    print_log(LogLevel.DEBUG, f"Rename: {path} -> {backup}")
-    shutil.move(path, backup)
+def check_linked(source, destination) -> bool:
+    return os.path.realpath(destination) == source
 
 
-def handle_existing_item(source, destination, force):
-    if os.path.islink(destination):
-        target = os.path.realpath(destination)
-        if target == source:
-            print_log(LogLevel.INFO, f"Already linked {destination} -> {source}")
-            return True
+def remove_or_backup(path):
+    if not os.path.exists(path):
+        raise Exception(f"{path} not found")
 
-        if not force:
-            raise Exception(f"Linked to another target: {target}")
+    if os.path.islink(path):
+        os.unlink(path)
 
-        print_log(LogLevel.WARN, f"Force unlink: {destination}")
-        remove_item(destination)
+    elif os.path.isdir(path) or os.path.isfile(path):
+        backup = f"{path}_old"
+        if os.path.exists(backup):
+            print_log(LogLevel.DEBUG, f"Remove: {backup}")
+            remove_item(backup)
 
-    elif os.path.exists(destination):
-        if force:
-            print_log(LogLevel.WARN, f"Force remove: {destination}")
-            remove_item(destination)
-        else:
-            backup_and_rename(destination)
+        print_log(LogLevel.DEBUG, f"Rename: {path} -> {backup}")
+        shutil.move(path, backup)
 
-    return False
+    else:
+        raise Exception("Not supported item type")
 
 
 # -------------------- CORE --------------------------
-
-
-# Case 1: {destination} not existed -> create link {source}
-# Case 2: {destination} is an existed symlink
-#           - Already linked to {source} -> ignore
-#           - Linked to other target
-#               + force     -> unlink and relink to {source}
-#               + no force  -> throw
-# Case 3: {destination} is an existing file
-#           - force     -> remove file and create link to {source}
-#           - no force  -> backup and create line to {source}
-# Case 4: {destination} is an existing directory
-#           - force     -> remove file
-#           - no force  -> backup and create line to {source}
 
 
 def make_symlink(source, destination, force=False):
@@ -153,30 +133,25 @@ def make_symlink(source, destination, force=False):
 
     try:
         destination_parent = Path(os.path.dirname(destination))
-        destination_parent.mkdir(parents=True, exist_ok=True)
 
-        if os.path.islink(destination):
-            target = os.path.realpath(destination)
-            if target == source:
-                print_log(LogLevel.INFO, f"Already linked {destination} -> {source}")
-                return
-
+        if not destination_parent.exists():
             if not force:
-                raise Exception(f"Linked to other target")
+                raise Exception(f"{str(destination_parent)} not found")
 
-            print_log(LogLevel.WARN, f"Force unlink: {destination}")
-            remove_item(destination)
+            destination_parent.mkdir(parents=True)
 
-        elif os.path.exists(destination):
-            if force:
-                print_log(LogLevel.WARN, f"Force remove: {destination}")
-                remove_item(destination)
-            else:
-                backup_and_rename(destination)
+        else:
+            if os.path.exists(destination):
+                if os.path.islink(destination) and check_linked(source, destination):
+                    raise Exception("Already linked.")
+
+                if not force:
+                    raise Exception("Destination existed.")
+
+                remove_or_backup(destination)
 
         os.symlink(source, destination)
         print_log(LogLevel.OK, f"Linked: {destination} -> {source}")
-
     except Exception as e:
         raise ProcessingError(str(e))
 
@@ -234,8 +209,8 @@ def process(line, force=False):
 
     if operation == "symlink":
         make_symlink(source, destination, force)
-    elif operation == "copy":
-        make_copy(source, destination, force)
+    # elif operation == "copy":
+    #     make_copy(source, destination, force)
     else:
         raise ManifestError(f'Unknown operation "{operation}"')
 
@@ -253,7 +228,7 @@ def parse_manifest(file_name, force=False):
             try:
                 process(line, force)
             except ProcessingError as e:
-                print_log(LogLevel.WARN, f"Skip processing line {line}: {str(e)}")
+                print_log(LogLevel.WARN, f"Skip processing line {line_num}: {str(e)}")
             except ManifestError as e:
                 raise ManifestFileError(str(e), line_num, line)
 
@@ -277,7 +252,7 @@ def main():
         else:
             file_name = arg
 
-    if file_name == None:
+    if not file_name:
         raise ArgumentError("Missing file name")
 
     parse_manifest(file_name, force)
