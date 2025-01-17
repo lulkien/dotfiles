@@ -1,12 +1,10 @@
 function hostname
-    if test -n "$HOSTNAME"
-        echo "$HOSTNAME"
-    else if test -n "$hostname"
-        echo "$hostname"
+    if test -n "$hostname"
+        printf "$hostname\n"
     else if command -sq hostname
         command hostname
     else
-        set _HOSTNAME (head -1 /etc/hostname)
-        test -n "$_HOSTNAME"; and echo "$_HOSTNAME"; or echo Unknown
+        set -f HOSTNAME_ (head -1 /etc/hostname)
+        test -n "$HOSTNAME_"; and printf "$HOSTNAME_\n"; or echo "Unknown\n"
     end
 end

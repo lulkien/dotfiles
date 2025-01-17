@@ -20,9 +20,9 @@ function fish_prompt --description 'Write out the prompt'
 
     if string match --regex --quiet -- '^(true|yes|ok|1)$' "$KFC_SHOW_HOSTNAME"
         if test -n "$KFC_OVERRIDE_HOSTNAME"
-            set host_string $KFC_ORANGE_N' 󰍹 '$KFC_OVERRIDE_HOSTNAME
+            set host_string $KFC_YELLOW_N' 󰍹 '$KFC_OVERRIDE_HOSTNAME
         else
-            set host_string $KFC_ORANGE_N' 󰍹 '(hostname)
+            set host_string $KFC_YELLOW_N' 󰍹 '(hostname)
         end
     end
 
