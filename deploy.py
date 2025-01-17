@@ -2,9 +2,11 @@
 
 import os
 import sys
+import shutil
+import zipfile
+import tarfile
 from enum import Enum
 from pathlib import Path
-import shutil
 
 
 # ------------------- DEFINITIONS ---------------------------
@@ -126,9 +128,17 @@ def remove_or_backup(path):
         raise Exception("Not supported item type")
 
 
-def process_extract(source, destination):
-    SUPPORTED_EXT = [".tar.gz", ".tar.bz", ".zip"]
-    pass
+def extract_archive(archive_path, output_dir):
+    if archive_path.endswidth((".tar.gz", ".tar.bz2", ".tgz", ".tbz2", ".tar")):
+        with tarfile.open(archive_path, "r:*") as tar:
+            tar.extractall(path=output_dir)
+
+    elif archive_path.endswidth(".zip"):
+        with zipfile.ZipFile(archive_path, "r") as zip_ref:
+            zip_ref.extractall(output_dir)
+
+    else:
+        raise Exception("Unsupported archive format")
 
 
 # -------------------- CORE --------------------------
@@ -189,16 +199,16 @@ def make_copy(source, destination, force=False):
         raise ProcessingError(str(e))
 
 
-def extract_archive(archive_path, extract_location, force=False):
+def extract_archive(archive_path, output_dir, force=False):
     if not os.path.exists(archive_path):
         raise ManifestError("Invalid archive path")
 
     try:
-        destination = Path(extract_location)
+        destination = Path(output_dir)
 
         if not destination.exists():
             if not force:
-                raise Exception("Extract location not found")
+                raise Exception("Output directory not found")
 
             destination.mkdir(parents=True)
 
@@ -207,10 +217,10 @@ def extract_archive(archive_path, extract_location, force=False):
                 if not force:
                     raise Exception("Extract location existed and not a directory")
 
-                remove_or_backup(extract_location)
+                remove_or_backup(output_dir)
 
-        process_extract(archive_path, extract_location)
-        print_log(LogLevel.OK, f"Extracted: {archive_path} -> {extract_location}")
+        extract_archive(archive_path, output_dir)
+        print_log(LogLevel.OK, f"Extracted: {archive_path} -> {output_dir}")
     except Exception as e:
         raise ProcessingError(str(e))
 
