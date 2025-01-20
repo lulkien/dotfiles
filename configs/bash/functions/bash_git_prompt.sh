@@ -43,9 +43,9 @@ function bash_git_prompt() {
     fi
 
     if $detached; then
-        git_string="\e[1;33m \e[0;91m${branch_name}"
+        git_string="\e[1;33m \e[1;91m${branch_name}"
     else
-        git_string="\e[1;33m \e[0;35m${branch_name}"
+        git_string="\e[1;33m \e[1;35m${branch_name}"
     fi
 
     # Fetch relative head count
