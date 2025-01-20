@@ -1,14 +1,21 @@
-# Format: <config>|<operation>|<destination>
-# <destination> is the part after $HOME
-# <destination> can be empty, default destination will be used: $HOME/.config/<config>
+# Config
+symlink|config/bash|.config/bash
+symlink|config/nvim|.config/nvim
+symlink|config/vim|.vim
+symlink|config/fish|.config/fish
+symlink|config/kitty|.config/kitty
 
-fish|symlink|
-bash|symlink|
-nvim|symlink|
-vim|symlink|.vim
-kitty|symlink|
-hypr|symlink|
-eww|symlink|
-anyrun|symlink|
-dunst|symlink|
-uwsm|symlink|
+symlink|config/hypr|.config/hypr
+symlink|config/eww|.config/eww
+symlink|config/anyrun|.config/anyrun
+symlink|config/dunst|.config/dunst
+symlink|config/uwsm|.config/uwsm
+
+# Binary
+symlink|bin/Hyprland|.local/bin/Hyprland
+
+# Fonts
+extract|packages/fonts/Anurati.tar.gz|.fonts
+
+# Icons
+extract|packages/hyprcursor/catppuccin-mocha-light-cursors.tar.gz|.local/share/icons

@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 import os
-import sys
 import shutil
 import zipfile
 import tarfile
@@ -80,25 +79,27 @@ Manifest file format:
         - operation:    symlink, copy, or extract
         - source:       relative path from {SCRIPT_DIR}
         - destination:  relative path from {HOME}
-    - Comment: Start with character #""")
+    - Comment: Start with character #"""
+    )
 
 
 def remove_item(path):
+    print_log(LogLevel.DEBUG, f"Try remove item: {path}")
     if os.path.islink(path):
         os.unlink(path)
         print_log(LogLevel.DEBUG, f"Unlinked: {path}")
     elif os.path.isfile(path):
         os.remove(path)
-        print_log(LogLevel.DEBUG, f"Remove file: {path}")
+        print_log(LogLevel.DEBUG, f"Removed file: {path}")
     elif os.path.isdir(path):
         shutil.rmtree(path)
-        print_log(LogLevel.DEBUG, f"Remove directory: {path}")
+        print_log(LogLevel.DEBUG, f"Removed directory: {path}")
     else:
         raise Exception("Not supported item type")
 
 
 def copy_item(source, destination):
-    if os.path.exists(destination):
+    if check_existed(destination):
         raise Exception("Destination still existed.")
 
     if os.path.isfile(source):
@@ -109,12 +110,20 @@ def copy_item(source, destination):
         raise Exception("Not supported item type.")
 
 
+def check_existed(path):
+    print_log(LogLevel.DEBUG, f"Check existed: {path}")
+    if os.path.islink(path) or os.path.isfile(path) or os.path.isdir(path):
+        return True
+    return False
+
+
 def check_linked(source, destination) -> bool:
     return os.path.realpath(destination) == source
 
 
 def remove_or_backup(path):
-    if not os.path.exists(path):
+    print_log(LogLevel.DEBUG, f"Remove or backup: {path}")
+    if not check_existed(path):
         raise Exception(f"{path} not found")
 
     if os.path.islink(path):
@@ -122,7 +131,7 @@ def remove_or_backup(path):
 
     elif os.path.isdir(path) or os.path.isfile(path):
         backup = f"{path}_old"
-        if os.path.exists(backup):
+        if check_existed(backup):
             remove_item(backup)
 
         shutil.move(path, backup)
@@ -149,7 +158,8 @@ def extract_archive(archive_path, output_dir):
 
 
 def make_symlink(source, destination, force=False):
-    if not os.path.exists(source):
+    print_log(LogLevel.DEBUG, f"Make symlink: {destination} -> {source}")
+    if not check_existed(source):
         raise ManifestError(f'Invalid source "{source}"')
 
     try:
@@ -159,10 +169,12 @@ def make_symlink(source, destination, force=False):
             if not force:
                 raise Exception(f"{str(destination_parent)} not found.")
 
+            print_log(LogLevel.DEBUG, f"Create directory: {str(destination_parent)}")
             destination_parent.mkdir(parents=True)
 
         else:
-            if os.path.exists(destination):
+            if check_existed(destination):
+                print_log(LogLevel.DEBUG, f"Destination existed: {destination}")
                 if os.path.islink(destination) and check_linked(source, destination):
                     raise Exception("Already linked.")
 
@@ -178,7 +190,7 @@ def make_symlink(source, destination, force=False):
 
 
 def make_copy(source, destination, force=False):
-    if not os.path.exists(source):
+    if not check_existed(source):
         raise ManifestError(f'Invalid source "{source}"')
 
     try:
@@ -191,7 +203,7 @@ def make_copy(source, destination, force=False):
             destination_parent.mkdir(parents=True)
 
         else:
-            if os.path.exists(destination):
+            if check_existed(destination):
                 if not force:
                     raise Exception("Destination existed.")
 
@@ -204,7 +216,7 @@ def make_copy(source, destination, force=False):
 
 
 def extract(archive_path, output_dir, force=False):
-    if not os.path.exists(archive_path):
+    if not check_existed(archive_path):
         raise ManifestError("Invalid archive path")
 
     try:
