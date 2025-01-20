@@ -84,7 +84,6 @@ Manifest file format:
 
 
 def remove_item(path):
-    print_log(LogLevel.DEBUG, f"Try remove item: {path}")
     if os.path.islink(path):
         os.unlink(path)
         print_log(LogLevel.DEBUG, f"Unlinked: {path}")
@@ -111,7 +110,6 @@ def copy_item(source, destination):
 
 
 def check_existed(path):
-    print_log(LogLevel.DEBUG, f"Check existed: {path}")
     if os.path.islink(path) or os.path.isfile(path) or os.path.isdir(path):
         return True
     return False
@@ -122,7 +120,6 @@ def check_linked(source, destination) -> bool:
 
 
 def remove_or_backup(path):
-    print_log(LogLevel.DEBUG, f"Remove or backup: {path}")
     if not check_existed(path):
         raise Exception(f"{path} not found")
 
@@ -158,7 +155,6 @@ def extract_archive(archive_path, output_dir):
 
 
 def make_symlink(source, destination, force=False):
-    print_log(LogLevel.DEBUG, f"Make symlink: {destination} -> {source}")
     if not check_existed(source):
         raise ManifestError(f'Invalid source "{source}"')
 
