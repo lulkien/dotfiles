@@ -69,13 +69,13 @@ def print_help():
     print(f"Usage: ./{SCRIPT_NAME} [OPTION] <MANIFEST FILE>")
     print()
     print("Options:")
-    print("    -f, --force          Force update no matter what")
+    print("    -f, --force          Force process manifest command")
     print("    -h, --help           Print help only")
     print()
     print("Manifest format:")
-    print("    <config>|<operation>|<destination>")
-    print(f"    config: relative path from {SCRIPT_DIR}")
-    print("    operation: symlink|copy|extract")
+    print("    <operation>|<source>|<destination>")
+    print(f"    operation: symlink|copy|extract")
+    print(f"    source: relative path from {SCRIPT_DIR}")
     print(f"    destination: relative path from {HOME}. Can be empty")
 
 
@@ -95,14 +95,14 @@ def remove_item(path):
 
 def copy_item(source, destination):
     if os.path.exists(destination):
-        raise Exception("Destination still existed")
+        raise Exception("Destination still existed.")
 
     if os.path.isfile(source):
         shutil.copy(source, destination)
     elif os.path.isdir(source):
         shutil.copytree(source, destination)
     else:
-        raise Exception("Not supported item type")
+        raise Exception("Not supported item type.")
 
 
 def check_linked(source, destination) -> bool:
@@ -125,20 +125,20 @@ def remove_or_backup(path):
         print_log(LogLevel.DEBUG, f"Renamed: {path} -> {backup}")
 
     else:
-        raise Exception("Not supported item type")
+        raise Exception("Not supported item type.")
 
 
 def extract_archive(archive_path, output_dir):
-    if archive_path.endswidth((".tar.gz", ".tar.bz2", ".tgz", ".tbz2", ".tar")):
+    if archive_path.endswith((".tar.gz", ".tar.bz2", ".tgz", ".tbz2", ".tar")):
         with tarfile.open(archive_path, "r:*") as tar:
-            tar.extractall(path=output_dir)
+            tar.extractall(path=output_dir, filter="tar")
 
-    elif archive_path.endswidth(".zip"):
+    elif archive_path.endswith(".zip"):
         with zipfile.ZipFile(archive_path, "r") as zip_ref:
             zip_ref.extractall(output_dir)
 
     else:
-        raise Exception("Unsupported archive format")
+        raise Exception("Unsupported archive format.")
 
 
 # -------------------- CORE --------------------------
@@ -153,7 +153,7 @@ def make_symlink(source, destination, force=False):
 
         if not destination_parent.exists():
             if not force:
-                raise Exception(f"{str(destination_parent)} not found")
+                raise Exception(f"{str(destination_parent)} not found.")
 
             destination_parent.mkdir(parents=True)
 
@@ -182,7 +182,7 @@ def make_copy(source, destination, force=False):
 
         if not destination_parent.exists():
             if not force:
-                raise Exception(f"{str(destination_parent)} not found")
+                raise Exception(f"{str(destination_parent)} not found.")
 
             destination_parent.mkdir(parents=True)
 
@@ -199,7 +199,7 @@ def make_copy(source, destination, force=False):
         raise ProcessingError(str(e))
 
 
-def extract_archive(archive_path, output_dir, force=False):
+def extract(archive_path, output_dir, force=False):
     if not os.path.exists(archive_path):
         raise ManifestError("Invalid archive path")
 
@@ -208,14 +208,14 @@ def extract_archive(archive_path, output_dir, force=False):
 
         if not destination.exists():
             if not force:
-                raise Exception("Output directory not found")
+                raise Exception("Output directory not found.")
 
             destination.mkdir(parents=True)
 
         else:
             if not destination.is_dir():
                 if not force:
-                    raise Exception("Extract location existed and not a directory")
+                    raise Exception("Extract location existed and not a directory.")
 
                 remove_or_backup(output_dir)
 
@@ -247,7 +247,7 @@ def process(line, force=False):
     elif operation == "copy":
         make_copy(source, destination, force)
     elif operation == "extract":
-        extract_archive(source, destination, force)
+        extract(source, destination, force)
     else:
         raise ManifestError(f'Unknown operation "{operation}"')
 
