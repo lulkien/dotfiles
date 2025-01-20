@@ -1,4 +1,2 @@
-symlink|link|test_symlink
-symlink|link|test_symlink2
-copy|link|test_copy                # copy
-extract|link.tar.gz|test_extract
+symlink|configs/dunst|test_config/dunst
+extract|packages/fonts/Anurati.tar.gz|test_extract

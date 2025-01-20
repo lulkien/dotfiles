@@ -5,6 +5,7 @@ import sys
 import shutil
 import zipfile
 import tarfile
+import argparse
 from enum import Enum
 from pathlib import Path
 
@@ -53,7 +54,7 @@ class ProcessingError(Exception): ...
 SCRIPT_NAME = os.path.basename(__file__)
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 HOME = os.path.expanduser("~")
-LOG_LEVEL = LogLevel.DEBUG
+LOG_LEVEL = LogLevel.INFO
 
 
 # -------------------- UTILITIES --------------------------
@@ -66,17 +67,20 @@ def print_log(level, message):
 
 
 def print_help():
-    print(f"Usage: ./{SCRIPT_NAME} [OPTION] <MANIFEST FILE>")
-    print()
-    print("Options:")
-    print("    -f, --force          Force process manifest command")
-    print("    -h, --help           Print help only")
-    print()
-    print("Manifest format:")
-    print("    <operation>|<source>|<destination>")
-    print(f"    operation: symlink|copy|extract")
-    print(f"    source: relative path from {SCRIPT_DIR}")
-    print(f"    destination: relative path from {HOME}. Can be empty")
+    print(
+        f"""Usage: ./{SCRIPT_NAME} [OPTION]... [FILE]
+
+Options:
+    -f, --force          Force process manifest file.
+    -v, --verbose        Print verbose log.
+    -h, --help           Print help and exit.
+
+Manifest file format:
+    - Manifest action: <operation>|<source>|<destination>
+        - operation:    symlink, copy, or extract
+        - source:       relative path from {SCRIPT_DIR}
+        - destination:  relative path from {HOME}
+    - Comment: Start with character #""")
 
 
 def remove_item(path):
@@ -271,28 +275,22 @@ def parse_manifest(file_name, force=False):
 
 
 def main():
-    argv = sys.argv[1:]
-    file_name = None
-    force = False
+    parser = argparse.ArgumentParser(add_help=False)
+    parser.add_argument("-f", "--force", action="store_true")
+    parser.add_argument("-v", "--verbose", action="store_true")
+    parser.add_argument("-h", "--help", action="store_true")
+    parser.add_argument("file", nargs="?")
 
-    if len(argv) == 0 or "-h" in argv or "--help" in argv:
+    args = parser.parse_args()
+    if args.help or not args.file:
         print_help()
         return
-    elif len(argv) > 2:
-        raise ArgumentError("Too many argument")
 
-    for arg in argv:
-        if arg == "-f" or arg == "--force":
-            force = True
-        elif arg.startswith("-"):
-            raise ArgumentError(f"Unknown argument: {arg}")
-        else:
-            file_name = arg
+    global LOG_LEVEL
+    if args.verbose:
+        LOG_LEVEL = LogLevel.DEBUG
 
-    if not file_name:
-        raise ArgumentError("Missing file name")
-
-    parse_manifest(file_name, force)
+    parse_manifest(args.file, args.force)
 
 
 # ------------------- MAIN SCRIPT ---------------------------
