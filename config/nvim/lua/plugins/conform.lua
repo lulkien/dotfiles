@@ -9,7 +9,7 @@ return {
         c = { "astyle" },
         cpp = { "astyle" },
         sh = { "shfmt" },
-        python = { "black" },
+        -- python = { "ruff" },
         javascript = { "prettierd" },
         toml = { "taplo" },
       },

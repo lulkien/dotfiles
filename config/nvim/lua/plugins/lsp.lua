@@ -132,7 +132,23 @@ return {
           },
         },
       },
-      pyright = {},
+      -- pylsp = {
+      --   settings = {
+      --     pylsp = {
+      --       plugins = {
+      --         pyflakes = { enabled = false },
+      --         pycodestyle = { enabled = false },
+      --         autopep8 = { enabled = false },
+      --         yapf = { enabled = false },
+      --         mccabe = { enabled = false },
+      --         pylsp_mypy = { enabled = false },
+      --         pylsp_black = { enabled = false },
+      --         pylsp_isort = { enabled = false },
+      --       },
+      --     },
+      --   },
+      -- },
+      ruff = {},
       ts_ls = {},
       yamlls = {},
     }
@@ -152,7 +168,6 @@ return {
     local ensure_installed = vim.tbl_keys(servers or {})
 
     vim.list_extend(ensure_installed, {
-      "black",
       "prettierd",
       "shfmt",
       "stylua",
