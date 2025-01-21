@@ -1,4 +1,4 @@
-function cwd() {
+cwd() {
     local dir_trim=2
     local dir_size=3
 

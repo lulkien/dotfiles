@@ -1,4 +1,4 @@
-function cd() {
+cd() {
     # Global variables for this SHELL session
     declare -p KBC_CD_PREV &>/dev/null || declare -g KBC_CD_PREV=$HOME
     declare -p KBC_CD_HISTORY_LEN &>/dev/null || declare -g -i KBC_CD_HISTORY_LEN=15

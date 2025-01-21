@@ -1,3 +1,3 @@
-function q() {
-    exit "$@"
+q() {
+    exit
 }

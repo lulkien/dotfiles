@@ -1,4 +1,4 @@
-function bash_prompt() {
+bash_prompt() {
     declare -p SSH_TTY &>/dev/null && KBC_SESSION='\e[1;31m \e[00m' || KBC_SESSION=''
 
     if [[ "$KBC_SHOW_HOSTNAME" =~ ^(true|yes|ok|1)$ ]]; then

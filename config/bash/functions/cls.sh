@@ -1,3 +1,3 @@
-function cls() {
+cls() {
     clear "$@"
 }

@@ -1,4 +1,4 @@
-function hostname() {
+hostname() {
     if [[ -n "$HOSTNAME" ]]; then
         printf "${HOSTNAME}\n"
     elif command -v hostname &>/dev/null; then

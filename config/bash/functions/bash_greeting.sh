@@ -1,3 +1,5 @@
-function bash_greeting() {
-    echo -e '\e[1;32mTake off toward a dream!\e[00m'
+bash_greeting() {
+    if [[ -n "$KBC_BASH_GREETING" ]]; then
+        echo -e "$KBC_BASH_GREETING"
+    fi
 }

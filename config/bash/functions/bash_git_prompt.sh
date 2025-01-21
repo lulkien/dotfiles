@@ -1,4 +1,4 @@
-function bash_git_prompt() {
+bash_git_prompt() {
     # Pre check
     local bare_repo=
     local git_dir=
