@@ -1,9 +1,9 @@
 vim() {
     if command -v nvim &>/dev/null; then
-        nvim "$@"
+        command nvim "$@"
     elif command -v vim &>/dev/null; then
-        vim "$@"
+        command vim "$@"
     else
-        vi "$@"
+        command vi "$@"
     fi
 }
