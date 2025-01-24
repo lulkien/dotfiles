@@ -1,0 +1,2 @@
+symlink|%SCRIPT_DIR%/config/vim|%HOME%/test_config/vim
+copy|%SCRIPT_DIR%/test|%HOME%/test_config/test
