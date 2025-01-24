@@ -72,12 +72,12 @@ return {
       }))
     end, { desc = "Find in current buffer" })
 
-    vim.keymap.set("n", "<leader>fio", function()
+    vim.keymap.set("n", "<leader>fia", function()
       builtin.live_grep({
         grep_open_files = true,
-        prompt_title = "Find in opening buffers",
+        prompt_title = "Find in all openning buffers",
       })
-    end, { desc = "Find in opening buffers" })
+    end, { desc = "Find in all buffers" })
 
     -- Git keymap
     vim.keymap.set("n", "<leader>gs", "<cmd>Telescope git_status<CR>", { desc = "Git status" })

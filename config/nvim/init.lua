@@ -30,6 +30,7 @@ require("lazy").setup({
     require("plugins.telescope"),
     require("plugins.conform"),
     require("plugins.comment"),
+    require("plugins.whichkey"),
     require("plugins.misc"),
 
     -- Devlopment

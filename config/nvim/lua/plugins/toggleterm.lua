@@ -4,8 +4,7 @@ return {
   config = function()
     require("toggleterm").setup()
 
-    vim.keymap.set("n", "<C-`>", "<cmd>ToggleTerm<CR>", { noremap = true, silent = true })
-    vim.keymap.set("n", "<C-~>", "<cmd>ToggleTerm direction=float<CR>", { noremap = true, silent = true })
+    vim.keymap.set("n", "<leader>`", "<cmd>ToggleTerm<CR>", { noremap = true, silent = true, desc = "Terminal: Open" })
 
     vim.api.nvim_create_autocmd("TermOpen", {
       pattern = "term://*toggleterm#*",

@@ -13,11 +13,16 @@ map("i", "<Down>", "<Nop>", opts)
 map("i", "<Left>", "<Nop>", opts)
 map("i", "<Right>", "<Nop>", opts)
 
+map("n", "<Up>", "<Nop>", opts)
+map("n", "<Down>", "<Nop>", opts)
+map("n", "<Left>", "<Nop>", opts)
+map("n", "<Right>", "<Nop>", opts)
+
 -- Resize with arrow keys in normal mode
-map("n", "<Up>", "<cmd>resize -2<CR>", { noremap = true, desc = "Resize: height -2" })
-map("n", "<Down>", "<cmd>resize +2<CR>", { noremap = true, desc = "Resize: height + 2" })
-map("n", "<Left>", "<cmd>vertical resize -2<CR>", { noremap = true, desc = "Resize: width -2" })
-map("n", "<Right>", "<cmd>vertical resize +2<CR>", { noremap = true, desc = "Resize: width +2" })
+-- map("n", "<Up>", "<cmd>resize -2<CR>", { noremap = true, desc = "Resize: height -2" })
+-- map("n", "<Down>", "<cmd>resize +2<CR>", { noremap = true, desc = "Resize: height + 2" })
+-- map("n", "<Left>", "<cmd>vertical resize -2<CR>", { noremap = true, desc = "Resize: width -2" })
+-- map("n", "<Right>", "<cmd>vertical resize +2<CR>", { noremap = true, desc = "Resize: width +2" })
 
 -- Navigate between windows
 map("n", "<C-h>", "<cmd>wincmd h<CR>", { noremap = true, desc = "Window: Focus left" })
