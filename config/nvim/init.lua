@@ -36,6 +36,7 @@ require("lazy").setup({
     require("plugins.treesitter"),
     require("plugins.cmp"),
     require("plugins.lsp"),
+    require("plugins.toggleterm"),
 
     -- Rust devlopment
     require("plugins.rustaceanvim"),

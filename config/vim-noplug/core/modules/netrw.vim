@@ -8,4 +8,4 @@ let g:netrw_list_hide = '\(^\|\s\s\)\zs\.\S\+'
 
 hi! link netrwMarkFile Search
 
-nnoremap <leader>e :Lexplore<CR>
+nnoremap <C-n> :Lexplore<CR>
