@@ -1,6 +1,0 @@
-# Config
-symlink|config/bash|.config/bash
-symlink|config/nvim|.config/nvim
-symlink|config/vim|.vim
-symlink|config/fish|.config/fish
-symlink|config/kitty|.config/kitty

@@ -14,14 +14,15 @@ trim_data() {
   data="${1%%#*}"                         # Remove commented
   data="${data#"${data%%[![:space:]]*}"}" # Remove leading white spaces
   data="${data%"${data##*[![:space:]]}"}" # Remove trailing white spaces
-  [[ -z "${data}" ]] && return 1
-  echo "${data}"
+
+  [[ -z "${data}" ]] && return 1 || echo "${data}"
 }
 
 expand_path() {
   local path="$1"
-  [[ ${path} == "%SCRIPT_DIR%/"* ]] && path="${path//%SCRIPT_DIR%/${SCRIPT_DIR}}" # Replace %SCRIPT_DIR% with actual SCRIPT_DIR
-  [[ ${path} == "%HOME%/"* ]] && path="${path//%HOME%/${HOME}}"                   # Replace %HOME% with actual HOME
+  [[ ${path} == "{SCRIPT_DIR}/"* ]] && path="${path//\{SCRIPT_DIR\}/${SCRIPT_DIR}}" # Replace {SCRIPT_DIR} with actual SCRIPT_DIR
+  [[ ${path} == "{HOME}/"* ]] && path="${path//\{HOME\}/${HOME}}"                   # Replace {HOME} with actual HOME
+  [[ ${path:0:1} == "~" ]] && path="${path//\~/${HOME}}"                            # Replace ~ with actual HOME
   echo ${path}
 }
 
@@ -29,26 +30,26 @@ make_symlink() {
   local source="$1"
   local destination="$2"
 
-  if [[ ! -e "${source}" ]]; then
+  [[ ! -e ${source} ]] && {
     echo "Invalid source."
     return 1
-  fi
+  }
 
-  if [[ -L "${destination}" ]] && [[ "$(realpath ${destination})" = "${source}" ]]; then
+  [[ "$(realpath ${destination})" = "${source}" ]] && {
     echo "Already linked, skipping."
     return 0
-  fi
+  }
 
-  if [[ -e "${destination}" ]]; then
+  [[ -e ${destination} ]] && {
     echo "Destination existed."
     return 2
-  fi
+  }
 
   output=$(ln -s ${source} ${destination} 2>&1)
-  if [[ $? -ne 0 ]]; then
+  [[ $? -ne 0 ]] && {
     echo "${output}"
     return 3
-  fi
+  }
 
   echo "Linked ${source} -> ${destination}"
 }
@@ -58,12 +59,13 @@ make_copy() {
   local destination="$2"
   local source_type="$(stat --format='%F' ${source})"
 
-  if [[ ! -e "${source}" ]]; then
+  [[ ! -e ${source} ]] && {
     echo "Invalid source."
     return 1
-  fi
+  }
 
-  if [[ -e "${destination}" ]]; then
+  if [[ -e ${destination} ]]; then
+
     local destination_type="$(stat --format='%F' ${destination})"
 
     if [[ "${source_type}" = 'regular file' ]] && [[ "${destination_type}" = 'regular file' ]]; then
@@ -80,6 +82,7 @@ make_copy() {
 
     echo "Destination existed."
     return 2
+
   fi
 
   local output=
@@ -90,31 +93,87 @@ make_copy() {
     output=$(cp ${source} ${destination} 2>&1)
     status=$?
     ;;
+
   directory)
     output=$(cp -r ${source} ${destination} 2>&1)
     status=$?
     ;;
+
   *)
     echo "Unsupported type."
-    return 5
+    return 3
     ;;
+
   esac
 
   if [[ "${status}" -ne 0 ]]; then
     echo "${output}"
-    return 6
+    return 4
   fi
 
   echo "Copied ${source} -> ${destination}"
 }
 
+extract_archive() {
+  local archive_path=$1
+  local extract_location=$2
+
+  [[ -f ${archive_path} ]] || {
+    echo "Archive not existed."
+    return 1
+  }
+
+  [[ -d ${extract_location} ]] || {
+    echo "Extract location is not directory or not existed."
+    return 2
+  }
+
+  local output=
+  local status=0
+
+  case "${archive_path}" in
+  *.zip)
+    output=$(unzip -qfo ${archive_path} -d ${extract_location} 2>&1)
+    status=$?
+    ;;
+
+  *.tar.gz | *.tgz)
+    output=$(tar -xzf ${archive_path} -C ${extract_location} 2>&1)
+    status=$?
+    ;;
+
+  *.tar)
+    output=$(tar -xf ${archive_path} -C ${extract_location} 2>&1)
+    status=$?
+    ;;
+
+  *)
+    echo "Unsupported archive type."
+    return 2
+    ;;
+
+  esac
+
+  [[ "${status}" -eq 0 ]] || {
+    echo "${output}"
+    return 3
+  }
+
+  echo "Extracted ${archive_path} -> ${extract_location}"
+}
+
 process_manifest() {
+  [[ "$1" == *" "* ]] && {
+    echo "Manifest contain white spaces."
+    return 1
+  }
+
   IFS="|" read -r operation source destination <<<"$1"
 
-  if [[ -z "${operation}" || -z "${source}" || -z "${destination}" ]]; then
+  [[ -z "${operation}" || -z "${source}" || -z "${destination}" ]] && {
     echo "Invalid manifest format."
     return 1
-  fi
+  }
 
   source=$(expand_path ${source})
   destination=$(expand_path ${destination})
@@ -131,7 +190,10 @@ process_manifest() {
     output=$(make_copy ${source} ${destination})
     status=$?
     ;;
-  extract) ;;
+  extract)
+    output=$(extract_archive ${source} ${destination})
+    status=$?
+    ;;
   *)
     echo "Unknown operation."
     return 2

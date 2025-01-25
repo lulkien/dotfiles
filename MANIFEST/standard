@@ -1,6 +1,6 @@
 # Config
-symlink|config/bash|.config/bash
-symlink|config/nvim|.config/nvim
-symlink|config/vim|.vim
-symlink|config/fish|.config/fish
-symlink|config/kitty|.config/kitty
+symlink|{SCRIPT_DIR}/config/bash|{HOME}/.config/bash
+symlink|{SCRIPT_DIR}/config/nvim|{HOME}/.config/nvim
+symlink|{SCRIPT_DIR}/config/vim|{HOME}/.vim
+symlink|{SCRIPT_DIR}/config/fish|{HOME}/.config/fish
+symlink|{SCRIPT_DIR}/config/kitty|{HOME}/.config/kitty

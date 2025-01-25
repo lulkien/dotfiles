@@ -1,0 +1,4 @@
+symlink|{SCRIPT_DIR}/config/vim|{HOME}/test_config/vim
+copy|{SCRIPT_DIR}/MANIFEST/test|{HOME}/test_config/test
+extract|{SCRIPT_DIR}/packages/fonts/Anurati.tar.gz|~/test_config
+extract|{SCRIPT_DIR}/test.zip|~/test_config
