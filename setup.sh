@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
 SCRIPT_DIR=$(dirname $(realpath $BASH_SOURCE[0]))
+SKIP_ERROR=false
+MANIFEST_FILE=""
 
 print_help() {
   echo "Unimplemented."
@@ -173,17 +175,17 @@ extract_archive() {
 }
 
 process_manifest() {
-  [[ "$1" == *" "* ]] && {
+  if [[ "$1" == *" "* ]]; then
     echo "Manifest contain white spaces."
     return 1
-  }
+  fi
 
   IFS="|" read -r operation source destination <<<"$1"
 
-  [[ -z "${operation}" || -z "${source}" || -z "${destination}" ]] && {
+  if [[ -z "${operation}" || -z "${source}" || -z "${destination}" ]]; then
     echo "Invalid manifest format."
     return 1
-  }
+  fi
 
   source=$(expand_path ${source})
   destination=$(expand_path ${destination})
@@ -215,15 +217,15 @@ process_manifest() {
 }
 
 load_manifest() {
-  [[ -z "$1" ]] && {
-    echo "[ERROR] Missing manifest."
+  if [[ -z "$1" ]]; then
+    printf "[ERROR] Missing manifest file.\n"
     return 1
-  }
+  fi
 
-  [[ ! -f "$1" ]] && {
-    echo "[ERROR] Manifest file not found."
+  if [[ ! -f "$1" ]]; then
+    printf "[ERROR] Manifest file not found.\n"
     return 2
-  }
+  fi
 
   local line_number=0
 
@@ -235,17 +237,46 @@ load_manifest() {
 
     output=$(process_manifest "${line}")
 
-    [[ $? -ne 0 ]] && {
+    if [[ $? -ne 0 ]]; then
       printf "[ERROR] Line ${line_number}: ${output}\n"
-      return 1
-    }
+      ${SKIP_ERROR} && continue || return 1
+    fi
 
     printf "[INFO]  Line ${line_number}: ${output}\n"
   done <"$1"
+}
 
-  printf "[OK]    Completed.\n"
+parse_arguments() {
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+    -s | --skip-error)
+      SKIP_ERROR=true
+      shift
+      ;;
+    -*)
+      printf "[ERROR] Unknown options: $1\n"
+      return 1
+      ;;
+    *)
+      if [[ -n "$MANIFEST_FILE" ]]; then
+        printf "[ERROR] Unexpected argument: $1\n"
+        return 1
+      fi
+      MANIFEST_FILE="$1"
+      shift
+      ;;
+    esac
+  done
 }
 
 # ------------------------- MAIN -------------------------
 
-load_manifest "$1"
+parse_arguments "$@" && load_manifest "${MANIFEST_FILE}"
+RESULT=$?
+
+printf "%s\n" "-----------------------------"
+if [[ "${RESULT}" -eq 0 ]]; then
+  printf ">>> Completed.\n"
+else
+  printf ">>> Failed to setup dotfiles.\n"
+fi
