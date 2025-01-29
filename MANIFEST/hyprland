@@ -5,6 +5,10 @@ symlink|{SCRIPT_DIR}/config/vim-noplug|{HOME}/.vim
 symlink|{SCRIPT_DIR}/config/fish|{HOME}/.config/fish
 symlink|{SCRIPT_DIR}/config/kitty|{HOME}/.config/kitty
 
+# Tmux
+symlink|{SCRIPT_DIR}/config/tmux/tmux.conf|{HOME}/.tmux.conf
+clone|https://github.com/tmux-plugins/tpm|{HOME}/.tmux/plugins/tpm
+
 symlink|{SCRIPT_DIR}/config/hypr|{HOME}/.config/hypr
 symlink|{SCRIPT_DIR}/config/eww|{HOME}/.config/eww
 symlink|{SCRIPT_DIR}/config/anyrun|{HOME}/.config/anyrun

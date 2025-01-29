@@ -34,31 +34,31 @@ make_symlink() {
   local destination_dir=$(dirname ${destination})
 
   if [[ ! -e ${source} ]]; then
-    echo "Invalid source."
+    echo "Link: Invalid source."
     return 1
   fi
 
   if [[ ! -d ${destination_dir} ]]; then
     mkdir -p ${destination_dir} || {
-      echo "Cannot create dir: ${destination_dir}"
+      echo "Link: Cannot create dir: ${destination_dir}"
       return 1
     }
   fi
 
   [[ "$(realpath ${destination} 2>/dev/null)" = ${source} ]] && {
-    echo "Already linked, skipping."
+    echo "Link: Already linked, skipping."
     return 0
   }
 
   if [[ -e ${destination} ]]; then
-    echo "Destination existed."
+    echo "Link: Destination existed."
     return 1
   fi
 
   output=$(ln -s ${source} ${destination} 2>&1)
 
   if [[ $? -ne 0 ]]; then
-    echo "${output}"
+    echo "Link: ${output}"
     return 1
   fi
 
@@ -72,13 +72,13 @@ make_copy() {
   local source_type="$(stat --format="%F" ${source} 2>/dev/null)"
 
   if [[ ! -e ${source} ]]; then
-    echo "Invalid source."
+    echo "Copy: Invalid source."
     return 1
   fi
 
   if [[ ! -d ${destination_dir} ]]; then
     mkdir -p ${destination_dir} || {
-      echo "Cannot create dir: ${destination_dir}"
+      echo "Copy: Cannot create dir: ${destination_dir}"
       return 1
     }
   fi
@@ -92,13 +92,13 @@ make_copy() {
       local hash_destination="$(md5sum ${destination} 2>/dev/null)"
 
       if [[ "${hash_source%% *}" = "${hash_destination%% *}" ]]; then
-        echo "Same file, skipping."
+        echo "Copy: Same file, skipping."
         return 0
       fi
 
     fi
 
-    echo "Destination existed."
+    echo "Copy: Destination existed."
     return 1
   fi
 
@@ -115,13 +115,13 @@ make_copy() {
     status=$?
     ;;
   *)
-    echo "Unsupported type."
+    echo "Copy: Unsupported type."
     return 1
     ;;
   esac
 
   if [[ "${status}" -ne 0 ]]; then
-    echo "${output}"
+    echo "Copy: ${output}"
     return 1
   fi
 
@@ -133,13 +133,13 @@ extract_archive() {
   local extract_location=$2
 
   if [[ ! -f ${archive_path} ]]; then
-    echo "Archive not existed."
+    echo "Extract: Archive not existed."
     return 1
   fi
 
   if [[ ! -d ${extract_location} ]]; then
     mkdir -p ${extract_location} || {
-      echo "Cannot create dir: ${extract_location}"
+      echo "Extract: Cannot create dir: ${extract_location}"
       return 1
     }
   fi
@@ -161,17 +161,36 @@ extract_archive() {
     status=$?
     ;;
   *)
-    echo "Unsupported archive type."
-    return 2
+    echo "Extract: Unsupported archive type."
+    return 1
     ;;
   esac
 
   if [[ "${status}" -ne 0 ]]; then
-    echo "${output}"
-    return 3
+    echo "Extract: ${output}"
+    return 1
   fi
 
   echo "Extracted ${archive_path} -> ${extract_location}"
+}
+
+git_clone() {
+  local url=$1
+  local clone_location=$2
+
+  if ! command -v git &>/dev/null; then
+    echo "Clone: Git is not installed."
+    return 1
+  fi
+
+  output=$(git clone --quiet ${url} ${clone_location} 2>&1)
+
+  if [[ $? -ne 0 ]]; then
+    echo "Clone: ${output}"
+    return 1
+  fi
+
+  echo "Cloned ${url} -> ${clone_location}"
 }
 
 process_manifest() {
@@ -204,6 +223,10 @@ process_manifest() {
     ;;
   extract)
     output=$(extract_archive ${source} ${destination})
+    status=$?
+    ;;
+  clone)
+    output=$(git_clone ${source} ${destination})
     status=$?
     ;;
   *)

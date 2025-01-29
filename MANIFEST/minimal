@@ -2,3 +2,6 @@
 symlink|{SCRIPT_DIR}/config/bash|{HOME}/.config/bash
 symlink|{SCRIPT_DIR}/config/nvim|{HOME}/.config/nvim
 symlink|{SCRIPT_DIR}/config/vim-noplug|{HOME}/.vim
+
+symlink|{SCRIPT_DIR}/config/tmux/tmux.conf|{HOME}/.tmux.conf
+clone|https://github.com/tmux-plugins/tpm|{HOME}/.tmux/plugins/tpm
