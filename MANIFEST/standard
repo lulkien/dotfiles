@@ -1,4 +1,3 @@
-# Config
 symlink|{SCRIPT_DIR}/config/bash|{HOME}/.config/bash
 symlink|{SCRIPT_DIR}/config/nvim|{HOME}/.config/nvim
 symlink|{SCRIPT_DIR}/config/vim-noplug|{HOME}/.vim
