@@ -3,11 +3,11 @@ bash_prompt() {
 
     if [[ "$KBC_SHOW_HOSTNAME" =~ ^(true|yes|ok|1)$ ]]; then
         if [[ -n "$KBC_OVERRIDE_HOSTNAME" ]]; then
-            KBC_HOSTNAME='\e[1;33m 󰍹 '$KBC_OVERRIDE_HOSTNAME
+            KBC_HOSTNAME='\e[0;33m 󰍹 '$KBC_OVERRIDE_HOSTNAME
         else
-            KBC_HOSTNAME='\e[1;33m 󰍹 '$(hostname)
+            KBC_HOSTNAME='\e[0;33m 󰍹 '$(hostname)
         fi
     fi
 
-    echo $KBC_SESSION'\e[1;36m  \u'$KBC_HOSTNAME' \e[1;34m󰉋 `cwd`\e[00m `bash_git_prompt`\n  '
+    echo $KBC_SESSION'\e[0;36m  \u'$KBC_HOSTNAME' \e[0;34m󰉋 `cwd`\e[00m `bash_git_prompt`\n  '
 }

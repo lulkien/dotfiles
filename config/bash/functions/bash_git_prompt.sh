@@ -11,12 +11,12 @@ bash_git_prompt() {
     fi
 
     if $bare_repo && $git_dir; then
-        echo -e '\e[1;33mGIT_BARE\e[00m'
+        echo -e '\e[0;33mGIT_BARE\e[00m'
         return
     fi
 
     if $git_dir; then
-        echo -e '\e[1;33mGIT_DIR\e[00m'
+        echo -e '\e[0;33mGIT_DIR\e[00m'
         return
     fi
 
@@ -43,9 +43,9 @@ bash_git_prompt() {
     fi
 
     if $detached; then
-        git_string="\e[1;33m \e[1;91m${branch_name}"
+        git_string="\e[0;33m \e[0;91m${branch_name}"
     else
-        git_string="\e[1;33m \e[1;35m${branch_name}"
+        git_string="\e[0;33m \e[0;35m${branch_name}"
     fi
 
     # Fetch relative head count
@@ -55,11 +55,11 @@ bash_git_prompt() {
         read -r behind ahead < <(git rev-list --count --left-right @{upstream}...HEAD 2>/dev/null)
         if [[ -n "$behind" ]] && [[ -n "$ahead" ]]; then
             if [[ $ahead -ne 0 ]] && [[ $behind -ne 0 ]]; then
-                git_string="${git_string} \e[1;33m"
+                git_string="${git_string} \e[0;33m"
             elif [[ $ahead -ne 0 ]]; then
-                git_string="${git_string} \e[1;32m ${ahead}"
+                git_string="${git_string} \e[0;32m ${ahead}"
             elif [[ $behind -ne 0 ]]; then
-                git_string="${git_string} \e[1;34m ${behind}"
+                git_string="${git_string} \e[0;34m ${behind}"
             fi
         fi
     fi
@@ -76,15 +76,15 @@ bash_git_prompt() {
 
         git_string="${git_string}\e[00m >"
         if ! $dirty && ! $untrack; then
-            git_string="${git_string} \e[1;32m"
+            git_string="${git_string} \e[0;32m"
         fi
 
         if $dirty; then
-            git_string="${git_string} \e[1;33m"
+            git_string="${git_string} \e[0;33m"
         fi
 
         if $untrack; then
-            git_string="${git_string} \e[1;34m"
+            git_string="${git_string} \e[0;34m"
         fi
     fi
 
