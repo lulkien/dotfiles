@@ -12,7 +12,7 @@ return {
         python = { "ruff" },
         javascript = { "prettierd" },
         toml = { "taplo" },
-        nix = { "nixpkgs-fmt" },
+        nix = { "nixfmt" },
       },
       format_on_save = {
         timeout_ms = 500,

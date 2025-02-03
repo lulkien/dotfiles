@@ -154,7 +154,7 @@ return {
 
     vim.list_extend(ensure_installed, {
       "clang-format",
-      "nixpkgs-fmt",
+      -- "nixpkgs-fmt", -> Use nixfmt-rfc-style from nix package manager
       "prettierd",
       "shfmt",
       "stylua",
