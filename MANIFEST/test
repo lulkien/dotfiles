@@ -1,0 +1,7 @@
+symlink|{SCRIPT_DIR}/config/vim|{HOME}/test_config/vim
+extract|{SCRIPT_DIR}/test.zip|~/test_config   # Will fail
+copy|{SCRIPT_DIR}/README.md|{HOME}/test_config/README.md.clone
+extract|{SCRIPT_DIR}/packages/fonts/Anurati.tar.gz|~/test_config
+
+symlink|{SCRIPT_DIR}/config/tmux/tmux.conf|{HOME}/.tmux.conf
+clone|https://github.com/tmux-plugins/tpm|{HOME}/test_config/tpm

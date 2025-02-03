@@ -1,189 +1,305 @@
 #!/usr/bin/env bash
 
-# Env
-PATH=/opt/homebrew/bin:$PATH
+SCRIPT_DIR=$(dirname $(realpath ${BASH_SOURCE[0]}))
+SKIP_ERROR=false
+MANIFEST_FILE=""
 
-# Source path
-script_path=$(realpath "$(dirname $0)")
-all_configs=${script_path}/configs
-
-# MacOS check
-is_darwin=false
-if test $(uname -s) = 'Darwin'; then
-    is_darwin=true
-fi
-
-# Root check
-is_root_user=false
-if test $(whoami) = 'root'; then
-    is_root_user=true
-fi
-
-# Config directory
-user_config_dir=${HOME}/.config
-
-# choices
-options=('Hyprland' 'General Desktop Environment' 'Windows Subsystem for Linux' 'Cancel')
-
-# Define list of configurations for every options
-hypr_conf=('hypr' 'eww' 'anyrun' 'kitty' 'dunst')
-general_conf=('kitty')
-wsl_conf=
-mac_conf=('kitty')
-root_conf=
-
-# Default list of configurations which every options have
-configs=('fish' 'nvim' 'neovide' 'bash')
-
-# If setup for hyprland
-is_hyprland=false
-
-# --------------------------------------------------------------------------------------------------------------------------------------------
-
-function setup_dotfiles {
-    if test $(pwd) != "${script_path}"; then
-        echo "[DEBUG] cd ${script_path}"
-        cd ${script_path}
-        echo "--------------------------------------"
-    fi
-
-    echo "[INFO] Backup or unlink old config"
-    for config in "${configs[@]}"; do
-        local conf_path=${user_config_dir}/${config}
-        local conf_path_bak=${user_config_dir}/${config}.bak
-
-        if [[ -L $conf_path ]]; then
-            echo "[DEBUG] unlink $conf_path"
-            unlink $conf_path
-        elif [[ -d $conf_path ]]; then
-            rm -rf $conf_path_bak
-            echo "[DEBUG] Rename: $conf_path -> $conf_path_bak"
-            mv $conf_path $conf_path_bak
-        fi
-    done
-    echo "--------------------------------------"
-
-    echo "[INFO] Symlink new configs"
-    for config in "${configs[@]}"; do
-        echo "[DEBUG] Create symlink: ${user_config_dir}/${config} -> ${all_configs}/${config}"
-        ln -s ${all_configs}/${config} ${user_config_dir}/${config}
-    done
-    echo "--------------------------------------"
+print_help() {
+  echo "Unimplemented."
 }
 
-function post_hyprland_config {
-    echo "[INFO] Run post config for Hyprland"
+trim_data() {
+  local data=
 
-    # Setup icons
-    local user_icons=$HOME/.local/share/icons
-    local hyprcursor_packages=$script_path/packages/hyprcursor
+  data="${1%%#*}"                         # Remove commented
+  data="${data#"${data%%[![:space:]]*}"}" # Remove leading white spaces
+  data="${data%"${data##*[![:space:]]}"}" # Remove trailing white spaces
 
-    if [[ ! -d $user_icons ]]; then
-        echo "[DEBUG] mkdir -p $user_icons"
-        mkdir -p $user_icons
-    fi
-
-    for pgk in $hyprcursor_packages/*.tar.gz; do
-        echo "[DEBUG] tar -xzf $pgk -C $user_icons"
-        tar -xzf $pgk -C $user_icons
-    done
-
-    # Setup fonts
-    local user_fonts="$HOME/.fonts"
-
-    if [[ ! -d $user_fonts ]]; then
-        echo "[DEBUG] mkdir -p $user_fonts"
-        mkdir -p $user_fonts
-    fi
-
-    echo "[DEBUG] cp -r $script_path/packages/fonts/Anurati $user_fonts"
-    cp -r $script_path/packages/fonts/Anurati $user_fonts
-    fc-cache -fv
-
-    # Setup bin
-    local user_bin="$HOME/.local/bin"
-    if [[ ! -d ${user_bin} ]]; then
-        echo "[DEBUG] mkdir -p ${user_bin}"
-        mkdir -p ${user_bin}
-    fi
-
-    if [[ -L $user_bin/Hyprland ]]; then
-        unlink $user_bin/Hyprland
-    elif [[ -e $user_bin/Hyprland ]]; then
-        mv $user_bin/Hyprland $user_bin/Hyprland.bak
-    fi
-
-    ln -s $script_path/bin/Hyprland $user_bin/Hyprland
+  [[ -z "${data}" ]] && return 1 || echo "${data}"
 }
 
-function main {
-    if $is_root_user; then
-        echo -e '\e[1;32mTarget: \e[00mRoot'
-        # keep configs for root
-    elif $is_darwin; then
-        echo -e '\e[1;32mTarget: \e[00mMacOS'
-        configs+=("${mac_conf[@]}")
-    else
-        echo -e '\e[1;32mSelect target:\e[00m'
-        select opt in "${options[@]}"; do
-            case $REPLY in
-            1)
-                echo -e "\e[1;32mTarget: \e[00m${opt}"
-                is_hyprland=true
-                configs+=("${hypr_conf[@]}")
-                break
-                ;;
-            2)
-                echo -e "\e[1;32mTarget: \e[00m${opt}"
-                configs+=("${general_conf[@]}")
-                break
-                ;;
-            3)
-                echo -e "\e[1;32mTarget: \e[00m${opt}"
-                # keep configs for WSL
-                break
-                ;;
-            4)
-                echo -e "\e[1;33mCanceled\e[00m"
-                exit 0
-                ;;
-            *)
-                echo -e "\e[1;31mInvalid\e[00m"
-                exit 1
-                ;;
-            esac
-        done
+expand_path() {
+  local path="$1"
+
+  [[ ${path} = "{SCRIPT_DIR}/"* ]] && path="${path//\{SCRIPT_DIR\}/${SCRIPT_DIR}}" # Replace {SCRIPT_DIR} with actual SCRIPT_DIR
+  [[ ${path} = "{HOME}/"* ]] && path="${path//\{HOME\}/${HOME}}"                   # Replace {HOME} with actual HOME
+  [[ ${path:0:1} = "~" ]] && path="${path//\~/${HOME}}"                            # Replace ~ with actual HOME
+
+  echo ${path}
+}
+
+make_symlink() {
+  local source="$1"
+  local destination="$2"
+  local destination_dir=$(dirname ${destination})
+
+  if [[ ! -e ${source} ]]; then
+    echo "Link: Invalid source."
+    return 1
+  fi
+
+  if [[ ! -d ${destination_dir} ]]; then
+    mkdir -p ${destination_dir} || {
+      echo "Link: Cannot create dir: ${destination_dir}"
+      return 1
+    }
+  fi
+
+  [[ "$(realpath ${destination} 2>/dev/null)" = ${source} ]] && {
+    echo "Link: Already linked, skipping."
+    return 0
+  }
+
+  if [[ -e ${destination} ]]; then
+    echo "Link: Destination existed."
+    return 1
+  fi
+
+  output=$(ln -s ${source} ${destination} 2>&1)
+
+  if [[ $? -ne 0 ]]; then
+    echo "Link: ${output}"
+    return 1
+  fi
+
+  echo "Linked ${source} -> ${destination}"
+}
+
+make_copy() {
+  local source="$1"
+  local destination="$2"
+  local destination_dir=$(dirname ${destination})
+  local source_type="$(stat --format="%F" ${source} 2>/dev/null)"
+
+  if [[ ! -e ${source} ]]; then
+    echo "Copy: Invalid source."
+    return 1
+  fi
+
+  if [[ ! -d ${destination_dir} ]]; then
+    mkdir -p ${destination_dir} || {
+      echo "Copy: Cannot create dir: ${destination_dir}"
+      return 1
+    }
+  fi
+
+  if [[ -e ${destination} ]]; then
+    local destination_type="$(stat --format='%F' ${destination})"
+
+    if [[ "${source_type}" = "regular file" && "${destination_type}" = "regular file" ]]; then
+
+      local hash_source="$(md5sum ${source} 2>/dev/null)"
+      local hash_destination="$(md5sum ${destination} 2>/dev/null)"
+
+      if [[ "${hash_source%% *}" = "${hash_destination%% *}" ]]; then
+        echo "Copy: Same file, skipping."
+        return 0
+      fi
+
     fi
 
-    sleep 0.5
-    echo
-    echo -e '\e[1;32mThe following configs will be linked:\e[00m'
-    for conf in "${configs[@]}"; do
-        echo " - $conf"
-    done
+    echo "Copy: Destination existed."
+    return 1
+  fi
 
-    sleep 0.5
-    echo -e '\e[1;33mAre you sure?\e[00m [y/N]'
-    read -r -p 'Answer: ' response
+  local output=
+  local status=0
 
-    echo
-    case "${response,,}" in
-    y)
-        echo -e '\e[1;32mSetting up...\e[00m'
-        setup_dotfiles
-        if $is_hyprland; then
-            post_hyprland_config
-        fi
-        echo
-        echo -e '\e[1;32mCompleted.\e[00m'
-        ;;
+  case "${source_type}" in
+  "regular file")
+    output=$(cp ${source} ${destination} 2>&1)
+    status=$?
+    ;;
+  directory)
+    output=$(cp -r ${source} ${destination} 2>&1)
+    status=$?
+    ;;
+  *)
+    echo "Copy: Unsupported type."
+    return 1
+    ;;
+  esac
+
+  if [[ "${status}" -ne 0 ]]; then
+    echo "Copy: ${output}"
+    return 1
+  fi
+
+  echo "Copied ${source} -> ${destination}"
+}
+
+extract_archive() {
+  local archive_path=$1
+  local extract_location=$2
+
+  if [[ ! -f ${archive_path} ]]; then
+    echo "Extract: Archive not existed."
+    return 1
+  fi
+
+  if [[ ! -d ${extract_location} ]]; then
+    mkdir -p ${extract_location} || {
+      echo "Extract: Cannot create dir: ${extract_location}"
+      return 1
+    }
+  fi
+
+  local output=
+  local status=0
+
+  case "${archive_path}" in
+  *.zip)
+    output=$(unzip -qfo ${archive_path} -d ${extract_location} 2>&1)
+    status=$?
+    ;;
+  *.tar.gz | *.tgz)
+    output=$(tar -xzf ${archive_path} -C ${extract_location} 2>&1)
+    status=$?
+    ;;
+  *.tar)
+    output=$(tar -xf ${archive_path} -C ${extract_location} 2>&1)
+    status=$?
+    ;;
+  *)
+    echo "Extract: Unsupported archive type."
+    return 1
+    ;;
+  esac
+
+  if [[ "${status}" -ne 0 ]]; then
+    echo "Extract: ${output}"
+    return 1
+  fi
+
+  echo "Extracted ${archive_path} -> ${extract_location}"
+}
+
+git_clone() {
+  local url=$1
+  local clone_location=$2
+
+  if ! command -v git &>/dev/null; then
+    echo "Clone: Git is not installed."
+    return 1
+  fi
+
+  output=$(git clone --quiet ${url} ${clone_location} 2>&1)
+
+  if [[ $? -ne 0 ]]; then
+    echo "Clone: ${output}"
+    return 1
+  fi
+
+  echo "Cloned ${url} -> ${clone_location}"
+}
+
+process_manifest() {
+  if [[ "$1" == *" "* ]]; then
+    echo "Manifest contain white spaces."
+    return 1
+  fi
+
+  IFS="|" read -r operation source destination <<<"$1"
+
+  if [[ -z "${operation}" || -z "${source}" || -z "${destination}" ]]; then
+    echo "Invalid manifest format."
+    return 1
+  fi
+
+  source=$(expand_path ${source})
+  destination=$(expand_path ${destination})
+
+  local output=
+  local status=0
+
+  case $operation in
+  symlink)
+    output=$(make_symlink ${source} ${destination})
+    status=$?
+    ;;
+  copy)
+    output=$(make_copy ${source} ${destination})
+    status=$?
+    ;;
+  extract)
+    output=$(extract_archive ${source} ${destination})
+    status=$?
+    ;;
+  clone)
+    output=$(git_clone ${source} ${destination})
+    status=$?
+    ;;
+  *)
+    echo "Unknown operation."
+    return 1
+    ;;
+  esac
+
+  echo "${output}"
+  [[ "${status}" -ne 0 ]] && return 1 || return 0
+}
+
+load_manifest() {
+  if [[ -z "$1" ]]; then
+    printf "[ERROR] Missing manifest file.\n"
+    return 1
+  fi
+
+  if [[ ! -f "$1" ]]; then
+    printf "[ERROR] Manifest file not found.\n"
+    return 2
+  fi
+
+  local line_number=0
+
+  while read -r line; do
+    line_number=$((${line_number} + 1))
+
+    line=$(trim_data "${line}")
+    [[ $? -ne 0 ]] && continue
+
+    output=$(process_manifest "${line}")
+
+    if [[ $? -ne 0 ]]; then
+      printf "[ERROR] Line ${line_number}: ${output}\n"
+      ${SKIP_ERROR} && continue || return 1
+    fi
+
+    printf "[INFO]  Line ${line_number}: ${output}\n"
+  done <"$1"
+}
+
+parse_arguments() {
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+    -s | --skip-error)
+      SKIP_ERROR=true
+      shift
+      ;;
+    -*)
+      printf "[ERROR] Unknown options: $1\n"
+      return 1
+      ;;
     *)
-        echo -e '\e[1;33mCanceled\e[00m'
-        exit 0
-        ;;
+      if [[ -n "$MANIFEST_FILE" ]]; then
+        printf "[ERROR] Unexpected argument: $1\n"
+        return 1
+      fi
+      MANIFEST_FILE="$1"
+      shift
+      ;;
     esac
+  done
 }
 
-# ------------------------------------------------------------------------------------------------------------
+# ------------------------- MAIN -------------------------
 
-main
+parse_arguments "$@" && load_manifest "${MANIFEST_FILE}"
+RESULT=$?
+
+printf "%s\n" "-----------------------------"
+if [[ "${RESULT}" -eq 0 ]]; then
+  printf ">>> Completed.\n"
+else
+  printf ">>> Failed to setup dotfiles.\n"
+fi

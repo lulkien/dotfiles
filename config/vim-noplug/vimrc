@@ -1,0 +1,10 @@
+function! LoadCoreConfigs() abort
+  let l:vimrc_dir = fnamemodify(expand('<sfile>'), ':p:h')
+  let l:glob_pattern = l:vimrc_dir .. '/core/**/*.vim'
+
+  for l:f in glob(l:glob_pattern, 1, 1)
+    execute 'source' l:f
+  endfor
+endfunction
+
+call LoadCoreConfigs()
