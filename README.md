@@ -19,19 +19,35 @@ This repository contains configuration files and scripts, known as dotfiles, tai
 
 ## Configurations
 
-- Hyprland
+### Minimal config
+- Bash
+- Vim
+- Neovim
+- Tmux
+
+### Standard config
+- [Minimal config]
 - Fish
 - Kitty
-- EWW
-- Anyrun
-- NvChad
+
+### Hyprland config
+- [Standard config]
+- Hypr ecosystem: Hyprland, Hypridle, Hyprlock, Hyprpaper
+- Status bar: EWW
+- Application launcher: Anyrun
+- Notification daemon: Dunst
+- Systemd wrapper: UWSM
+
+### MacOS darwin config
+
+It's just [Standard config] exclude `Bash`
 
 ## Getting Started
 
 Feel free to explore, fork, or use my dotfiles as a reference for creating your own personalized setup. Use the provided scripts to symlink the configurations to your home directory.
 
 ```bash
-./setup.sh
+./setup.sh [options] <Manifest file>
 ```
 
 ### Note for Users:
