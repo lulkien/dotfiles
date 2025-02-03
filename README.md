@@ -26,12 +26,12 @@ This repository contains configuration files and scripts, known as dotfiles, tai
 - Tmux
 
 ### Standard config
-- [Minimal config]
+- [Minimal config](#minimal-config)
 - Fish
 - Kitty
 
 ### Hyprland config
-- [Standard config]
+- [Standard config](#standard-config)
 - Hypr ecosystem: Hyprland, Hypridle, Hyprlock, Hyprpaper
 - Status bar: EWW
 - Application launcher: Anyrun
@@ -40,7 +40,7 @@ This repository contains configuration files and scripts, known as dotfiles, tai
 
 ### MacOS darwin config
 
-It's just [Standard config] exclude `Bash`
+It's just [Standard config](#standard-config) exclude `Bash`
 
 ## Getting Started
 
