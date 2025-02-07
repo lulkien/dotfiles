@@ -3,6 +3,10 @@ if not contains "$HOME/.cargo/bin" $PATH
     set -xp PATH $HOME/.cargo/bin
 end
 
+if not contains "$HOME/go/bin" $PATH
+    set -xp PATH $HOME/go/bin
+end
+
 if not contains "$HOME/.local/bin" $PATH
     set -xp PATH $HOME/.local/bin
 end
