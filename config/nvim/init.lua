@@ -17,6 +17,7 @@ require("lazy").setup({
   spec = {
     -- Theme
     require("plugins.catppuccin"),
+    require("plugins.mini-icons"),
 
     -- UI
     require("plugins.nvim-tree"),
