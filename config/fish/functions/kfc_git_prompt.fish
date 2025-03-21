@@ -1,4 +1,15 @@
 function kfc_git_prompt
+    # Icon
+    set -f ico_git $KFC_YELLOW_N''
+    set -f ico_detach $KFC_YELLOW_N''
+    set -f ico_clean $KFC_GREEN_N''
+    set -f ico_dirty $KFC_YELLOW_N''
+    set -f ico_untrack $KFC_BLUE_N''
+    set -f ico_divergent $KFC_RED_N''
+    set -f ico_ahead $KFC_GREEN_N''
+    set -f ico_behind $KFC_YELLOW_N''
+    set -f ico_arrow $KFC_WHITE_N''
+
     # Git precheck
     set -f bare_repo
     set -f git_dir
@@ -14,17 +25,15 @@ function kfc_git_prompt
         return
     end
 
-    $bare_repo && $git_dir &&
-        begin
-            echo $KFC_YELLOW_N''$KFC_RED_N' bare'
-            return
-        end
+    if $bare_repo; and $git_dir
+        echo $ico_git' '$KFC_RED_N'bare'
+        return
+    end
 
-    $git_dir &&
-        begin
-            echo $KFC_YELLOW_N''$KFC_RED_N' .git'
-            return
-        end
+    if $git_dir
+        echo $ico_git' '$KFC_RED_N'.git'
+        return
+    end
 
     $work_tree || return
 
@@ -41,11 +50,11 @@ function kfc_git_prompt
         set detached true
     end
 
-    if $detached
-        set git_string $KFC_YELLOW_N' '$KFC_PINK_N$branch_name
-    else
-        set git_string $KFC_YELLOW_N' '$KFC_PURPLE_N$branch_name
-    end
+    $detached
+    and set git_string $ico_detach
+    or set git_string $ico_git
+
+    set -a git_string $KFC_PURPLE_N$branch_name
 
     # Fetch relative count
     if string match --regex --quiet -- '^(true|yes|ok|1)$' "$KFC_SHOW_GIT_RELATIVE"
@@ -55,18 +64,18 @@ function kfc_git_prompt
         git rev-list --count --left-right @{upstream}...HEAD 2>/dev/null | read behind ahead
         if test -n "$behind"; and test -n "$ahead"
             if test $ahead -ne 0; and test $behind -ne 0
-                set git_string $git_string' '$KFC_RED_N''
+                set -a git_string $ico_divergent
             else if test $ahead -ne 0
-                set git_string $git_string' '$KFC_GREEN_N' '$ahead
+                set -a git_string $ico_ahead' '$ahead
             else if test $behind -ne 0
-                set git_string $git_string' '$KFC_YELLOW_N' '$behind
+                set -a git_string $ico_behind' '$behind
             end
         end
     end
 
     # Fetch git status
     if string match --regex --quiet -- '^(true|yes|ok|1)$' "$KFC_SHOW_GIT_STATUS"
-        for stt in $(git status --short | awk '{print $1}' | uniq)
+        for stt in $(git status --short | awk '{print $1}' | sort | uniq)
             if string match --regex --quiet -- '[ACDMR]' "$stt"
                 set dirty true
             else if test "$stt" = '??'
@@ -74,18 +83,17 @@ function kfc_git_prompt
             end
         end
 
-        set git_string $git_string$KFC_WHITE_N' '
-        if not $dirty && not $untrack
-            set git_string $git_string' '$KFC_GREEN_N''
-        end
+        set -a git_string $ico_arrow
 
-        if $dirty
-            set git_string $git_string' '$KFC_YELLOW_N''
-        end
+        not $dirty
+        and not $untrack
+        and set -a git_string $ico_clean
 
-        if $untrack
-            set git_string $git_string' '$KFC_BLUE_N''
-        end
+        $dirty
+        and set -a git_string $ico_dirty
+
+        $untrack
+        and set -a git_string $ico_untrack
     end
 
     echo "$git_string"
