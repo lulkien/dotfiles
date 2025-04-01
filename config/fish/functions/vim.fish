@@ -1,7 +1,7 @@
 function vim --description 'Use vim alternative if possible'
-    if command -sq neovide
+    if command -q neovide
         neovide $argv
-    else if command -sq nvim
+    else if command -q nvim
         nvim $argv
     else if set -q EDITOR
         command $EDITOR $argv

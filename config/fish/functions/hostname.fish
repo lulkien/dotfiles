@@ -1,7 +1,7 @@
 function hostname
     if test -n "$hostname"
         printf "$hostname\n"
-    else if command -sq hostname
+    else if command -q hostname
         command hostname
     else
         set -f HOSTNAME_ (head -1 /etc/hostname)

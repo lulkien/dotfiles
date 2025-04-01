@@ -4,12 +4,12 @@ function wl-capture-region
         return 1
     end
 
-    if not command -sq wf-recorder
+    if not command -q wf-recorder
         echo "Command not found: wf-recorder"
         return 2
     end
 
-    if not command -sq slurp
+    if not command -q slurp
         echo "Command not found: slurp"
         return 2
     end
