@@ -36,7 +36,8 @@ require("lazy").setup({
 
     -- Devlopment
     require("plugins.treesitter"),
-    require("plugins.cmp"),
+    -- require("plugins.cmp"),
+    require("plugins.blink-cmp"),
     require("plugins.lsp"),
     -- require("plugins.toggleterm"),
 
