@@ -17,7 +17,6 @@ require("lazy").setup({
   spec = {
     -- Theme
     require("plugins.catppuccin"),
-    require("plugins.mini-icons"),
 
     -- UI
     require("plugins.nvim-tree"),
@@ -36,10 +35,8 @@ require("lazy").setup({
 
     -- Devlopment
     require("plugins.treesitter"),
-    -- require("plugins.cmp"),
     require("plugins.blink-cmp"),
     require("plugins.lsp"),
-    -- require("plugins.toggleterm"),
 
     -- Rust devlopment
     require("plugins.rustaceanvim"),
