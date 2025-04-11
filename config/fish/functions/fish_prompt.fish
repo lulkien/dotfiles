@@ -36,7 +36,7 @@ function fish_prompt --description 'Write out the prompt'
     set -a prompt_string "$cwd_string"
     set -a prompt_string "$git_string"
 
-    set -a command_prefix $KFC_CL_NONE' '
+    set -a command_prefix $KFC_WHITE_N' '$KFC_CL_NONE
 
     # Output
     printf "$padding_string$prompt_string\n$padding_string$command_prefix"
