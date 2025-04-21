@@ -4,20 +4,7 @@ return {
     "nvim-tree/nvim-web-devicons",
   },
   config = function()
-    require("fzf-lua").setup({
-      defaults = {
-        git_icons = false,
-        file_icons = false,
-        color_icons = false,
-        keymap = {
-          ["<Esc>"] = "hide",
-          ["<C-n>"] = "preview-up",
-          ["<C-k>"] = "preview-up",
-          ["<C-p>"] = "preview-down",
-          ["<C-j>"] = "preview-down",
-        },
-      },
-    })
+    require("fzf-lua").setup({ "telescope" })
 
     vim.keymap.set("n", "<leader>fw", require("fzf-lua").grep_cword, { desc = "Fzf search word" })
     vim.keymap.set("n", "<leader>fW", require("fzf-lua").grep_cWORD, { desc = "Fzf search WORD" })
@@ -33,5 +20,12 @@ return {
 
     vim.keymap.set("n", "<leader>ft", require("fzf-lua").btags, { desc = "Fzf buffer tags" })
     vim.keymap.set("n", "<leader>fT", require("fzf-lua").tags, { desc = "Fzf project tags" })
+
+    vim.keymap.set(
+      "n",
+      "gca",
+      ":lua require('fzf-lua').lsp_code_actions({winopts={row=0.5,col=0.5,height=0.2,width=0.2},previewer=false})<cr>",
+      { desc = "LSP: Code Actions" }
+    )
   end,
 }
