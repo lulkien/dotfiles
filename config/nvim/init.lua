@@ -27,7 +27,7 @@ require("lazy").setup({
     require("plugins.gitsigns"),
 
     -- Functionality
-    require("plugins.telescope"),
+    require("plugins.fzf"),
     require("plugins.conform"),
     require("plugins.comment"),
     require("plugins.whichkey"),

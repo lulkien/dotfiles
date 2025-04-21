@@ -9,6 +9,7 @@ return {
     "WhoIsSethDaniel/mason-tool-installer.nvim",
     { "j-hui/fidget.nvim", opts = {} },
     "saghen/blink.cmp",
+    "ibhagwan/fzf-lua",
   },
   config = function()
     vim.api.nvim_create_autocmd("LspAttach", {
@@ -19,13 +20,11 @@ return {
           vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
         end
 
-        map("grD", vim.lsp.buf.declaration, "Goto Declaration")
-        map("grd", require("telescope.builtin").lsp_definitions, "Goto Definition")
-        map("grr", require("telescope.builtin").lsp_references, "Goto References")
-        map("gri", require("telescope.builtin").lsp_implementations, "Goto Implementation")
-        map("grt", require("telescope.builtin").lsp_type_definitions, "Type Definition")
-        -- map("grs", require("telescope.builtin").lsp_document_symbols, "Document Symbols")
-        map("grs", require("telescope.builtin").lsp_dynamic_workspace_symbols, "Workspace Symbols")
+        map("grr", require("fzf-lua").lsp_references, "Goto References")
+        map("grd", require("fzf-lua").lsp_definitions, "Goto Definition")
+        map("grD", require("fzf-lua").lsp_declarations, "Goto Declaration")
+        map("grt", require("fzf-lua").lsp_typedefs, "Type Definition")
+        map("gri", require("fzf-lua").lsp_implementations, "Goto Implementation")
 
         local client = vim.lsp.get_client_by_id(event.data.client_id)
         if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
