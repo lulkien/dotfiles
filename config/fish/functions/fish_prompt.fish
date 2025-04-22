@@ -7,7 +7,7 @@ function fish_prompt --description 'Write out the prompt'
     set ico_user ''
 
     # User string
-    test $USER = root
+    test (whoami) = root
     and set user_string $KFC_RED_N$ico_user
     or set user_string $KFC_CYAN_N$ico_user
 

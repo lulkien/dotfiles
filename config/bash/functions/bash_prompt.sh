@@ -1,6 +1,6 @@
 bash_prompt() {
     KBC_USER='\e[0;36m  \u'
-    if [[ $USER = 'root' ]]; then
+    if [[ $(whoami) = 'root' ]]; then
         KBC_USER='\e[0;31m  \u'
     fi
 
