@@ -1,6 +1,25 @@
-require("core.options")
-require("core.keymaps")
-require("core.autocmds")
+--- Safely require a module, return nil on failure.
+--- @param module string The module name to require.
+--- @param silent? boolean If true, suppresses error messages.
+--- @return any|nil loaded_module Returns the module if successful, nil otherwise.
+local function try_require(module, silent)
+  local ok, loaded = pcall(require, module)
+  if not ok then
+    if not silent then
+      print("Failed to require '" .. module .. "': " .. loaded)
+    end
+    return {}
+  end
+  return loaded
+end
+
+----------------------------------------------- CORE -----------------------------------------------
+
+try_require("core.options")
+try_require("core.keymaps")
+try_require("core.autocmds")
+
+----------------------------------------------- LAZY -----------------------------------------------
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
@@ -9,38 +28,38 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
   if vim.v.shell_error ~= 0 then
     error("Error cloning lazy.nvim:\n" .. out)
   end
-end ---@diagnostic disable-next-line: undefined-field
+end
 
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
   spec = {
     -- Theme
-    require("plugins.catppuccin"),
+    try_require("plugins.catppuccin"),
 
     -- UI
-    require("plugins.nvim-tree"),
-    require("plugins.bufferline"),
-    require("plugins.lualine"),
-    require("plugins.alpha"),
-    require("plugins.indent-blankline"),
-    require("plugins.gitsigns"),
+    try_require("plugins.nvim-tree"),
+    try_require("plugins.bufferline"),
+    try_require("plugins.lualine"),
+    try_require("plugins.alpha"),
+    try_require("plugins.indent-blankline"),
+    try_require("plugins.gitsigns"),
 
     -- Functionality
-    require("plugins.fzf"),
-    require("plugins.conform"),
-    require("plugins.comment"),
-    require("plugins.whichkey"),
-    require("plugins.misc"),
+    try_require("plugins.fzf"),
+    try_require("plugins.conform"),
+    try_require("plugins.comment"),
+    try_require("plugins.whichkey"),
+    try_require("plugins.misc"),
 
     -- Devlopment
-    require("plugins.treesitter"),
-    require("plugins.blink-cmp"),
-    require("plugins.lsp"),
+    try_require("plugins.treesitter"),
+    try_require("plugins.blink"),
+    try_require("plugins.lsp"),
 
     -- Rust devlopment
-    require("plugins.rustaceanvim"),
-    require("plugins.crates"),
+    try_require("plugins.rustaceanvim"),
+    try_require("plugins.crates"),
   },
 
   install = { colorscheme = { "catppuccin" } },

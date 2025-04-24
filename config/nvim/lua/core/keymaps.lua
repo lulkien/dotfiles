@@ -72,7 +72,13 @@ map("v", "<S-Tab>", "<gv", opts)
 map("v", "p", '"_dP', opts)
 
 -- Diagnostic keymaps
-map("n", "<leader>dn", vim.diagnostic.goto_next, { desc = "Diagnostics: Next" })
-map("n", "<leader>dp", vim.diagnostic.goto_prev, { desc = "Diagnostics: Previous" })
+map("n", "<leader>dn", function()
+  vim.diagnostic.jump({ count = 1 })
+end, { desc = "Diagnostics: Next" })
+
+map("n", "<leader>dp", function()
+  vim.diagnostic.jump({ count = -1 })
+end, { desc = "Diagnostics: Previous" })
+
 map("n", "<leader>df", vim.diagnostic.open_float, { desc = "Diagnostics: Open Floating" })
 map("n", "<leader>dl", vim.diagnostic.setloclist, { desc = "Diagnostics: List" })

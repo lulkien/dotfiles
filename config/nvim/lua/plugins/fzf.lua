@@ -4,7 +4,7 @@ return {
     "nvim-tree/nvim-web-devicons",
   },
   config = function()
-    require("fzf-lua").setup({ "telescope" })
+    require("fzf-lua").setup({ "fzf-native" })
 
     vim.keymap.set("n", "<leader>fw", require("fzf-lua").grep_cword, { desc = "Fzf search word" })
     vim.keymap.set("n", "<leader>fW", require("fzf-lua").grep_cWORD, { desc = "Fzf search WORD" })
