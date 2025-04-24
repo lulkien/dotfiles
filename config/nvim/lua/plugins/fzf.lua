@@ -18,7 +18,7 @@ return {
     vim.keymap.set("n", "<leader>ff", require("fzf-lua").files, { desc = "Fzf find files" })
     vim.keymap.set("n", "<leader>fb", require("fzf-lua").buffers, { desc = "Fzf find buffers" })
 
-    vim.keymap.set("n", "<leader>ft", require("fzf-lua").btags, { desc = "Fzf buffer tags" })
-    vim.keymap.set("n", "<leader>fT", require("fzf-lua").tags, { desc = "Fzf project tags" })
+    -- vim.keymap.set("n", "<leader>ft", require("fzf-lua").btags, { desc = "Fzf buffer tags" })
+    -- vim.keymap.set("n", "<leader>fT", require("fzf-lua").tags, { desc = "Fzf project tags" })
   end,
 }
