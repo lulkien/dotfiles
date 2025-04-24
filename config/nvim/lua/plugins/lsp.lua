@@ -20,13 +20,20 @@ return {
           vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
         end
 
-        map("grr", require("fzf-lua").lsp_references, "Goto References")
-        map("grd", require("fzf-lua").lsp_definitions, "Goto Definition")
-        map("grD", require("fzf-lua").lsp_declarations, "Goto Declaration")
-        map("grt", require("fzf-lua").lsp_typedefs, "Type Definition")
-        map("gri", require("fzf-lua").lsp_implementations, "Goto Implementation")
+        map("<leader>la", require("fzf-lua").lsp_code_actions, "Code Actions")
+        map("<leader>lr", require("fzf-lua").lsp_references, "Goto References")
+        map("<leader>ld", require("fzf-lua").lsp_definitions, "Goto Definition")
+        map("<leader>li", require("fzf-lua").lsp_implementations, "Goto Implementation")
+        map("<leader>lD", require("fzf-lua").lsp_declarations, "Goto Declaration")
+        map("<leader>lt", require("fzf-lua").lsp_typedefs, "Type Definition")
 
         local client = vim.lsp.get_client_by_id(event.data.client_id)
+
+        if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
+          map("<leader>lh", function()
+            vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }))
+          end, "Toggle Inlay Hints")
+        end
 
         if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
           local highlight_augroup = vim.api.nvim_create_augroup("kickstart-lsp-highlight", { clear = false })
@@ -49,12 +56,6 @@ return {
               vim.api.nvim_clear_autocmds({ group = "kickstart-lsp-highlight", buffer = event2.buf })
             end,
           })
-        end
-
-        if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
-          map("<leader>lth", function()
-            vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }))
-          end, "Toggle Inlay Hints")
         end
       end,
     })
