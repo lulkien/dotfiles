@@ -21,6 +21,6 @@ return {
     vim.keymap.set("n", "<leader>ft", require("fzf-lua").btags, { desc = "Fzf buffer tags" })
     vim.keymap.set("n", "<leader>fT", require("fzf-lua").tags, { desc = "Fzf project tags" })
 
-    vim.keymap.set("n", "gca", require("fzf-lua").lsp_code_actions(), { desc = "LSP: Code Actions" })
+    vim.keymap.set("n", "lca", require("fzf-lua").lsp_code_actions, { desc = "LSP: Code Actions" })
   end,
 }
