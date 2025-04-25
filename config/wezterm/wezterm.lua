@@ -40,7 +40,7 @@ keymap = {
 	{
 		key = "/",
 		mods = "LEADER",
-		action = action.Search,
+		action = action.Search({ CaseInSensitiveString = "" }),
 	},
 	--SCROLLINGS
 	{
