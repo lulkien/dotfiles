@@ -37,6 +37,32 @@ keymap = {
 		mods = "CTRL|SHIFT",
 		action = action.PasteFrom("Clipboard"),
 	},
+	{
+		key = "/",
+		mods = "LEADER",
+		action = action.Search,
+	},
+	--SCROLLINGS
+	{
+		key = "u",
+		mods = "LEADER",
+		action = action.ScrollByPage(-0.5),
+	},
+	{
+		key = "d",
+		mods = "LEADER",
+		action = action.ScrollByPage(0.5),
+	},
+	{
+		key = "b",
+		mods = "LEADER",
+		action = action.ScrollByPage(-1),
+	},
+	{
+		key = "f",
+		mods = "LEADER",
+		action = action.ScrollByPage(1),
+	},
 	-- PANES
 	{
 		key = "%",
@@ -47,6 +73,14 @@ keymap = {
 		key = '"',
 		mods = "LEADER|SHIFT",
 		action = action.SplitVertical({ args = config.default_prog }),
+	},
+	{
+		key = "q",
+		mods = "LEADER",
+		action = action.PaneSelect({
+			alphabet = "123456789",
+			mode = "Activate",
+		}),
 	},
 	{
 		key = "h",
@@ -67,6 +101,11 @@ keymap = {
 		key = "j",
 		mods = "LEADER",
 		action = action.ActivatePaneDirection("Down"),
+	},
+	{
+		key = "r",
+		mods = "LEADER",
+		action = action.RotatePanes("Clockwise"),
 	},
 	{
 		key = "x",
@@ -98,6 +137,7 @@ keymap = {
 
 config = {
 	default_prog = { "pwsh.exe", "-NoLogo" },
+	window_background_opacity = 0.8,
 	color_scheme = "Catppuccin Mocha",
 	font = wezterm.font("CodeNewRoman Nerd Font Mono"),
 	use_fancy_tab_bar = false,
@@ -108,6 +148,7 @@ config = {
 	check_for_updates = false,
 	animation_fps = 1,
 	max_fps = 30,
+	disable_default_key_bindings = true,
 	leader = { key = "b", mods = "CTRL" },
 	keys = keymap,
 }
