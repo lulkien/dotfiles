@@ -9,6 +9,7 @@ symlink|{SCRIPT_DIR}/config/tmux/tmux.conf|{HOME}/.tmux.conf
 clone|https://github.com/tmux-plugins/tpm|{HOME}/.tmux/plugins/tpm
 
 symlink|{SCRIPT_DIR}/config/hypr|{HOME}/.config/hypr
+symlink|{SCRIPT_DIR}/config/btop|{HOME}/.config/btop
 symlink|{SCRIPT_DIR}/config/eww|{HOME}/.config/eww
 symlink|{SCRIPT_DIR}/config/anyrun|{HOME}/.config/anyrun
 symlink|{SCRIPT_DIR}/config/dunst|{HOME}/.config/dunst
