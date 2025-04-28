@@ -36,7 +36,6 @@ This repository contains configuration files and scripts, known as dotfiles, tai
 - Status bar: EWW
 - Application launcher: Anyrun
 - Notification daemon: Dunst
-- Systemd wrapper: UWSM
 
 ### MacOS darwin config
 
