@@ -41,7 +41,8 @@ Config(
     // List of plugins to be loaded by default, can be specified with a relative path to be loaded from the
     // `<anyrun config dir>/plugins` directory or with an absolute path to just load the file the path points to.
     plugins: [
-        "libuwsm_launcher.so",
+        // "libuwsm_launcher.so",
+        "libapp_launcher.so",
         "libpower_menu.so",
         // "libapplications.so",
         // "libsymbols.so",

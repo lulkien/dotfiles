@@ -13,10 +13,9 @@ symlink|{SCRIPT_DIR}/config/btop|{HOME}/.config/btop
 symlink|{SCRIPT_DIR}/config/eww|{HOME}/.config/eww
 symlink|{SCRIPT_DIR}/config/anyrun|{HOME}/.config/anyrun
 symlink|{SCRIPT_DIR}/config/dunst|{HOME}/.config/dunst
-symlink|{SCRIPT_DIR}/config/uwsm|{HOME}/.config/uwsm
 
 # Binary{SCRIPT_DIR}/
-symlink|{SCRIPT_DIR}/bin/Hyprland|{HOME}/.local/bin/Hyprland
+# symlink|{SCRIPT_DIR}/bin/Hyprland|{HOME}/.local/bin/Hyprland
 
 # Fonts
 extract|{SCRIPT_DIR}/packages/fonts/Anurati.tar.gz|{HOME}/.fonts
