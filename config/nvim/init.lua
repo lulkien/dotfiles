@@ -50,6 +50,7 @@ require("lazy").setup({
     try_require("plugins.conform"),
     try_require("plugins.comment"),
     try_require("plugins.whichkey"),
+    try_require("plugins.screenkey"),
     try_require("plugins.misc"),
 
     -- Devlopment

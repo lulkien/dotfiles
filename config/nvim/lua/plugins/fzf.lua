@@ -1,4 +1,4 @@
----@diagnostic disable: unused-local
+---@diagnostic disable: unused-local, unused-function
 return {
   "ibhagwan/fzf-lua",
   dependencies = {
@@ -15,12 +15,70 @@ return {
       BottomLeft = 7,
       Left = 8,
     }
+
     local double_border = { "╔", "═", "╗", "║", "╝", "═", "╚", "║" }
 
     require("fzf-lua").setup({
-      { "fzf-native" },
+      { "default-title" },
+      number = false,
+
       winopts = {
-        border = double_border,
+        border = function(_, m)
+          assert(m.type == "nvim" and m.name == "fzf")
+          if m.nwin == 1 then
+            return double_border
+          end
+
+          assert(type(m.layout) == "string")
+
+          local b = vim.deepcopy(double_border)
+
+          if m.layout == "down" then
+            b[Position.Bottom] = ""
+          elseif m.layout == "up" then
+            b[Position.Top] = ""
+          elseif m.layout == "left" then
+            b[Position.Left] = ""
+          else -- right
+            b[Position.Right] = ""
+          end
+
+          return b
+        end,
+
+        preview = {
+          scrollbar = "float",
+
+          border = function(_, m)
+            if m.type == "fzf" then
+              return double_border
+            end
+
+            assert(m.type == "nvim" and m.name == "prev" and type(m.layout) == "string")
+
+            local b = vim.deepcopy(double_border)
+
+            if m.layout == "down" then
+              b[Position.TopLeft] = "╟"
+              b[Position.Top] = "─"
+              b[Position.TopRight] = "╢"
+            elseif m.layout == "up" then
+              b[Position.BottomRight] = "╢"
+              b[Position.Bottom] = "─"
+              b[Position.BottomLeft] = "╟"
+            elseif m.layout == "left" then
+              b[Position.TopRight] = "╤"
+              b[Position.Right] = "│"
+              b[Position.BottomRight] = "╧"
+            else -- right
+              b[Position.TopLeft] = "╤"
+              b[Position.Left] = "│"
+              b[Position.BottomLeft] = "╧"
+            end
+
+            return b
+          end,
+        },
       },
     })
 
