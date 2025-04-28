@@ -2,7 +2,7 @@ export GTK_THEME=catppuccin-mocha-red-standard+default
 export XCURSOR_THEME=catppuccin-mocha-red-cursors
 export XCURSOR_SIZE=24
 
-export GDK_BACKEND=wayland,x11,*
+export GDK_BACKEND=wayland,*
 export SDL_VIDEODRIVER=wayland
 export CLUTTER_BACKEND=wayland
  
