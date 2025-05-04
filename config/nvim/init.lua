@@ -56,7 +56,7 @@ require("lazy").setup({
     -- Devlopment
     try_require("plugins.treesitter"),
     try_require("plugins.blink"),
-    try_require("plugins.lsp"),
+    try_require("plugins.lsp11"),
 
     -- Rust devlopment
     try_require("plugins.rustaceanvim"),

@@ -20,12 +20,14 @@ return {
           vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
         end
 
-        map("<leader>la", require("fzf-lua").lsp_code_actions, "Code Actions")
-        map("<leader>lr", require("fzf-lua").lsp_references, "Goto References")
-        map("<leader>ld", require("fzf-lua").lsp_definitions, "Goto Definition")
-        map("<leader>li", require("fzf-lua").lsp_implementations, "Goto Implementation")
-        map("<leader>lD", require("fzf-lua").lsp_declarations, "Goto Declaration")
-        map("<leader>lt", require("fzf-lua").lsp_typedefs, "Type Definition")
+        map("<leader>lca", require("fzf-lua").lsp_code_actions, "Code Actions")
+        map("<leader>lgr", require("fzf-lua").lsp_references, "Goto References")
+        map("<leader>lgd", require("fzf-lua").lsp_definitions, "Goto Definition")
+        map("<leader>lgi", require("fzf-lua").lsp_implementations, "Goto Implementation")
+        map("<leader>lgD", require("fzf-lua").lsp_declarations, "Goto Declaration")
+        map("<leader>lgt", require("fzf-lua").lsp_typedefs, "Type Definition")
+
+        map("<leader>lrn", vim.lsp.buf.rename, "Rename")
 
         local client = vim.lsp.get_client_by_id(event.data.client_id)
 
