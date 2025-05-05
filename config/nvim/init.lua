@@ -2,7 +2,7 @@
 --- @param module string The module name to require.
 --- @param silent? boolean If true, suppresses error messages.
 --- @return any|nil loaded_module Returns the module if successful, nil otherwise.
-local function try_require(module, silent)
+local function safe_require(module, silent)
   local ok, loaded = pcall(require, module)
   if not ok then
     if not silent then
@@ -15,9 +15,9 @@ end
 
 ----------------------------------------------- CORE -----------------------------------------------
 
-try_require("core.options")
-try_require("core.keymaps")
-try_require("core.autocmds")
+safe_require("core.options")
+safe_require("core.keymaps")
+safe_require("core.autocmds")
 
 ----------------------------------------------- LAZY -----------------------------------------------
 
@@ -35,34 +35,39 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
   spec = {
     -- Theme
-    try_require("plugins.catppuccin"),
+    safe_require("plugins.catppuccin"),
 
     -- UI
-    try_require("plugins.nvim-tree"),
-    try_require("plugins.bufferline"),
-    try_require("plugins.lualine"),
-    try_require("plugins.alpha"),
-    try_require("plugins.indent-blankline"),
-    try_require("plugins.gitsigns"),
+    safe_require("plugins.nvim-tree"),
+    safe_require("plugins.bufferline"),
+    safe_require("plugins.lualine"),
+    safe_require("plugins.alpha"),
+    safe_require("plugins.indent-blankline"),
+    safe_require("plugins.gitsigns"),
 
     -- Functionality
-    try_require("plugins.fzf"),
-    try_require("plugins.conform"),
-    try_require("plugins.comment"),
-    try_require("plugins.whichkey"),
-    try_require("plugins.screenkey"),
-    try_require("plugins.misc"),
+    safe_require("plugins.fzf"),
+    safe_require("plugins.blink"),
+    safe_require("plugins.conform"),
+    safe_require("plugins.comment"),
+    safe_require("plugins.whichkey"),
+    safe_require("plugins.screenkey"),
+    safe_require("plugins.misc"),
 
     -- Devlopment
-    try_require("plugins.treesitter"),
-    try_require("plugins.blink"),
-    try_require("plugins.lsp11"),
+    safe_require("plugins.treesitter"),
+    safe_require("plugins.mason"),
+    -- safe_require("plugins.lsp11"),
 
     -- Rust devlopment
-    try_require("plugins.rustaceanvim"),
-    try_require("plugins.crates"),
+    safe_require("plugins.rustaceanvim"),
+    safe_require("plugins.crates"),
   },
 
   install = { colorscheme = { "catppuccin" } },
   checker = { enabled = false },
 })
+
+----------------------------------------------- LSP -----------------------------------------------
+
+safe_require("core.lsp")

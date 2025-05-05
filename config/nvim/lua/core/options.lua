@@ -23,7 +23,7 @@ vim.opt.tabstop = 2
 vim.opt.softtabstop = 2
 vim.opt.expandtab = true
 
-vim.opt.scrolloff = 30
+vim.opt.scrolloff = 8
 vim.opt.sidescrolloff = 8
 
 vim.opt.cmdheight = 1

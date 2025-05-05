@@ -32,4 +32,27 @@ return {
       require("colorizer").setup()
     end,
   },
+  {
+    -- Notification UI
+    "j-hui/fidget.nvim",
+    opts = {
+      integration = {
+        ["nvim-tree"] = {
+          enable = true,
+        },
+      },
+      notification = {
+        window = {
+          zindex = 100,
+          align = "top",
+        },
+      },
+      progress = {
+        lsp = {
+          progress_ringbuf_size = 0,
+          log_handler = false,
+        },
+      },
+    },
+  },
 }
