@@ -14,15 +14,6 @@ return {
       disable = {
         filetypes = { "NvimTree" },
       },
-      filter = function(keys)
-        local ignore = { "h", "j", "k", "l" }
-        return vim
-          .iter(keys)
-          :filter(function(k)
-            return not vim.tbl_contains(ignore, k.key)
-          end)
-          :totable()
-      end,
     })
 
     if not require("screenkey").is_active() then
