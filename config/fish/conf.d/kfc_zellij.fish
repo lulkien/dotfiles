@@ -1,5 +1,5 @@
 if command -sq zellij
-    abbr -a -- zz zellij
+    abbr -a -- zn zellij
     abbr -a -- za 'zellij attach'
     abbr -a -- zd 'zellij delete-session'
     abbr -a -- zda 'zellij delete-all-sessions'

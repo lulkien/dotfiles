@@ -449,8 +449,6 @@ keybinds clear-defaults=true {
         }
     }
 }
-// Plugin aliases - can be used to change the implementation of Zellij
-// changing these requires a restart to take effect
 plugins {
     about location="zellij:about"
     compact-bar location="zellij:compact-bar"
@@ -481,7 +479,7 @@ load_plugins {
 // Choose the theme that is specified in the themes section.
 // Default: default
 //
-theme "catppuccin-mocha"
+theme "onedark"
 // --------------------------------------------------------------------------
 // Choose the base input mode of zellij.
 // Default: normal
