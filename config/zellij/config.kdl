@@ -213,22 +213,6 @@ keybinds clear-defaults=true {
         }
     }
     scroll {
-        bind "Alt left" {
-            MoveFocusOrTab "left"
-            SwitchToMode "locked"
-        }
-        bind "Alt down" {
-            MoveFocus "down"
-            SwitchToMode "locked"
-        }
-        bind "Alt up" {
-            MoveFocus "up"
-            SwitchToMode "locked"
-        }
-        bind "Alt right" {
-            MoveFocusOrTab "right"
-            SwitchToMode "locked"
-        }
         bind "e" {
             EditScrollback
             SwitchToMode "locked"
@@ -311,18 +295,6 @@ keybinds clear-defaults=true {
         }
     }
     shared_among "normal" "locked" {
-        bind "Alt left" {
-            MoveFocusOrTab "left"
-        }
-        bind "Alt down" {
-            MoveFocus "down"
-        }
-        bind "Alt up" {
-            MoveFocus "up"
-        }
-        bind "Alt right" {
-            MoveFocusOrTab "right"
-        }
         bind "Alt +" {
             Resize "Increase"
         }
