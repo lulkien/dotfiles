@@ -13,6 +13,7 @@ return {
         javascript = { "prettierd" },
         toml = { "taplo" },
         nix = { "nixfmt" },
+        kdl = { "kdlfmt" },
       },
       format_on_save = {
         timeout_ms = 500,
