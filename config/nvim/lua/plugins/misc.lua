@@ -33,26 +33,29 @@ return {
     end,
   },
   {
-    -- Notification UI
-    "j-hui/fidget.nvim",
-    opts = {
-      integration = {
-        ["nvim-tree"] = {
-          enable = true,
-        },
-      },
-      notification = {
-        window = {
-          zindex = 100,
-          align = "top",
-        },
-      },
-      progress = {
-        lsp = {
-          progress_ringbuf_size = 0,
-          log_handler = false,
-        },
-      },
-    },
+    "rcarriga/nvim-notify",
+    config = function()
+      require("notify").setup({
+        stages = "static",
+      })
+
+      vim.notify = require("notify")
+    end,
+  },
+  {
+    "m4xshen/hardtime.nvim",
+    lazy = false,
+    dependencies = { "MunifTanjim/nui.nvim" },
+    opts = {},
+  },
+  {
+    "mrded/nvim-lsp-notify",
+    requires = { "rcarriga/nvim-notify" },
+    config = function()
+      require("lsp-notify").setup({
+        -- icons = false,
+        notidy = require("notify"),
+      })
+    end,
   },
 }

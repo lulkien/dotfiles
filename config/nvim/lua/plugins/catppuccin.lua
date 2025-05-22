@@ -42,6 +42,7 @@ return {
         cmp = true,
         gitsigns = true,
         nvimtree = true,
+        notify = true,
         treesitter = true,
         alpha = true,
         indent_blankline = {
@@ -73,7 +74,8 @@ return {
         which_key = false,
       },
     })
-
+  end,
+  init = function()
     vim.cmd.colorscheme("catppuccin")
   end,
 }
