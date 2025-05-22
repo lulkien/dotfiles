@@ -114,20 +114,24 @@ keybinds clear-defaults=true {
             SwitchToMode "locked"
         }
         bind "h" {
+            SwitchToMode "locked"
             GoToPreviousTab
         }
         bind "j" {
+            SwitchToMode "locked"
             GoToNextTab
         }
         bind "k" {
+            SwitchToMode "locked"
             GoToPreviousTab
         }
         bind "l" {
+            SwitchToMode "locked"
             GoToNextTab
         }
         bind "n" {
-            NewTab
             SwitchToMode "locked"
+            NewTab
         }
         bind "r" {
             SwitchToMode "renametab"
