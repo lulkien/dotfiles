@@ -18,4 +18,7 @@ return {
     "taplo",
     "yamlfmt",
   },
+  external_servers = {
+    "qmlls",
+  },
 }

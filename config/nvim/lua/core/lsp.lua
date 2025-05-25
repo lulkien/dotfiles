@@ -1,4 +1,5 @@
 local servers = require("configs.language-servers").servers
+local external_servers = require("configs.language-servers").external_servers
 
 -- Load blink capabilities
 local blink_ok, blink = pcall(require, "blink-cmp")
@@ -9,9 +10,8 @@ if blink_ok then
 end
 
 -- Enable language servers
-for _, server in ipairs(servers) do
-  vim.lsp.enable(server)
-end
+vim.lsp.enable(servers)
+vim.lsp.enable(external_servers)
 
 -- Setup virtual line diagnostic
 vim.diagnostic.config({
