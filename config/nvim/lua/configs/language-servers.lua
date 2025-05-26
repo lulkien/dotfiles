@@ -9,6 +9,7 @@ return {
     "ruff",
     "ts_ls",
     "yamlls",
+    "cmake-language-server",
   },
   formatters = {
     "clang-format",
@@ -17,6 +18,7 @@ return {
     "stylua",
     "taplo",
     "yamlfmt",
+    "cmakelang",
   },
   external_servers = {
     "qmlls",
