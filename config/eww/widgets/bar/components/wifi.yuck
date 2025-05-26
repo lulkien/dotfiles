@@ -1,6 +1,6 @@
 ;; Listener
 (deflisten WIFI_DATA :initial "[]"
-    `uwsm app -- hyprvisor wifi`)
+    `hyprvisor wifi`)
 
 (defwidget wifi []
     (box

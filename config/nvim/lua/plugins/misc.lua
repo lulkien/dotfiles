@@ -32,4 +32,30 @@ return {
       require("colorizer").setup()
     end,
   },
+  {
+    "rcarriga/nvim-notify",
+    config = function()
+      require("notify").setup({
+        stages = "static",
+      })
+
+      vim.notify = require("notify")
+    end,
+  },
+  -- {
+  --   "m4xshen/hardtime.nvim",
+  --   lazy = false,
+  --   dependencies = { "MunifTanjim/nui.nvim" },
+  --   opts = {},
+  -- },
+  -- {
+  --   "mrded/nvim-lsp-notify",
+  --   requires = { "rcarriga/nvim-notify" },
+  --   config = function()
+  --     require("lsp-notify").setup({
+  --       -- icons = false,
+  --       notidy = require("notify"),
+  --     })
+  --   end,
+  -- },
 }

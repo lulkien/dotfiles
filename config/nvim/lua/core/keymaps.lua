@@ -62,7 +62,7 @@ map("n", "<C-u>", "<C-u>zz", opts)
 map("n", "<C-d>", "<C-d>zz", opts)
 
 -- Line wrapping toggle
-map("n", "<leader>lw", "<cmd>set wrap!<CR>", { noremap = true, desc = "Toggle: Line wrap" })
+map("n", "<leader>W", "<cmd>set wrap!<CR>", { noremap = true, desc = "Toggle: Line wrap" })
 
 -- Indent mode
 map("v", "<Tab>", ">gv", opts)
@@ -79,6 +79,6 @@ end, { desc = "Diagnostics: Next" })
 map("n", "<leader>dp", function()
   vim.diagnostic.jump({ count = -1 })
 end, { desc = "Diagnostics: Previous" })
-
-map("n", "<leader>df", vim.diagnostic.open_float, { desc = "Diagnostics: Open Floating" })
-map("n", "<leader>dl", vim.diagnostic.setloclist, { desc = "Diagnostics: List" })
+--
+-- map("n", "<leader>df", vim.diagnostic.open_float, { desc = "Diagnostics: Open Floating" })
+-- map("n", "<leader>dl", vim.diagnostic.setloclist, { desc = "Diagnostics: List" })
