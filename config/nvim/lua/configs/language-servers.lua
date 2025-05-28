@@ -1,14 +1,14 @@
 return {
   servers = {
-    "bashls",
+    "bash-language-server",
     "clangd",
-    "cssls",
-    "html",
-    "jsonls",
-    "lua_ls",
+    "css-lsp",
+    "html-lsp",
+    "json-lsp",
+    "lua-language-server",
     "ruff",
-    "ts_ls",
-    "yamlls",
+    "typescript-language-server",
+    "yaml-language-server",
     "cmake-language-server",
   },
   formatters = {

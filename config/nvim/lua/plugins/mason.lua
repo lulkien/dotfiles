@@ -1,7 +1,6 @@
 return {
   "williamboman/mason.nvim",
   dependencies = {
-    "williamboman/mason-lspconfig.nvim",
     "WhoIsSethDaniel/mason-tool-installer.nvim",
   },
   config = function()
@@ -21,7 +20,6 @@ return {
       max_concurrent_installers = 10,
     })
 
-    require("mason-lspconfig").setup({})
     require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
   end,
 }
