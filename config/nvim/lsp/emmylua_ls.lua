@@ -26,7 +26,7 @@ return {
           unpack(vim.api.nvim_get_runtime_file("", true)),
         },
       },
-      diagnostics = { disable = { "missing-fields" } },
+      -- diagnostics = { disable = { "missing-fields" } },
       format = {
         enable = false,
       },

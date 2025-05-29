@@ -1,3 +1,4 @@
+---@type LazyConfig
 return {
   "goolord/alpha-nvim",
   dependencies = {

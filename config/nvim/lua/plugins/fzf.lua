@@ -1,4 +1,5 @@
 ---@diagnostic disable: unused-local, unused-function
+---@type LazyConfig
 return {
   "ibhagwan/fzf-lua",
   dependencies = {

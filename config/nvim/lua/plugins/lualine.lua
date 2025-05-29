@@ -1,3 +1,4 @@
+---@type LazyConfig
 return {
   "nvim-lualine/lualine.nvim",
   dependencies = {

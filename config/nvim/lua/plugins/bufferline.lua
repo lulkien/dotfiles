@@ -1,3 +1,4 @@
+---@type LazyConfig
 return {
   "akinsho/bufferline.nvim",
   dependencies = {

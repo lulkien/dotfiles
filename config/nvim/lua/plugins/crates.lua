@@ -1,3 +1,4 @@
+---@type LazyConfig
 return {
   "saecki/crates.nvim",
   ft = { "rust", "toml" },

@@ -1,3 +1,4 @@
+---@type LazyConfig
 return {
   "folke/which-key.nvim",
   opts = {

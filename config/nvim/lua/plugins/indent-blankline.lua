@@ -1,4 +1,4 @@
----@diagnostic disable: unused-local
+---@type LazyConfig
 return {
   "lukas-reineke/indent-blankline.nvim",
   dependencies = {
@@ -6,7 +6,7 @@ return {
   },
   main = "ibl",
   config = function()
-    local highlight = {
+    local _highlight = {
       "CatppuccinRed",
       "CatppuccinYellow",
       "CatppuccinBlue",

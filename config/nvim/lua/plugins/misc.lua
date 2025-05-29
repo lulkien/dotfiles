@@ -1,4 +1,5 @@
-return {
+---@type LazyConfig
+local M = {
   {
     -- Detect tabstop and shiftwidth automatically
     "tpope/vim-sleuth",
@@ -32,30 +33,41 @@ return {
       require("colorizer").setup()
     end,
   },
-  {
-    "rcarriga/nvim-notify",
-    config = function()
-      require("notify").setup({
-        stages = "static",
-      })
-
-      vim.notify = require("notify")
-    end,
-  },
   -- {
-  --   "m4xshen/hardtime.nvim",
-  --   lazy = false,
-  --   dependencies = { "MunifTanjim/nui.nvim" },
-  --   opts = {},
-  -- },
-  -- {
-  --   "mrded/nvim-lsp-notify",
-  --   requires = { "rcarriga/nvim-notify" },
+  --   -- Notification
+  --   "echasnovski/mini.notify",
+  --   version = "*",
   --   config = function()
-  --     require("lsp-notify").setup({
-  --       -- icons = false,
-  --       notidy = require("notify"),
+  --     require("mini.notify").setup({
+  --       lsp_progress = {
+  --         enable = true,
+  --         level = "INFO",
+  --         duration_last = 1000,
+  --       },
   --     })
   --   end,
   -- },
+  {
+    "mrded/nvim-lsp-notify",
+    dependencies = {
+      {
+        "rcarriga/nvim-notify",
+        config = function()
+          ---@diagnostic disable-next-line: assign-type-mismatch
+          vim.notify = require("notify")
+        end,
+      },
+    },
+    config = function()
+      require("lsp-notify").setup()
+    end,
+  },
+  {
+    "m4xshen/hardtime.nvim",
+    lazy = false,
+    dependencies = { "MunifTanjim/nui.nvim" },
+    opts = {},
+  },
 }
+
+return M

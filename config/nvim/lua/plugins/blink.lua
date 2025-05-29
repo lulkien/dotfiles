@@ -1,3 +1,4 @@
+---@type LazyConfig
 return {
   "saghen/blink.cmp",
   dependencies = {

@@ -1,3 +1,4 @@
+---@type LazyConfig
 return {
   "nvim-tree/nvim-tree.lua",
   dependencies = {

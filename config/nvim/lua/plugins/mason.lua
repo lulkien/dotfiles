@@ -1,3 +1,4 @@
+---@type LazyConfig
 return {
   "williamboman/mason.nvim",
   dependencies = {

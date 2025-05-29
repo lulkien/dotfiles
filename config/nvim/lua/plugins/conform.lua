@@ -1,3 +1,4 @@
+---@type LazyConfig
 return {
   "stevearc/conform.nvim",
   config = function()

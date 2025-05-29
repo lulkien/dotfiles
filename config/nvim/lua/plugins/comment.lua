@@ -1,3 +1,4 @@
+---@type LazyConfig
 return {
   "numToStr/Comment.nvim",
   opts = {},

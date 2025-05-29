@@ -1,3 +1,4 @@
+---@diagnostic disable: duplicate-type, param-type-not-match
 local servers = require("configs.language-servers").servers
 local external_servers = require("configs.language-servers").external_servers
 
@@ -18,6 +19,7 @@ vim.diagnostic.config({
   virtual_lines = true,
 })
 
+---@diagnostic disable-next-line: duplicate-type
 --- Callback function triggered on LSP attach event.
 ---
 --- @param args vim.api.keyset.create_autocmd.callback_args Event arguments containing:
