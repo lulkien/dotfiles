@@ -77,5 +77,5 @@ return {
   comments,
   colorizer,
   notify,
-  hardtime,
+  -- hardtime,
 }
