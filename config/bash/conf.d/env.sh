@@ -3,7 +3,6 @@ bash_prepend_path() {
     [ -d "$1" ] || return
     [[ $PATH =~ "$1" ]] && return
 
-    echo "Prepend: $1"
     export PATH="$1:$PATH"
 }
 
