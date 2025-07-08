@@ -1,0 +1,18 @@
+theme = "onedark"
+
+[editor]
+scrolloff = 10
+mouse = false
+line-number = "relative"
+cursorline = true
+bufferline = "always"
+color-modes = true
+text-width = 100
+popup-border = "all"
+end-of-line-diagnostics = "hint"
+
+[editor.file-picker]
+hidden = false
+
+[editor.inline-diagnostics]
+cursor-line = "warning"

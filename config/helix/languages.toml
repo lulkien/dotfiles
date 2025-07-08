@@ -1,0 +1,22 @@
+[language-server.clangd]
+command = "clangd"
+args = ["--background-index", "-j=8", "--malloc-trim", "--pch-storage=memory"]
+required-root-patterns = [".clangd"]
+
+[[language]]
+name = "cpp"
+scope = "source.cpp"
+injection-regex = "cpp"
+file-types = ["cpp", "C", "h", "hpp"]
+roots = [".clangd", ".git"]
+indent = { tab-width = 2, unit = "  " }
+language-servers = ["clangd"]
+
+[[language]]
+name = "c"
+scope = "source.c"
+injection-regex = "c"
+file-types = ["c", "h", "hh"]
+roots = [".clangd", ".git"]
+indent = { tab-width = 2, unit = "  " }
+language-servers = ["clangd"]
