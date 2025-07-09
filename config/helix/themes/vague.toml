@@ -1,0 +1,215 @@
+# Vague theme for Helix
+# Author: Ported from vague.nvim by vague2k
+# Original: https://github.com/vague2k/vague.nvim
+
+## User interface
+"ui.background" = { bg = "bg" }
+"ui.text" = "fg"
+"ui.text.focus" = { fg = "constant", bg = "line", modifiers = ["bold"] }
+"ui.text.inactive" = "comment"
+"ui.text.info" = "hint"
+"ui.text.directory" = "hint"
+
+"ui.cursor" = { bg = "fg", fg = "bg" }
+"ui.cursor.primary" = { bg = "fg", fg = "bg" }
+"ui.cursor.match" = { fg = "warning", modifiers = ["bold"] }
+"ui.cursor.normal" = { bg = "fg", fg = "bg" }
+"ui.cursor.insert" = { bg = "plus", fg = "bg" }
+"ui.cursor.select" = { bg = "parameter", fg = "bg" }
+
+"ui.cursorline.primary" = { bg = "line" }
+"ui.cursorcolumn.primary" = { bg = "line" }
+
+"ui.selection" = { bg = "visual" }
+"ui.selection.primary" = { bg = "visual" }
+
+"ui.linenr" = "comment"
+"ui.linenr.selected" = { fg = "fg", modifiers = ["bold"] }
+
+"ui.statusline" = { fg = "fg", bg = "line" }
+"ui.statusline.inactive" = { fg = "comment", bg = "bg" }
+"ui.statusline.normal" = { fg = "bg", bg = "keyword", modifiers = ["bold"] }
+"ui.statusline.insert" = { fg = "bg", bg = "plus", modifiers = ["bold"] }
+"ui.statusline.select" = { fg = "bg", bg = "parameter", modifiers = ["bold"] }
+
+"ui.bufferline" = { fg = "comment", bg = "line" }
+"ui.bufferline.active" = { fg = "fg", bg = "bg" }
+"ui.bufferline.background" = { bg = "bg" }
+
+"ui.virtual" = "comment"
+"ui.virtual.ruler" = { bg = "line" }
+"ui.virtual.whitespace" = "comment"
+"ui.virtual.indent-guide" = "comment"
+"ui.virtual.inlay-hint" = "comment"
+"ui.virtual.wrap" = "comment"
+"ui.virtual.jump-label" = { fg = "warning", modifiers = ["bold"] }
+
+"ui.popup" = { fg = "fg", bg = "bg" }
+"ui.popup.info" = { fg = "fg", bg = "line" }
+"ui.window" = "floatBorder"
+"ui.help" = { fg = "fg", bg = "bg" }
+
+"ui.menu" = { fg = "fg", bg = "bg" }
+"ui.menu.selected" = { fg = "constant", bg = "line", modifiers = ["bold"] }
+"ui.menu.scroll" = { fg = "comment", bg = "line" }
+
+"ui.picker.header" = { fg = "constant", modifiers = ["bold"] }
+"ui.picker.header.column" = { fg = "parameter" }
+"ui.picker.header.column.active" = { fg = "constant", modifiers = ["bold"] }
+
+"ui.gutter" = { bg = "bg" }
+"ui.gutter.selected" = { bg = "line" }
+
+"ui.highlight" = { bg = "visual" }
+"ui.highlight.frameline" = { bg = "search" }
+
+"ui.debug.breakpoint" = "error"
+"ui.debug.active" = "warning"
+
+## Diagnostics
+"diagnostic" = { underline = { style = "curl" } }
+"diagnostic.error" = { fg = "error", underline = { color = "error", style = "curl" } }
+"diagnostic.warning" = { fg = "warning", underline = { color = "warning", style = "curl" } }
+"diagnostic.info" = { fg = "hint", underline = { color = "hint", style = "curl" } }
+"diagnostic.hint" = { fg = "hint", underline = { color = "hint", style = "curl" } }
+"diagnostic.unnecessary" = { modifiers = ["dim"] }
+"diagnostic.deprecated" = { modifiers = ["crossed_out"] }
+
+"error" = "error"
+"warning" = "warning"
+"info" = "hint"
+"hint" = "hint"
+
+## Diff
+"diff.plus" = "plus"
+"diff.minus" = "error"
+"diff.delta" = "delta"
+
+## Syntax highlighting
+"attribute" = "constant"
+"type" = "type"
+"type.builtin" = { fg = "builtin", modifiers = ["bold"] }
+"type.parameter" = "parameter"
+"type.enum" = "type"
+"type.variant" = "constant"
+
+"constructor" = { fg = "constant", modifiers = ["bold"] }
+
+"constant" = "constant"
+"constant.builtin" = { fg = "builtin", modifiers = ["bold"] }
+"constant.boolean" = { fg = "number", modifiers = ["bold"] }
+"constant.character" = "string"
+"constant.character.escape" = "keyword"
+"constant.numeric" = "number"
+"constant.numeric.integer" = "number"
+"constant.numeric.float" = "number"
+
+"string" = { fg = "string", modifiers = ["italic"] }
+"string.regexp" = "keyword"
+"string.special" = "keyword"
+"string.special.path" = "string"
+"string.special.url" = "func"
+"string.special.symbol" = "parameter"
+
+"comment" = { fg = "comment", modifiers = ["italic"] }
+"comment.line" = { fg = "comment", modifiers = ["italic"] }
+"comment.block" = { fg = "comment", modifiers = ["italic"] }
+"comment.documentation" = { fg = "comment", modifiers = ["italic"] }
+
+"variable" = "fg"
+"variable.builtin" = { fg = "builtin", modifiers = ["bold"] }
+"variable.parameter" = "parameter"
+"variable.other.member" = "property"
+"variable.other.member.private" = "property"
+
+"label" = "keyword"
+
+"punctuation" = "fg"
+"punctuation.delimiter" = "fg"
+"punctuation.bracket" = "fg"
+"punctuation.special" = "keyword"
+
+"keyword" = "keyword"
+"keyword.control" = "keyword"
+"keyword.control.conditional" = "keyword"
+"keyword.control.repeat" = "keyword"
+"keyword.control.import" = "keyword"
+"keyword.control.return" = { fg = "keyword", modifiers = ["italic"] }
+"keyword.control.exception" = "keyword"
+"keyword.operator" = { fg = "operator", modifiers = ["bold"] }
+"keyword.directive" = "constant"
+"keyword.function" = "keyword"
+"keyword.storage" = "constant"
+"keyword.storage.type" = "constant"
+"keyword.storage.modifier" = "constant"
+
+"operator" = "operator"
+
+"function" = "func"
+"function.builtin" = { fg = "func", modifiers = ["bold"] }
+"function.method" = "func"
+"function.method.private" = "func"
+"function.macro" = "constant"
+"function.special" = "builtin"
+
+"tag" = "builtin"
+"tag.builtin" = "builtin"
+
+"namespace" = "constant"
+
+"special" = "builtin"
+
+## Markup
+"markup.heading" = { fg = "keyword", modifiers = ["bold"] }
+"markup.heading.marker" = "keyword"
+"markup.heading.1" = { fg = "keyword", modifiers = ["bold"] }
+"markup.heading.2" = { fg = "keyword", modifiers = ["bold"] }
+"markup.heading.3" = { fg = "keyword", modifiers = ["bold"] }
+"markup.heading.4" = { fg = "keyword", modifiers = ["bold"] }
+"markup.heading.5" = { fg = "keyword", modifiers = ["bold"] }
+"markup.heading.6" = { fg = "keyword", modifiers = ["bold"] }
+
+"markup.list" = "func"
+"markup.list.numbered" = "func"
+"markup.list.unnumbered" = "func"
+"markup.list.checked" = "func"
+"markup.list.unchecked" = "func"
+
+"markup.bold" = { modifiers = ["bold"] }
+"markup.italic" = { modifiers = ["italic"] }
+"markup.strikethrough" = { fg = "comment", modifiers = ["crossed_out"] }
+
+"markup.link" = "string"
+"markup.link.url" = { fg = "string", modifiers = ["underlined"] }
+"markup.link.label" = "string"
+"markup.link.text" = "string"
+
+"markup.quote" = "comment"
+"markup.raw" = "constant"
+"markup.raw.inline" = "constant"
+"markup.raw.block" = "constant"
+
+## Color palette
+[palette]
+bg = "#141415"
+fg = "#cdcdcd"
+floatBorder = "#878787"
+line = "#252530"
+comment = "#606079"
+builtin = "#b4d4cf"
+func = "#c48282"
+string = "#e8b589"
+number = "#e0a363"
+property = "#c3c3d5"
+constant = "#aeaed1"
+parameter = "#bb9dbd"
+visual = "#333738"
+error = "#d8647e"
+warning = "#f3be7c"
+hint = "#7e98e8"
+operator = "#90a0b5"
+keyword = "#6e94b2"
+type = "#9bb4bc"
+search = "#405065"
+plus = "#7fa563"
+gelta = "#f3be7c"
