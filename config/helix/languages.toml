@@ -5,18 +5,16 @@ required-root-patterns = [".clangd"]
 
 [[language]]
 name = "cpp"
-scope = "source.cpp"
-injection-regex = "cpp"
-file-types = ["cpp", "C", "h", "hpp"]
-roots = [".clangd", ".git"]
-indent = { tab-width = 2, unit = "  " }
 language-servers = ["clangd"]
 
 [[language]]
 name = "c"
-scope = "source.c"
-injection-regex = "c"
-file-types = ["c", "h", "hh"]
-roots = [".clangd", ".git"]
-indent = { tab-width = 2, unit = "  " }
 language-servers = ["clangd"]
+
+[language-server.ruff]
+command = "ruff"
+args = ["server", "--preview"]
+
+[[language]]
+name = "python"
+language-servers = ["ruff"]
