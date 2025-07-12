@@ -1,4 +1,4 @@
-theme = "onedark"
+theme = "catppuccin_mocha"
 
 [editor]
 scrolloff = 10
@@ -10,6 +10,8 @@ color-modes = true
 text-width = 100
 popup-border = "all"
 end-of-line-diagnostics = "hint"
+true-color = true
+continue-comments = false
 
 [editor.file-picker]
 hidden = false
