@@ -4,8 +4,7 @@ import "modules/bar"
 
 ShellRoot {
     LazyLoader {
-        id: bar
-        activeAsync: true
+        active: true
         Bar {}
     }
 }

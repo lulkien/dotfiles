@@ -8,6 +8,7 @@ Shape {
     property real topRightRadius: 0
     property real bottomLeftRadius: 16
     property real bottomRightRadius: 0
+    property color color: "steelblue"
 
     width: 150
     implicitHeight: 40
@@ -26,7 +27,7 @@ Shape {
     }
 
     ShapePath {
-        fillColor: "steelblue"
+        fillColor: root.color
         strokeWidth: 0
 
         startX: self.topLeftRadius

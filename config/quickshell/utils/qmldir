@@ -1,0 +1,4 @@
+module Utils
+singleton Config 1.0 Config.qml
+singleton Datetime 1.0 Datetime.qml
+singleton Pallete 1.0 Pallete.qml

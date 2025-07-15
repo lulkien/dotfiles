@@ -2,7 +2,7 @@ pragma Singleton
 
 import QtQuick
 import Quickshell
-import "../../themes/cattpuccin_mocha.js" as Theme
+import "../themes/cattpuccin_mocha.js" as Theme
 
 Singleton {
     id: root

@@ -2,13 +2,14 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import Quickshell
-import "../utils"
-import "../common"
+import "root:/utils"
+import "root:/modules/common"
+import "components"
 
 PanelWindow {
     id: bar
 
-    implicitHeight: 50
+    implicitHeight: Config.barHeight
 
     anchors {
         left: true
@@ -17,20 +18,13 @@ PanelWindow {
     }
 
     Rectangle {
-      id: bg
-      anchors.fill: parent
-      color: Theme.background
+        id: bg
+        anchors.fill: parent
+        color: Config.colors.background
     }
 
-    CssRectangle {
-      anchors.centerIn: parent
+    NerdWidget {
+        id: widget
+        anchors.centerIn: parent
     }
-
-    Text {
-      id: text
-      anchors.centerIn: parent
-      color: Theme.text
-      text: Datetime.datetime
-    }
-
 }

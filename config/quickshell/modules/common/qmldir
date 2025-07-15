@@ -1,0 +1,4 @@
+module Common
+FlexRectangle 1.0 FlexRectangle.qml
+NerdWidget 1.0 NerdWidget.qml
+NerdText 1.0 NerdText.qml
