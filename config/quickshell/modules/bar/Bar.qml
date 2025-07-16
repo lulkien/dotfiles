@@ -3,7 +3,6 @@ pragma ComponentBehavior: Bound
 import QtQuick
 import Quickshell
 import "root:/utils"
-import "root:/modules/common"
 import "components"
 
 PanelWindow {
@@ -23,8 +22,12 @@ PanelWindow {
         color: Config.colors.background
     }
 
-    NerdWidget {
-        id: widget
-        anchors.centerIn: parent
+    RightRegion {
+        id: rightRegion
+        anchors {
+            verticalCenter: parent.verticalCenter
+            right: parent.right
+            rightMargin: 10
+        }
     }
 }

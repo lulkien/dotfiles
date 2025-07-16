@@ -26,6 +26,6 @@ Singleton {
 
     function getCurrentDateTime() {
         var now = new Date();
-        return now.toLocaleString(Qt.locale(), "yyyy-MM-dd hh:mm:ss");
+        return now.toLocaleString(Qt.locale(), "ddd MMMM dd | hh:mm A");
     }
 }

@@ -8,12 +8,14 @@ Item {
 
     property string icon: ""
     property string text: "Sample Text"
-    property real padding: 12
-    property real widgetHeight: 32
+    property real padding: 8
+    property real widgetHeight: 34
     property real borderRadius: 8
-    property color leftColor: "steelblue"
-    property color rightColor: "lightgray"
-    property color textColor: "black"
+    property alias leftColor: left.color
+    property alias rightColor: right.color
+    property alias iconColor: iconText.color
+    property alias textColor: contentText.color
+    property alias textFont: contentText.font
     property bool clip: false
 
     implicitWidth: layout.implicitWidth
@@ -27,7 +29,7 @@ Item {
             id: left
             Layout.preferredWidth: root.widgetHeight
             Layout.preferredHeight: root.widgetHeight
-            color: root.leftColor
+            color: "steelblue"
 
             topLeftRadius: root.borderRadius
             topRightRadius: 0
@@ -38,7 +40,7 @@ Item {
 
             NerdText {
                 id: iconText
-                color: root.textColor
+                color: "black"
                 anchors.centerIn: parent
                 padding: root.padding
                 text: root.icon
@@ -52,7 +54,7 @@ Item {
             Layout.preferredHeight: root.widgetHeight
             Layout.preferredWidth: contentText.width
             // Layout.fillWidth: false
-            color: root.rightColor
+            color: "lightgray"
 
             topLeftRadius: 0
             topRightRadius: root.borderRadius
@@ -62,7 +64,7 @@ Item {
             NerdText {
                 id: contentText
                 text: root.text
-                color: root.textColor
+                color: "black"
                 anchors.centerIn: parent
                 padding: root.padding
 
