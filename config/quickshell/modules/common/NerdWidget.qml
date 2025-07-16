@@ -14,6 +14,7 @@ Item {
     property alias leftColor: left.color
     property alias rightColor: right.color
     property alias iconColor: iconText.color
+    property alias iconFont: iconText.font
     property alias textColor: contentText.color
     property alias textFont: contentText.font
     property bool clip: false
@@ -45,7 +46,7 @@ Item {
                 padding: root.padding
                 text: root.icon
 
-                font.pixelSize: Math.max(12, parent.height * 0.5)
+                font.pixelSize: Math.max(20, parent.height * 0.6)
             }
         }
 

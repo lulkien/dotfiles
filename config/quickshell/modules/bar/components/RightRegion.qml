@@ -1,6 +1,7 @@
 pragma ComponentBehavior: Bound
 
 import QtQuick
+// import Quickshell.Bluetooth
 import "root:/modules/common"
 import "root:/utils"
 
@@ -10,7 +11,7 @@ Row {
 
     NerdWidget {
         id: datetime
-        icon: ""
+        icon: "󰃰"
         text: Datetime.datetime
         leftColor: Config.colors.pink
         iconColor: Config.colors.base
