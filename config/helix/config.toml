@@ -70,9 +70,12 @@ U = "no_op"
 ]
 
 j = "move_line_down"
-J = ["copy_selection_on_next_line"]
+"A-j" = ["copy_selection_on_next_line"]
+
 k = "move_line_up"
-K = ["copy_selection_on_prev_line"]
+"A-k" = ["copy_selection_on_prev_line"]
+
+K = "hover"
 
 # Tab movement
 tab = ["goto_next_buffer"]
@@ -89,7 +92,7 @@ s = "no_op"
 n = "no_op"
 p = "no_op"
 
-# Delete in normal node
+# Delete
 [keys.normal.d]
 d = [
   "extend_to_line_bounds",
@@ -135,7 +138,7 @@ g = { g = [
   "normal_mode",
 ] }
 
-
+# Yank
 [keys.normal.y]
 y = [
   "extend_to_line_bounds",
@@ -143,6 +146,52 @@ y = [
   "normal_mode",
   "collapse_selection",
 ]
+
+# Leader
+[keys.normal.space]
+a = "no_op"
+b = "no_op"
+c = "no_op"
+C = "no_op"
+D = "no_op"
+F = "no_op"
+G = "no_op"
+h = "no_op"
+j = "no_op"
+k = "no_op"
+p = "no_op"
+P = "no_op"
+r = "no_op"
+R = "no_op"
+s = "no_op"
+S = "no_op"
+y = "no_op"
+Y = "no_op"
+w = "no_op"
+"A-c" = "no_op"
+"?" = "no_op"
+"'" = "no_op"
+
+## Comment
+"/" = "toggle_comments"
+
+## Diagnostics
+d = { d = "diagnostics_picker", w = "workspace_diagnostics_picker" }
+
+## File explorer
+# e = "file_explorer"
+
+## Find
+f = { b = "buffer_picker", f = "file_picker", F = "file_picker_in_current_directory", S = "global_search", s = "search", r = "last_picker", w = [
+  "move_prev_word_start",
+  "select_mode",
+  "move_next_word_end",
+  "search_selection_detect_word_boundaries",
+  "global_search",
+] }
+
+# LSP
+l = { a = "code_action", f = ":format", R = "rename_symbol" }
 
 # ---------------------------------------- INSERT MODE ----------------------------------------
 
@@ -168,15 +217,50 @@ i = "select_textobject_inner"
 a = "select_textobject_around"
 
 j = ["extend_line_down"]
-J = ["copy_selection_on_next_line"]
+J = ["extend_line_down", "goto_line_end"]
+"A-j" = ["copy_selection_on_next_line"]
 
 k = ["extend_line_up"]
-K = ["copy_selection_on_prev_line"]
+K = ["extend_line_up", "goto_line_start"]
+"A-k" = ["copy_selection_on_prev_line"]
 
 d = ["yank_main_selection_to_clipboard", "delete_selection"]
 x = ["delete_selection"]
 
 y = ["yank_main_selection_to_clipboard", "collapse_selection"]
 
+V = "extend_to_line_bounds"
+
 tab = ["indent", "select_mode"]
 S-tab = ["unindent", "select_mode"]
+
+[keys.select.space]
+a = "no_op"
+b = "no_op"
+c = "no_op"
+C = "no_op"
+d = "no_op"
+D = "no_op"
+f = "no_op"
+F = "no_op"
+g = "no_op"
+G = "no_op"
+h = "no_op"
+j = "no_op"
+k = "no_op"
+p = "no_op"
+P = "no_op"
+r = "no_op"
+R = "no_op"
+s = "no_op"
+S = "no_op"
+y = "no_op"
+Y = "no_op"
+w = "no_op"
+"A-c" = "no_op"
+"?" = "no_op"
+"'" = "no_op"
+
+## Comment
+"/" = "toggle_line_comments"
+# "/" = "toggle_block_comments"
