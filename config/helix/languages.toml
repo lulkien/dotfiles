@@ -1,0 +1,3 @@
+[[languages]]
+name = "toml"
+auto-format = true

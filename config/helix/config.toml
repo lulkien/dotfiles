@@ -13,8 +13,170 @@ end-of-line-diagnostics = "hint"
 true-color = true
 continue-comments = false
 
+[editor.cursor-shape]
+normal = "block"
+insert = "bar"
+select = "underline"
+
 [editor.file-picker]
 hidden = false
 
 [editor.inline-diagnostics]
 cursor-line = "warning"
+
+# ---------------------------------------- NORMAL MODE ----------------------------------------
+
+[keys.normal]
+esc = ["collapse_selection", "keep_primary_selection"]
+
+0 = "goto_line_start"
+"$" = "goto_line_end"
+"^" = "goto_first_nonwhitespace"
+G = "goto_file_end"
+
+V = ["select_mode", "extend_to_line_bounds"]
+
+x = "delete_selection"
+p = ["paste_clipboard_after", "collapse_selection"]
+P = ["paste_clipboard_before", "collapse_selection"]
+
+w = ["move_next_word_start", "move_char_right", "collapse_selection"]
+W = ["move_next_long_word_start", "move_char_right", "collapse_selection"]
+e = ["move_next_word_end", "collapse_selection"]
+E = ["move_next_long_word_end", "collapse_selection"]
+b = ["move_prev_word_start", "collapse_selection"]
+B = ["move_prev_long_word_start", "collapse_selection"]
+
+i = ["insert_mode", "collapse_selection"]
+a = ["append_mode", "collapse_selection"]
+
+u = ["undo", "collapse_selection"]
+U = "no_op"
+"C-r" = ["redo", "collapse_selection"]
+
+"*" = [
+  "move_char_right",
+  "move_prev_word_start",
+  "move_next_word_end",
+  "search_selection",
+  "search_next",
+]
+"#" = [
+  "move_char_right",
+  "move_prev_word_start",
+  "move_next_word_end",
+  "search_selection",
+  "search_prev",
+]
+
+j = "move_line_down"
+J = ["copy_selection_on_next_line"]
+k = "move_line_up"
+K = ["copy_selection_on_prev_line"]
+
+# Tab movement
+tab = ["goto_next_buffer"]
+S-tab = ["goto_previous_buffer"]
+
+# Disable some goto keys
+[keys.normal.g]
+k = "no_op"
+j = "no_op"
+h = "no_op"
+l = "no_op"
+e = "no_op"
+s = "no_op"
+n = "no_op"
+p = "no_op"
+
+# Delete in normal node
+[keys.normal.d]
+d = [
+  "extend_to_line_bounds",
+  "yank_main_selection_to_clipboard",
+  "delete_selection",
+]
+
+"$" = [
+  "extend_to_line_end",
+  "yank_main_selection_to_clipboard",
+  "delete_selection",
+]
+
+"^" = [
+  "extend_to_first_nonwhitespace",
+  "yank_main_selection_to_clipboard",
+  "delete_selection",
+]
+
+"0" = [
+  "extend_to_line_start",
+  "yank_main_selection_to_clipboard",
+  "delete_selection",
+]
+
+G = [
+  "select_mode",
+  "extend_to_line_bounds",
+  "goto_last_line",
+  "extend_to_line_bounds",
+  "yank_main_selection_to_clipboard",
+  "delete_selection",
+  "normal_mode",
+]
+
+g = { g = [
+  "select_mode",
+  "extend_to_line_bounds",
+  "goto_file_start",
+  "extend_to_line_bounds",
+  "yank_main_selection_to_clipboard",
+  "delete_selection",
+  "normal_mode",
+] }
+
+
+[keys.normal.y]
+y = [
+  "extend_to_line_bounds",
+  "yank_main_selection_to_clipboard",
+  "normal_mode",
+  "collapse_selection",
+]
+
+# ---------------------------------------- INSERT MODE ----------------------------------------
+
+[keys.insert]
+esc = ["collapse_selection", "keep_primary_selection", "normal_mode"]
+
+# ---------------------------------------- VISUAL MODE ----------------------------------------
+
+[keys.select]
+esc = ["collapse_selection", "keep_primary_selection", "normal_mode"]
+
+0 = "goto_line_start"
+"$" = "goto_line_end"
+"^" = "goto_first_nonwhitespace"
+G = "goto_file_end"
+
+S = "surround_add"
+
+u = ["switch_to_lowercase", "collapse_selection", "normal_mode"]
+U = ["switch_to_uppercase", "collapse_selection", "normal_mode"]
+
+i = "select_textobject_inner"
+a = "select_textobject_around"
+
+j = ["extend_line_down"]
+J = ["copy_selection_on_next_line"]
+
+k = ["extend_line_up"]
+K = ["copy_selection_on_prev_line"]
+
+d = ["yank_main_selection_to_clipboard", "delete_selection"]
+x = ["delete_selection"]
+
+y = ["yank_main_selection_to_clipboard", "collapse_selection"]
+
+tab = ["indent", "select_mode"]
+S-tab = ["unindent", "select_mode"]
