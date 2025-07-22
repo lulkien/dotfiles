@@ -211,14 +211,18 @@ R = "rename_symbol"
 
 ## Windows
 [keys.normal.space.w]
-"up" = "no_op"
-"down" = "no_op"
-"left" = "no_op"
-"right" = "no_op"
+n = "vsplit"
+d = "hsplit"
+x = "wclose"
+
 q = "no_op"
 s = "no_op"
 v = "no_op"
 w = "no_op"
+"up" = "no_op"
+"down" = "no_op"
+"left" = "no_op"
+"right" = "no_op"
 "C-q" = "no_op"
 "C-o" = "no_op"
 "C-w" = "no_op"
@@ -226,13 +230,10 @@ w = "no_op"
 "C-j" = "no_op"
 "C-k" = "no_op"
 "C-l" = "no_op"
-"C-v" = "no_op"
 "C-s" = "no_op"
+"C-v" = "no_op"
+"C-t" = "no_op"
 
-n = "vsplit"
-d = "hsplit"
-
-x = "wclose"
 
 # ---------------------------------------- INSERT MODE ----------------------------------------
 
