@@ -1,7 +1,7 @@
 theme = "catppuccin_mocha"
 
 [editor]
-scrolloff = 10
+scrolloff = 15
 mouse = false
 line-number = "relative"
 cursorline = true
@@ -150,7 +150,7 @@ y = [
 # Leader
 [keys.normal.space]
 a = "no_op"
-b = "no_op"
+# b = "no_op"
 c = "no_op"
 C = "no_op"
 D = "no_op"
@@ -167,7 +167,6 @@ s = "no_op"
 S = "no_op"
 y = "no_op"
 Y = "no_op"
-w = "no_op"
 "A-c" = "no_op"
 "?" = "no_op"
 "'" = "no_op"
@@ -175,23 +174,65 @@ w = "no_op"
 ## Comment
 "/" = "toggle_comments"
 
-## Diagnostics
-d = { d = "diagnostics_picker", w = "workspace_diagnostics_picker" }
+## Buffer
+[keys.normal.space.b]
+c = ":buffer-close"
+o = ":buffer-close-others"
+a = ":buffer-close-all"
+n = ":buffer-next"
+p = ":buffer-previous"
 
-## File explorer
-# e = "file_explorer"
+## Diagnostics
+[keys.normal.space.d]
+f = "diagnostics_picker"
+w = "workspace_diagnostics_picker"
 
 ## Find
-f = { b = "buffer_picker", f = "file_picker", F = "file_picker_in_current_directory", S = "global_search", s = "search", r = "last_picker", w = [
+[keys.normal.space.f]
+b = "buffer_picker"
+f = "file_picker_in_current_directory"
+F = "file_picker"
+s = "search"
+S = "global_search"
+r = "last_picker"
+w = [
   "move_prev_word_start",
   "select_mode",
   "move_next_word_end",
   "search_selection_detect_word_boundaries",
   "global_search",
-] }
+]
 
 # LSP
-l = { a = "code_action", f = ":format", R = "rename_symbol" }
+[keys.normal.space.l]
+a = "code_action"
+f = ":format"
+R = "rename_symbol"
+
+## Windows
+[keys.normal.space.w]
+"up" = "no_op"
+"down" = "no_op"
+"left" = "no_op"
+"right" = "no_op"
+q = "no_op"
+s = "no_op"
+v = "no_op"
+w = "no_op"
+"C-q" = "no_op"
+"C-o" = "no_op"
+"C-w" = "no_op"
+"C-h" = "no_op"
+"C-j" = "no_op"
+"C-k" = "no_op"
+"C-l" = "no_op"
+"C-v" = "no_op"
+"C-s" = "no_op"
+
+n = "vsplit"
+d = "hsplit"
+
+x = "wclose"
 
 # ---------------------------------------- INSERT MODE ----------------------------------------
 
@@ -203,10 +244,10 @@ esc = ["collapse_selection", "keep_primary_selection", "normal_mode"]
 [keys.select]
 esc = ["collapse_selection", "keep_primary_selection", "normal_mode"]
 
-0 = "goto_line_start"
-"$" = "goto_line_end"
-"^" = "goto_first_nonwhitespace"
-G = "goto_file_end"
+0 = "extend_to_line_start"
+"$" = "extend_to_line_end"
+"^" = "extend_to_first_nonwhitespace"
+G = "extend_to_file_end"
 
 S = "surround_add"
 
@@ -217,11 +258,9 @@ i = "select_textobject_inner"
 a = "select_textobject_around"
 
 j = ["extend_line_down"]
-J = ["extend_line_down", "goto_line_end"]
 "A-j" = ["copy_selection_on_next_line"]
 
 k = ["extend_line_up"]
-K = ["extend_line_up", "goto_line_start"]
 "A-k" = ["copy_selection_on_prev_line"]
 
 d = ["yank_main_selection_to_clipboard", "delete_selection"]
