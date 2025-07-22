@@ -120,9 +120,8 @@ d = [
 
 G = [
   "select_mode",
-  "extend_to_line_bounds",
-  "goto_last_line",
-  "extend_to_line_bounds",
+  "extend_to_last_line",
+  "extend_to_line_end",
   "yank_main_selection_to_clipboard",
   "delete_selection",
   "normal_mode",
@@ -130,9 +129,7 @@ G = [
 
 g = { g = [
   "select_mode",
-  "extend_to_line_bounds",
-  "goto_file_start",
-  "extend_to_line_bounds",
+  "extend_to_file_start",
   "yank_main_selection_to_clipboard",
   "delete_selection",
   "normal_mode",
