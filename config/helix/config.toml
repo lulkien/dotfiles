@@ -52,6 +52,7 @@ a = ["append_mode", "collapse_selection"]
 
 u = ["undo", "collapse_selection"]
 U = "no_op"
+
 "C-r" = ["redo", "collapse_selection"]
 
 "*" = [

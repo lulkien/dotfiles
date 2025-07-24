@@ -1,3 +1,11 @@
+[language-server.rust-analyzer.config]
+check = { command = "clippy" }
+cargo = { features = "all" }
+
+[[languages]]
+name = "rust"
+auto-format = true
+
 [[languages]]
 name = "toml"
 auto-format = true
