@@ -13,7 +13,7 @@ set -gx PATH /usr/local/bin /usr/local/sbin /usr/bin /usr/sbin /bin /sbin
 # Prepend additional PATH
 prepend_path "$HOME/.local/bin"
 prepend_path "$HOME/go/bin"
-prepend_path "$HOME/cargo/bin"
+prepend_path "$HOME/.cargo/bin"
 prepend_path /opt/homebrew/bin
 prepend_path /home/linuxbrew/.linuxbrew/bin
 
