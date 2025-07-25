@@ -27,34 +27,32 @@ cursor-line = "warning"
 # ---------------------------------------- NORMAL MODE ----------------------------------------
 
 [keys.normal]
+# Disable keys
+U = "no_op"
+"C-w" = "no_op"
+# Collapse
 esc = ["collapse_selection", "keep_primary_selection"]
-
+# Vim-like movements
 0 = "goto_line_start"
 "$" = "goto_line_end"
 "^" = "goto_first_nonwhitespace"
 G = "goto_file_end"
-
+# Vim-like operations
 V = ["select_mode", "extend_to_line_bounds"]
-
 x = "delete_selection"
 p = ["paste_clipboard_after", "collapse_selection"]
 P = ["paste_clipboard_before", "collapse_selection"]
-
 w = ["move_next_word_start", "move_char_right", "collapse_selection"]
 W = ["move_next_long_word_start", "move_char_right", "collapse_selection"]
 e = ["move_next_word_end", "collapse_selection"]
 E = ["move_next_long_word_end", "collapse_selection"]
 b = ["move_prev_word_start", "collapse_selection"]
 B = ["move_prev_long_word_start", "collapse_selection"]
-
 i = ["insert_mode", "collapse_selection"]
 a = ["append_mode", "collapse_selection"]
-
 u = ["undo", "collapse_selection"]
-U = "no_op"
-
 "C-r" = ["redo", "collapse_selection"]
-
+# Find word under
 "*" = [
   "move_char_right",
   "move_prev_word_start",
@@ -69,15 +67,11 @@ U = "no_op"
   "search_selection",
   "search_prev",
 ]
-
-j = "move_line_down"
+# Clone cursor
 "A-j" = ["copy_selection_on_next_line"]
-
-k = "move_line_up"
 "A-k" = ["copy_selection_on_prev_line"]
-
+# LSP Hover
 K = "hover"
-
 # Tab movement
 tab = ["goto_next_buffer"]
 S-tab = ["goto_previous_buffer"]
@@ -92,33 +86,34 @@ e = "no_op"
 s = "no_op"
 n = "no_op"
 p = "no_op"
+d = "no_op"
+D = "no_op"
+i = "no_op"
+y = "no_op"
+r = "no_op"
 
-# Delete
+# Delete mode
 [keys.normal.d]
 d = [
   "extend_to_line_bounds",
   "yank_main_selection_to_clipboard",
   "delete_selection",
 ]
-
 "$" = [
   "extend_to_line_end",
   "yank_main_selection_to_clipboard",
   "delete_selection",
 ]
-
 "^" = [
   "extend_to_first_nonwhitespace",
   "yank_main_selection_to_clipboard",
   "delete_selection",
 ]
-
 "0" = [
   "extend_to_line_start",
   "yank_main_selection_to_clipboard",
   "delete_selection",
 ]
-
 G = [
   "select_mode",
   "extend_to_last_line",
@@ -127,7 +122,6 @@ G = [
   "delete_selection",
   "normal_mode",
 ]
-
 g = { g = [
   "select_mode",
   "extend_to_file_start",
@@ -147,8 +141,7 @@ y = [
 
 # Leader
 [keys.normal.space]
-
-## Disable keys
+# Disable keys
 a = "no_op"
 c = "no_op"
 C = "no_op"
@@ -165,19 +158,14 @@ Y = "no_op"
 "A-c" = "no_op"
 "?" = "no_op"
 "'" = "no_op"
-
-## Remap
+# Remap
 e = "file_explorer_in_current_buffer_directory"
 E = "file_explorer"
-
 f = "file_picker_in_current_directory"
 F = "file_picker"
-
 s = "search"
 S = "global_search"
-
 r = "last_picker"
-
 W = [
   "move_prev_word_start",
   "select_mode",
@@ -185,36 +173,41 @@ W = [
   "search_selection_detect_word_boundaries",
   "global_search",
 ]
-
 "/" = "toggle_comments"
 
-## Buffer
+# Buffer
 [keys.normal.space.b]
 b = "buffer_picker"
 c = ":buffer-close"
+x = ":buffer-close"
 o = ":buffer-close-others"
 a = ":buffer-close-all"
 n = ":buffer-next"
 p = ":buffer-previous"
 
-## Diagnostics
+# Diagnostics
 [keys.normal.space.d]
-f = "diagnostics_picker"
+d = "diagnostics_picker"
 w = "workspace_diagnostics_picker"
 
 # LSP
 [keys.normal.space.l]
 a = "code_action"
 f = ":format"
+d = "goto_definition"
+D = "goto_declaration"
+i = "goto_implementation"
+r = "goto_reference"
 R = "rename_symbol"
 
-## Windows
+# Windows
 [keys.normal.space.w]
+# split
 n = "vsplit"
 d = "hsplit"
+c = "wclose"
 x = "wclose"
-
-### Disable keys
+# Disable keys
 q = "no_op"
 s = "no_op"
 v = "no_op"
@@ -234,7 +227,6 @@ w = "no_op"
 "C-v" = "no_op"
 "C-t" = "no_op"
 
-
 # ---------------------------------------- INSERT MODE ----------------------------------------
 
 [keys.insert]
@@ -244,38 +236,28 @@ esc = ["collapse_selection", "keep_primary_selection", "normal_mode"]
 
 [keys.select]
 esc = ["collapse_selection", "keep_primary_selection", "normal_mode"]
-
 0 = "extend_to_line_start"
 "$" = "extend_to_line_end"
 "^" = "extend_to_first_nonwhitespace"
 G = "extend_to_file_end"
-
 S = "surround_add"
-
 u = ["switch_to_lowercase", "collapse_selection", "normal_mode"]
 U = ["switch_to_uppercase", "collapse_selection", "normal_mode"]
-
 i = "select_textobject_inner"
 a = "select_textobject_around"
-
 j = ["extend_line_down"]
 "A-j" = ["copy_selection_on_next_line"]
-
 k = ["extend_line_up"]
 "A-k" = ["copy_selection_on_prev_line"]
-
 d = ["yank_main_selection_to_clipboard", "delete_selection"]
 x = ["delete_selection"]
-
 y = ["yank_main_selection_to_clipboard", "collapse_selection"]
-
 V = "extend_to_line_bounds"
-
 tab = ["indent", "select_mode"]
 S-tab = ["unindent", "select_mode"]
 
 [keys.select.space]
-### Disable keys
+# ## Disable keys
 a = "no_op"
 b = "no_op"
 c = "no_op"
@@ -301,7 +283,6 @@ w = "no_op"
 "A-c" = "no_op"
 "?" = "no_op"
 "'" = "no_op"
-
-## Comment
+# #Comment
 # "/" = "toggle_line_comments"
 "/" = "toggle_block_comments"
