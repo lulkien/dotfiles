@@ -4,16 +4,18 @@ function prepend_path
     contains "$argv[1]" $PATH; or set -xp PATH "$argv[1]" # $PATH does not contains $argv[1]
 end
 
+# Reset PATH
+set -e PATH
+
+# Export default PATH
+set -gx PATH /usr/local/bin /usr/local/sbin /usr/bin /usr/sbin /bin /sbin
+
+# Prepend additional PATH
 prepend_path "$HOME/.local/bin"
 prepend_path "$HOME/go/bin"
-prepend_path "$HOME/cargo/bin"
+prepend_path "$HOME/.cargo/bin"
 prepend_path /opt/homebrew/bin
 prepend_path /home/linuxbrew/.linuxbrew/bin
-
-# Set editor
-if command -sq nvim
-    set -x EDITOR nvim
-end
 
 # Fish builtin variables
 set -g fish_color_valid_path
