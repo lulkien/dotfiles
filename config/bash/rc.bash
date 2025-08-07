@@ -1,8 +1,6 @@
-[[ $- != *i* ]] && return
-
 RUNTIME_DIR=$HOME/.config/bash
 
-for conf in $(find "$RUNTIME_DIR/conf.d" -type f -name '*.bash' | sort); do
+for conf in $(find "$RUNTIME_DIR/conf.d/rc" -type f -name '*.bash' | sort); do
 	. $conf
 done
 
