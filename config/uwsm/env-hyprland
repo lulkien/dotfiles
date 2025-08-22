@@ -1,5 +1,0 @@
-export HYPRCURSOR_THEME=catppuccin-mocha-red-cursors
-export HYPRCURSOR_SIZE=30
- 
-export HYPRLAND_NO_SD_VARS=1
-export AQ_DRM_DEVICES="/dev/dri/card1:/dev/dri/card0"
