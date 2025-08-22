@@ -2,10 +2,16 @@
 check = { command = "clippy" }
 cargo = { features = "all" }
 
-[[languages]]
+[[language]]
 name = "rust"
 auto-format = true
 
-[[languages]]
+[[language]]
 name = "toml"
+auto-format = true
+
+[[language]]
+name = "bash"
+indent = { tab-width = 4, unit = "    " }
+formatter = { command = 'shfmt', args = ["-i", "4"] }
 auto-format = true
