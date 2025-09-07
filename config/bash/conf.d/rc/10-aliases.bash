@@ -7,3 +7,6 @@ alias rf='rm -rf'
 
 alias ..='cd ..'
 alias ...='cd ../..'
+
+alias l='ls -oh'
+alias la='ls -ohA'
