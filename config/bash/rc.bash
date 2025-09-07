@@ -12,4 +12,6 @@ for comp in $(find "$RUNTIME_DIR/completion" -type f -name '*.bash' | sort); do
     . $comp
 done
 
-bash_greeting
+for conf in $(find "$RUNTIME_DIR/conf.d/after" -type f -name '*.bash' | sort); do
+    . $conf
+done
