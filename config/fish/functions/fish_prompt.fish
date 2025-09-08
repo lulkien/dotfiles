@@ -32,7 +32,11 @@ function fish_prompt --description 'Write out the prompt'
     end
 
     set -a prompt_string "$user_string"
-    set -a prompt_string "$host_string"
+
+    if string match --regex --quiet -- '^(true|yes|ok|1)$' "$KFC_SHOW_HOSTNAME"
+        set -a prompt_string "$host_string"
+    end
+
     set -a prompt_string "$cwd_string"
     set -a prompt_string "$git_string"
 
