@@ -1,7 +1,7 @@
 function kfc_fish_prompt_simple
     if test "$USER" = root
         set -f user_string $KFC_RED_N$USER
-        set -f cmd_start $KFC_RESET'#'
+        set -f cmd_start $KFC_RESET'# '
     else
         set -f user_string $KFC_GREEN_N$USER
         set -f cmd_start $KFC_RESET'$ '
