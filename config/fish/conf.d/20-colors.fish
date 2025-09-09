@@ -40,3 +40,4 @@ set -g KFC_GRAY_B (set_color -o $gray)
 set -g KFC_GRAY_N (set_color    $gray)
 
 set -g KFC_CL_NONE (set_color reset)
+set -g KFC_RESET (set_color reset)

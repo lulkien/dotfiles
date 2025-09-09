@@ -5,3 +5,7 @@ abbr -a rf 'rm -rf'
 
 # Misc
 abbr -a ipa 'ip address'
+
+# Cargo
+abbr -a cbr 'cargo build --release'
+abbr -a crr 'cargo run --release'

@@ -1,4 +1,4 @@
-function fish_prompt --description 'Write out the prompt'
+function kfc_fish_prompt
     set padding_string ' '
     set ico_dir '󰉋'
     set ico_fish ''
