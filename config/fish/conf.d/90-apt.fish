@@ -4,7 +4,7 @@ end
 
 set -l APT_CMD 'sudo apt'
 
-if (whoami) = root
+if test (whoami) = root
     set APT_CMD apt
 end
 
