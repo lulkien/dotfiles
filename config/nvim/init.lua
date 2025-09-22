@@ -61,7 +61,6 @@ lazy.setup({
     -- Devlopment
     safe_require("plugins.treesitter"),
     safe_require("plugins.mason"),
-    -- safe_require("plugins.lsp11"),
 
     -- Rust devlopment
     safe_require("plugins.rustaceanvim"),
