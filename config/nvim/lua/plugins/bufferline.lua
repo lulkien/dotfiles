@@ -44,7 +44,7 @@ return {
         maximum_length = 15,
         sort_by = "insert_at_end",
       },
-      highlights = require("catppuccin.groups.integrations.bufferline").get_theme({
+      highlights = require("catppuccin.special.bufferline").get_theme({
         styles = { "bold" },
       }),
     })
@@ -56,7 +56,6 @@ return {
     vim.keymap.set("n", "<leader>bp", "<cmd>BufferLineCyclePrev<CR>", { desc = "Buffer: Cycle previous" })
 
     vim.keymap.set("n", "<leader>bx", "<cmd>Bdelete<CR>", { desc = "Buffer: Close current" })
-    vim.keymap.set("n", "<leader>bcc", "<cmd>Bdelete<CR>", { desc = "Buffer: Close current" })
-    vim.keymap.set("n", "<leader>bco", "<cmd>BufferLineCloseOthers<CR>", { desc = "Buffer: Close others" })
+    vim.keymap.set("n", "<leader>bo", "<cmd>BufferLineCloseOthers<CR>", { desc = "Buffer: Close others" })
   end,
 }

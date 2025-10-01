@@ -7,7 +7,6 @@ local opts = { noremap = true, silent = true }
 map({ "n", "v" }, "<Space>", "<Nop>", opts)
 
 -- Disable arrow keys
-
 map("i", "<Up>", "<Nop>", opts)
 map("i", "<Down>", "<Nop>", opts)
 map("i", "<Left>", "<Nop>", opts)
@@ -34,18 +33,18 @@ map("n", "<C-l>", "<cmd>wincmd l<CR>", { noremap = true, desc = "Window: Focus r
 map("n", "<leader>wv", "<cmd>wincmd v<CR>", { noremap = true, desc = "Window: Split vertical" })
 map("n", "<leader>wh", "<cmd>wincmd s<CR>", { noremap = true, desc = "Window: Split horizontal" })
 map("n", "<leader>we", "<cmd>wincmd =<CR>", { noremap = true, desc = "Window: Equalize size" })
-map("n", "<leader>wc", "<cmd>wincmd q<CR>", { noremap = true, desc = "Window: Close" })
+-- map("n", "<leader>wc", "<cmd>wincmd q<CR>", { noremap = true, desc = "Window: Close" })
 map("n", "<leader>wx", "<cmd>wincmd q<CR>", { noremap = true, desc = "Window: Close" })
 
 -- Buffers
-map("n", "<leader>bn", "<cmd>enew<CR>", { noremap = true, desc = "Buffer: New" })
+map("n", "<leader>bN", "<cmd>enew<CR>", { noremap = true, desc = "Buffer: New" })
 
 -- Tabs
-map("n", "<leader>to", "<cmd>tabnew<CR>", { noremap = true, desc = "Tab: New" })
-map("n", "<leader>tx", "<cmd>tabclose<CR>", { noremap = true, desc = "Tab: Close" })
-map("n", "<leader>tc", "<cmd>tabclose<CR>", { noremap = true, desc = "Tab: Close" })
-map("n", "<leader>tn", "<cmd>tabn<CR>", { noremap = true, desc = "Tab: Cycle next" })
-map("n", "<leader>tp", "<cmd>tabp<CR>", { noremap = true, desc = "Tab: Cycle previous" })
+-- map("n", "<leader>to", "<cmd>tabnew<CR>", { noremap = true, desc = "Tab: New" })
+-- map("n", "<leader>tx", "<cmd>tabclose<CR>", { noremap = true, desc = "Tab: Close" })
+-- map("n", "<leader>tc", "<cmd>tabclose<CR>", { noremap = true, desc = "Tab: Close" })
+-- map("n", "<leader>tn", "<cmd>tabn<CR>", { noremap = true, desc = "Tab: Cycle next" })
+-- map("n", "<leader>tp", "<cmd>tabp<CR>", { noremap = true, desc = "Tab: Cycle previous" })
 
 -- Clear search highlight
 map("n", "<Esc>", "<cmd>noh<CR>", opts)
