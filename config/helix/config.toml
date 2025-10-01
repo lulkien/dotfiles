@@ -231,6 +231,8 @@ w = "no_op"
 
 [keys.insert]
 esc = ["collapse_selection", "keep_primary_selection", "normal_mode"]
+tab = "insert_tab"
+"C-h" = "delete_word_backward"
 
 # ---------------------------------------- VISUAL MODE ----------------------------------------
 
