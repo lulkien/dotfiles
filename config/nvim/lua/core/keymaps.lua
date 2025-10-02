@@ -46,6 +46,12 @@ map("n", "<leader>bN", "<cmd>enew<CR>", { noremap = true, desc = "Buffer: New" }
 -- map("n", "<leader>tn", "<cmd>tabn<CR>", { noremap = true, desc = "Tab: Cycle next" })
 -- map("n", "<leader>tp", "<cmd>tabp<CR>", { noremap = true, desc = "Tab: Cycle previous" })
 
+-- Toggle
+map("n", "<leader>tl", "<cmd>set number! relativenumber!<CR>", { noremap = true, desc = "Toggle: Line number + relativenumber" })
+map("n", "<leader>tn", "<cmd>set number!<CR>", { noremap = true, desc = "Toggle: Line number" })
+map("n", "<leader>tr", "<cmd>set relativenumber!<CR>", { noremap = true, desc = "Toggle: Line relativenumber" })
+map("n", "<leader>tw", "<cmd>set wrap!<CR>", { noremap = true, desc = "Toggle: Line wrap" })
+
 -- Clear search highlight
 map("n", "<Esc>", "<cmd>noh<CR>", opts)
 
@@ -59,9 +65,6 @@ map("n", "N", "Nzzzv", opts)
 -- Scroll and centered
 map("n", "<C-u>", "<C-u>zz", opts)
 map("n", "<C-d>", "<C-d>zz", opts)
-
--- Line wrapping toggle
-map("n", "<leader>W", "<cmd>set wrap!<CR>", { noremap = true, desc = "Toggle: Line wrap" })
 
 -- Indent mode
 map("v", "<Tab>", ">gv", opts)

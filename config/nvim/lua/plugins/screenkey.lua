@@ -21,8 +21,8 @@ return {
       require("screenkey").toggle()
     end
 
-    vim.keymap.set("n", "<leader>st", function()
+    vim.keymap.set("n", "<leader>ts", function()
       require("screenkey").toggle()
-    end, { desc = "Screenkey: Toggle" })
+    end, { desc = "Toggle: Screenkey" })
   end,
 }
