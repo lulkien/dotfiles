@@ -12,8 +12,8 @@ abbr -a crr 'cargo run --release'
 
 abbr -a vim nvim
 abbr -a pls sudo
-abbr -a l ls
-abbr -a ll 'ls -lh'
-abbr -a la 'ls -lhA'
+# abbr -a l ls
+# abbr -a ll 'ls -lh'
+# abbr -a la 'ls -lhA'
 abbr -a cls clear
 abbr -a q exit

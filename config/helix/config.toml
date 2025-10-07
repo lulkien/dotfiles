@@ -149,13 +149,17 @@ a = "no_op"
 c = "no_op"
 C = "no_op"
 D = "no_op"
+F = "no_op"
 G = "no_op"
 h = "no_op"
 j = "no_op"
 k = "no_op"
 p = "no_op"
 P = "no_op"
+r = "no_op"
 R = "no_op"
+s = "no_op"
+S = "no_op"
 y = "no_op"
 Y = "no_op"
 "A-c" = "no_op"
@@ -164,23 +168,26 @@ Y = "no_op"
 # Remap
 e = "file_explorer_in_current_buffer_directory"
 E = "file_explorer"
-f = "file_picker_in_current_directory"
-F = "file_picker"
-s = "search"
-S = "global_search"
+"/" = "toggle_comments"
+
+# Find mode
+[keys.normal.space.f]
+b = "buffer_picker"
+f = "file_picker"
+F = "file_picker_in_current_directory"
 r = "last_picker"
-W = [
+s = "global_search"
+# s = "search" -- Just use /
+w = [
   "move_prev_word_start",
   "select_mode",
   "move_next_word_end",
   "search_selection_detect_word_boundaries",
   "global_search",
 ]
-"/" = "toggle_comments"
 
 # Buffer
 [keys.normal.space.b]
-b = "buffer_picker"
 c = ":buffer-close"
 x = ":buffer-close"
 o = ":buffer-close-others"
