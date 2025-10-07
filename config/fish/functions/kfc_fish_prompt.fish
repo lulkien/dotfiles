@@ -1,47 +1,46 @@
 function kfc_fish_prompt
-    set padding_string ' '
-    set ico_dir '󰉋'
-    set ico_fish ''
-    set ico_host '󰍹'
-    set ico_ssh ''
-    set ico_user ''
+    set ico_dir $KFC_BLUE_B'󰉋'
+    set ico_fish $KFC_WHITE_N''$KFC_CL_NONE
+    set ico_local $KFC_YELLOW_N'󰍹'
+    set ico_ssh $KFC_YELLOW_N''
+    set ico_user $KFC_CYAN_N''
+    set ico_root $KFC_RED_N''
 
     # User string
-    test (whoami) = root
-    and set user_string $KFC_RED_N$ico_user
-    or set user_string $KFC_CYAN_N$ico_user
-
-    set -a user_string $USER
+    if test (whoami) = root
+        set user_string $ico_root' '$USER
+    else
+        set user_string $ico_user' '$USER
+    end
 
     # Working directory string
-    set cwd_string $KFC_BLUE_N'󰉋 '(prompt_pwd --full-length-dirs=2 --dir-length=3)
+    set cwd_string $ico_dir' '(prompt_pwd --full-length-dirs=2 --dir-length=3)
 
     # Git string
     set git_string (kfc_git_prompt)
 
+    # Host string
+    set host_string ''
     if string match --regex --quiet -- '^(true|yes|ok|1)$' "$KFC_SHOW_HOSTNAME"
-        set -q SSH_TTY
-        and set host_string $KFC_YELLOW_N''
-        or set host_string $KFC_YELLOW_N'󰍹'
+        set ico_host
+        if set -q SSH_TTY
+            set ico_host $ico_ssh
+        else
+            set ico_host $ico_local
+        end
 
         if set -q KFC_OVERRIDE_HOSTNAME; and test -n "$KFC_OVERRIDE_HOSTNAME"
-            set -a host_string $KFC_OVERRIDE_HOSTNAME
+            set host_string ' '$ico_host' '$KFC_OVERRIDE_HOSTNAME' '
         else
-            set -a host_string $hostname
+            set host_string ' '$ico_host' '(hostname)' '
         end
     end
 
-    set -a prompt_string "$user_string"
+    # Collect prompt string
+    set prompt_top $user_string$host_string$cwd_string' '$git_string
 
-    if string match --regex --quiet -- '^(true|yes|ok|1)$' "$KFC_SHOW_HOSTNAME"
-        set -a prompt_string "$host_string"
-    end
-
-    set -a prompt_string "$cwd_string"
-    set -a prompt_string "$git_string"
-
-    set -a command_prefix $KFC_WHITE_N' '$KFC_CL_NONE
+    set prompt_bottom $ico_fish
 
     # Output
-    printf "$padding_string$prompt_string\n$padding_string$command_prefix"
+    printf " $prompt_top\n $prompt_bottom "
 end

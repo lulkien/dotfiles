@@ -4,10 +4,10 @@ function kfc_git_prompt
     end
 
     if ! command -q git
-        set -Ux KFC_GIT_DISABLED 1
+        set -gx KFC_GIT_DISABLED 1
         return
     end
-    
+
     # Icon
     set -f ico_git $KFC_YELLOW_N''
     set -f ico_detach $KFC_YELLOW_N''
