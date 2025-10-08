@@ -17,7 +17,7 @@ function kfc_fish_prompt
     set cwd_string $ico_dir' '(prompt_pwd --full-length-dirs=2 --dir-length=3)
 
     # Git string
-    set git_string (kfc_git_prompt)
+    set git_string ' '(kfc_git_prompt)
 
     # Host string
     set host_string ''
@@ -37,7 +37,7 @@ function kfc_fish_prompt
     end
 
     # Collect prompt string
-    set prompt_top $user_string$host_string$cwd_string' '$git_string
+    set prompt_top "$user_string$host_string$cwd_string$git_string"
 
     set prompt_bottom $ico_fish
 
