@@ -32,7 +32,7 @@ function kfc_fish_prompt
         if set -q KFC_OVERRIDE_HOSTNAME; and test -n "$KFC_OVERRIDE_HOSTNAME"
             set host_string ' '$ico_host' '$KFC_OVERRIDE_HOSTNAME' '
         else
-            set host_string ' '$ico_host' '(hostname)' '
+            set host_string ' '$ico_host' '$hostname' '
         end
     end
 
