@@ -22,6 +22,7 @@ return {
     require("fzf-lua").setup({
       { "default-title" },
       number = false,
+      fzf_bin = "sk",
 
       winopts = {
         border = function(_, m)
