@@ -1,6 +1,6 @@
 if command -v git &>/dev/null; then
 	alias gcl='do_command "git clone"'
-	alias gpl='do_command "git pull"'
+	alias gpl='do_command "git pull --rebase"'
 	alias grs='do_command "git reset --hard HEAD^; git pull"'
 
 	alias glo='do_command "git log --oneline"'
