@@ -2,6 +2,32 @@
 check = { command = "clippy" }
 cargo = { features = "all" }
 
+[language-server.clangd]
+command = "clangd"
+args = [
+  "--compile-commands-dir=build",
+  "--background-index",
+  "--background-index-priority=normal",
+  "--completion-style=bundled",
+  "--experimental-modules-support",
+  "--header-insertion=iwyu",
+  "--enable-config",
+  "--malloc-trim",
+  "--pch-storage=memory",
+  "-j",
+  "8",
+]
+
+[[language]]
+name = "cpp"
+language-servers = ["clangd"]
+roots = [".git", ".clangd", ".clang-format", "meson.build", "CMakeLists.txt"]
+
+[[language]]
+name = "c"
+language-servers = ["clangd"]
+roots = [".git", ".clangd", ".clang-format", "meson.build", "CMakeLists.txt"]
+
 [[language]]
 name = "rust"
 auto-format = true

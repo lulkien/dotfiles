@@ -296,5 +296,5 @@ w = "no_op"
 "?" = "no_op"
 "'" = "no_op"
 # #Comment
-# "/" = "toggle_line_comments"
-"/" = "toggle_block_comments"
+"/" = "toggle_line_comments"
+# "/" = "toggle_block_comments"

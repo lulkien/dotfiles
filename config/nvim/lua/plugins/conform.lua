@@ -10,7 +10,7 @@ return {
         c = { "clang-format" },
         cpp = { "clang-format" },
         sh = { "shfmt" },
-        python = { "ruff" },
+        python = { "black" },
         javascript = { "prettierd" },
         toml = { "taplo" },
         nix = { "nixfmt" },

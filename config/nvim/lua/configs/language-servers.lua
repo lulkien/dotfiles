@@ -6,7 +6,8 @@ return {
     "emmylua_ls",
     -- "html-lsp",
     -- "json-lsp",
-    "ruff",
+    "pyright",
+    -- "ruff",
     -- "typescript-language-server",
     -- "yaml-language-server",
     "cmake-language-server",
@@ -14,6 +15,7 @@ return {
   formatters = {
     "clang-format",
     -- "prettierd",
+    "black",
     "shfmt",
     "stylua",
     "taplo",
