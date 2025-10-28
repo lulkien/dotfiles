@@ -5,28 +5,26 @@ cargo = { features = "all" }
 [language-server.clangd]
 command = "clangd"
 args = [
-  "--compile-commands-dir=build",
   "--background-index",
-  "--background-index-priority=normal",
   "--completion-style=bundled",
-  "--experimental-modules-support",
   "--header-insertion=iwyu",
   "--enable-config",
   "--malloc-trim",
   "--pch-storage=memory",
-  "-j",
-  "8",
+  "-j=8",
 ]
 
 [[language]]
 name = "cpp"
 language-servers = ["clangd"]
 roots = [".git", ".clangd", ".clang-format", "meson.build", "CMakeLists.txt"]
+auto-format = true
 
 [[language]]
 name = "c"
 language-servers = ["clangd"]
 roots = [".git", ".clangd", ".clang-format", "meson.build", "CMakeLists.txt"]
+auto-format = true
 
 [[language]]
 name = "rust"

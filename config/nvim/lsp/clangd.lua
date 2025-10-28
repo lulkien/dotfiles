@@ -2,17 +2,13 @@
 return {
   cmd = {
     "clangd",
-    "--compile-commands-dir=build",
     "--background-index",
-    "--background-index-priority=normal",
     "--completion-style=bundled",
-    "--experimental-modules-support",
     "--header-insertion=iwyu",
     "--enable-config",
     "--malloc-trim",
     "--pch-storage=memory",
-    "-j",
-    "8",
+    "-j=8",
   },
 
   filetypes = { "c", "cpp" },
