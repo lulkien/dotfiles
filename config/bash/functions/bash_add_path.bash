@@ -1,6 +1,7 @@
 bash_add_path() {
 	local dry_run=false
 	local append_mode=false
+	local verbose=false
 
 	# Parse arguments
 	local paths=()
@@ -12,6 +13,10 @@ bash_add_path() {
 			;;
 		'-n' | '--dry-run')
 			dry_run=true
+			shift
+			;;
+		'-v' | '--verbose')
+			verbose=true
 			shift
 			;;
 		'-h' | '--help')
@@ -41,21 +46,13 @@ bash_add_path() {
 
 	for path in "${paths[@]}"; do
 		# Canonicalize path (resolve symlinks, get absolute path)
-		local p
-		if command -v realpath >/dev/null 2>&1; then
-			p=$(realpath -s -- "$path" 2>/dev/null || echo "")
-		else
-			# Fallback: try to get absolute path
-			if [[ -d "$path" ]]; then
-				p=$(cd -- "$path" && pwd 2>/dev/null || echo "$path")
-			else
-				p="$path"
-			fi
-		fi
+		local p=$(realpath -- "$path" 2>/dev/null || echo "")
 
 		# Ignore non-existing paths
 		if [[ ! -d "$p" ]]; then
-			echo "Skipping non-existent path: $path" >&2
+			if $verbose; then
+				echo "Skipping non-existent path: $path" >&2
+			fi
 			continue
 		fi
 
@@ -63,7 +60,7 @@ bash_add_path() {
 		local found=false
 		local IFS=':'
 		for existing_path in $current_path; do
-			if [[ "$existing_path" == "$p" ]]; then
+			if [[ "$existing_path" = "$p" ]]; then
 				found=true
 				break
 			fi
@@ -71,15 +68,15 @@ bash_add_path() {
 		unset IFS
 
 		# Check if path already in newpaths
-		local in_newpaths=false
+		local duplicated=false
 		for newp in "${newpaths[@]}"; do
-			if [[ "$newp" == "$p" ]]; then
-				in_newpaths=true
+			if [[ "$newp" = "$p" ]]; then
+				duplicated=true
 				break
 			fi
 		done
 
-		if [[ $found == false ]] && [[ $in_newpaths == false ]]; then
+		if ! $found && ! $duplicated; then
 			newpaths+=("$p")
 		fi
 	done
@@ -96,13 +93,13 @@ bash_add_path() {
 	)
 
 	local new_path=
-	if [[ $append_mode == true ]]; then
+	if $append_mode; then
 		new_path="$current_path:$new_paths_str"
 	else
 		new_path="$new_paths_str:$current_path"
 	fi
 
-	if [[ $dry_run == true ]]; then
+	if $dry_run; then
 		echo "export PATH=\"$new_path\""
 	else
 		export PATH="$new_path"
