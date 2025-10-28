@@ -12,7 +12,7 @@ return {
         sh = { "shfmt" },
         python = { "black" },
         javascript = { "prettierd" },
-        toml = { "taplo" },
+        toml = { "tombi" },
         nix = { "nixfmt" },
         kdl = { "kdlfmt" },
         cmake = { "cmake-format" },

@@ -10,6 +10,7 @@ return {
     -- "ruff",
     -- "typescript-language-server",
     -- "yaml-language-server",
+    "tombi",
     "cmake-language-server",
   },
   formatters = {
@@ -18,7 +19,6 @@ return {
     "black",
     "shfmt",
     "stylua",
-    "taplo",
     "yamlfmt",
     "cmakelang",
   },
