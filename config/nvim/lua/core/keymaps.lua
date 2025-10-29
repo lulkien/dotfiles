@@ -24,20 +24,65 @@ map("n", "<Right>", "<Nop>", opts)
 -- map("n", "<Right>", "<cmd>vertical resize +2<CR>", { noremap = true, desc = "Resize: width +2" })
 
 -- Navigate between windows
-map("n", "<C-h>", "<cmd>wincmd h<CR>", { noremap = true, desc = "Window: Focus left" })
-map("n", "<C-j>", "<cmd>wincmd j<CR>", { noremap = true, desc = "Window: Focus down" })
-map("n", "<C-k>", "<cmd>wincmd k<CR>", { noremap = true, desc = "Window: Focus up" })
-map("n", "<C-l>", "<cmd>wincmd l<CR>", { noremap = true, desc = "Window: Focus right" })
+map(
+    "n",
+    "<C-h>",
+    "<cmd>wincmd h<CR>",
+    { noremap = true, desc = "Window: Focus left" }
+)
+map(
+    "n",
+    "<C-j>",
+    "<cmd>wincmd j<CR>",
+    { noremap = true, desc = "Window: Focus down" }
+)
+map(
+    "n",
+    "<C-k>",
+    "<cmd>wincmd k<CR>",
+    { noremap = true, desc = "Window: Focus up" }
+)
+map(
+    "n",
+    "<C-l>",
+    "<cmd>wincmd l<CR>",
+    { noremap = true, desc = "Window: Focus right" }
+)
 
 -- Windows
-map("n", "<leader>wv", "<cmd>wincmd v<CR>", { noremap = true, desc = "Window: Split vertical" })
-map("n", "<leader>wh", "<cmd>wincmd s<CR>", { noremap = true, desc = "Window: Split horizontal" })
-map("n", "<leader>we", "<cmd>wincmd =<CR>", { noremap = true, desc = "Window: Equalize size" })
+map(
+    "n",
+    "<leader>wv",
+    "<cmd>wincmd v<CR>",
+    { noremap = true, desc = "Window: Split vertical" }
+)
+map(
+    "n",
+    "<leader>wh",
+    "<cmd>wincmd s<CR>",
+    { noremap = true, desc = "Window: Split horizontal" }
+)
+map(
+    "n",
+    "<leader>we",
+    "<cmd>wincmd =<CR>",
+    { noremap = true, desc = "Window: Equalize size" }
+)
 -- map("n", "<leader>wc", "<cmd>wincmd q<CR>", { noremap = true, desc = "Window: Close" })
-map("n", "<leader>wx", "<cmd>wincmd q<CR>", { noremap = true, desc = "Window: Close" })
+map(
+    "n",
+    "<leader>wx",
+    "<cmd>wincmd q<CR>",
+    { noremap = true, desc = "Window: Close" }
+)
 
 -- Buffers
-map("n", "<leader>bN", "<cmd>enew<CR>", { noremap = true, desc = "Buffer: New" })
+map(
+    "n",
+    "<leader>bN",
+    "<cmd>enew<CR>",
+    { noremap = true, desc = "Buffer: New" }
+)
 
 -- Tabs
 -- map("n", "<leader>to", "<cmd>tabnew<CR>", { noremap = true, desc = "Tab: New" })
@@ -47,10 +92,30 @@ map("n", "<leader>bN", "<cmd>enew<CR>", { noremap = true, desc = "Buffer: New" }
 -- map("n", "<leader>tp", "<cmd>tabp<CR>", { noremap = true, desc = "Tab: Cycle previous" })
 
 -- Toggle
-map("n", "<leader>tl", "<cmd>set number! relativenumber!<CR>", { noremap = true, desc = "Toggle: Line number + relativenumber" })
-map("n", "<leader>tn", "<cmd>set number!<CR>", { noremap = true, desc = "Toggle: Line number" })
-map("n", "<leader>tr", "<cmd>set relativenumber!<CR>", { noremap = true, desc = "Toggle: Line relativenumber" })
-map("n", "<leader>tw", "<cmd>set wrap!<CR>", { noremap = true, desc = "Toggle: Line wrap" })
+map(
+    "n",
+    "<leader>tl",
+    "<cmd>set number! relativenumber!<CR>",
+    { noremap = true, desc = "Toggle: Line number + relativenumber" }
+)
+map(
+    "n",
+    "<leader>tn",
+    "<cmd>set number!<CR>",
+    { noremap = true, desc = "Toggle: Line number" }
+)
+map(
+    "n",
+    "<leader>tr",
+    "<cmd>set relativenumber!<CR>",
+    { noremap = true, desc = "Toggle: Line relativenumber" }
+)
+map(
+    "n",
+    "<leader>tw",
+    "<cmd>set wrap!<CR>",
+    { noremap = true, desc = "Toggle: Line wrap" }
+)
 
 -- Clear search highlight
 map("n", "<Esc>", "<cmd>noh<CR>", opts)
@@ -75,11 +140,11 @@ map("v", "p", '"_dP', opts)
 
 -- Diagnostic keymaps
 map("n", "<leader>dn", function()
-  vim.diagnostic.jump({ count = 1 })
+    vim.diagnostic.jump({ count = 1 })
 end, { desc = "Diagnostics: Next" })
 
 map("n", "<leader>dp", function()
-  vim.diagnostic.jump({ count = -1 })
+    vim.diagnostic.jump({ count = -1 })
 end, { desc = "Diagnostics: Previous" })
 --
 -- map("n", "<leader>df", vim.diagnostic.open_float, { desc = "Diagnostics: Open Floating" })

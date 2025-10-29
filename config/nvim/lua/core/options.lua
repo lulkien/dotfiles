@@ -23,8 +23,8 @@ vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
 vim.opt.expandtab = true
 
-vim.opt.scrolloff = 8
-vim.opt.sidescrolloff = 8
+vim.opt.scrolloff = 15
+vim.opt.sidescrolloff = 15
 
 vim.opt.cmdheight = 1
 vim.opt.termguicolors = true
