@@ -6,6 +6,7 @@ local external_servers = require("configs.language-servers").external_servers
 local blink_ok, blink = pcall(require, "blink-cmp")
 if blink_ok then
     vim.lsp.config("*", {
+        ---@diagnostic disable-next-line: need-check-nil
         capabilities = blink.get_lsp_capabilities(),
     })
 end
@@ -94,11 +95,11 @@ local function LspAttachCallback(args)
             keys = "<leader>lR",
             trigger = vim.lsp.buf.rename,
         },
-        [vim.lsp.protocol.Methods.textDocument_formatting] = {
-            name = "Format",
-            keys = "<leader>lf",
-            trigger = vim.lsp.buf.format,
-        },
+        -- [vim.lsp.protocol.Methods.textDocument_formatting] = {
+        --     name = "Format",
+        --     keys = "<leader>lf",
+        --     trigger = vim.lsp.buf.format,
+        -- },
         [vim.lsp.protocol.Methods.textDocument_hover] = {
             name = "Hover",
             keys = "K",

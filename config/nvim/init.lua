@@ -63,6 +63,7 @@ lazy.setup({
         safe_require("plugins.comment"),
         safe_require("plugins.whichkey"),
         safe_require("plugins.screenkey"),
+        safe_require("plugins.osc52"),
         safe_require("plugins.misc"),
 
         -- Devlopment

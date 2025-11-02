@@ -9,33 +9,26 @@
 "ui.text.inactive" = "comment"
 "ui.text.info" = "hint"
 "ui.text.directory" = "hint"
-
 "ui.cursor" = { bg = "fg", fg = "bg" }
 "ui.cursor.primary" = { bg = "fg", fg = "bg" }
 "ui.cursor.match" = { fg = "warning", modifiers = ["bold"] }
 "ui.cursor.normal" = { bg = "fg", fg = "bg" }
 "ui.cursor.insert" = { bg = "plus", fg = "bg" }
 "ui.cursor.select" = { bg = "parameter", fg = "bg" }
-
 "ui.cursorline.primary" = { bg = "line" }
 "ui.cursorcolumn.primary" = { bg = "line" }
-
 "ui.selection" = { bg = "visual" }
 "ui.selection.primary" = { bg = "visual" }
-
 "ui.linenr" = "comment"
 "ui.linenr.selected" = { fg = "fg", modifiers = ["bold"] }
-
 "ui.statusline" = { fg = "fg", bg = "line" }
 "ui.statusline.inactive" = { fg = "comment", bg = "bg" }
 "ui.statusline.normal" = { fg = "bg", bg = "keyword", modifiers = ["bold"] }
 "ui.statusline.insert" = { fg = "bg", bg = "plus", modifiers = ["bold"] }
 "ui.statusline.select" = { fg = "bg", bg = "parameter", modifiers = ["bold"] }
-
 "ui.bufferline" = { fg = "comment", bg = "line" }
 "ui.bufferline.active" = { fg = "fg", bg = "bg" }
 "ui.bufferline.background" = { bg = "bg" }
-
 "ui.virtual" = "comment"
 "ui.virtual.ruler" = { bg = "line" }
 "ui.virtual.whitespace" = "comment"
@@ -43,29 +36,22 @@
 "ui.virtual.inlay-hint" = "comment"
 "ui.virtual.wrap" = "comment"
 "ui.virtual.jump-label" = { fg = "warning", modifiers = ["bold"] }
-
 "ui.popup" = { fg = "fg", bg = "bg" }
 "ui.popup.info" = { fg = "fg", bg = "line" }
 "ui.window" = "floatBorder"
 "ui.help" = { fg = "fg", bg = "bg" }
-
 "ui.menu" = { fg = "fg", bg = "bg" }
 "ui.menu.selected" = { fg = "constant", bg = "line", modifiers = ["bold"] }
 "ui.menu.scroll" = { fg = "comment", bg = "line" }
-
 "ui.picker.header" = { fg = "constant", modifiers = ["bold"] }
 "ui.picker.header.column" = { fg = "parameter" }
 "ui.picker.header.column.active" = { fg = "constant", modifiers = ["bold"] }
-
 "ui.gutter" = { bg = "bg" }
 "ui.gutter.selected" = { bg = "line" }
-
 "ui.highlight" = { bg = "visual" }
 "ui.highlight.frameline" = { bg = "search" }
-
 "ui.debug.breakpoint" = "error"
 "ui.debug.active" = "warning"
-
 ## Diagnostics
 "diagnostic" = { underline = { style = "curl" } }
 "diagnostic.error" = { fg = "error", underline = { color = "error", style = "curl" } }
@@ -74,17 +60,14 @@
 "diagnostic.hint" = { fg = "hint", underline = { color = "hint", style = "curl" } }
 "diagnostic.unnecessary" = { modifiers = ["dim"] }
 "diagnostic.deprecated" = { modifiers = ["crossed_out"] }
-
 "error" = "error"
 "warning" = "warning"
 "info" = "hint"
 "hint" = "hint"
-
 ## Diff
 "diff.plus" = "plus"
 "diff.minus" = "error"
 "diff.delta" = "delta"
-
 ## Syntax highlighting
 "attribute" = "constant"
 "type" = "type"
@@ -92,9 +75,7 @@
 "type.parameter" = "parameter"
 "type.enum" = "type"
 "type.variant" = "constant"
-
 "constructor" = { fg = "constant", modifiers = ["bold"] }
-
 "constant" = "constant"
 "constant.builtin" = { fg = "builtin", modifiers = ["bold"] }
 "constant.boolean" = { fg = "number", modifiers = ["bold"] }
@@ -103,32 +84,26 @@
 "constant.numeric" = "number"
 "constant.numeric.integer" = "number"
 "constant.numeric.float" = "number"
-
 "string" = { fg = "string", modifiers = ["italic"] }
 "string.regexp" = "keyword"
 "string.special" = "keyword"
 "string.special.path" = "string"
 "string.special.url" = "func"
 "string.special.symbol" = "parameter"
-
 "comment" = { fg = "comment", modifiers = ["italic"] }
 "comment.line" = { fg = "comment", modifiers = ["italic"] }
 "comment.block" = { fg = "comment", modifiers = ["italic"] }
 "comment.documentation" = { fg = "comment", modifiers = ["italic"] }
-
 "variable" = "fg"
 "variable.builtin" = { fg = "builtin", modifiers = ["bold"] }
 "variable.parameter" = "parameter"
 "variable.other.member" = "property"
 "variable.other.member.private" = "property"
-
 "label" = "keyword"
-
 "punctuation" = "fg"
 "punctuation.delimiter" = "fg"
 "punctuation.bracket" = "fg"
 "punctuation.special" = "keyword"
-
 "keyword" = "keyword"
 "keyword.control" = "keyword"
 "keyword.control.conditional" = "keyword"
@@ -142,23 +117,17 @@
 "keyword.storage" = "constant"
 "keyword.storage.type" = "constant"
 "keyword.storage.modifier" = "constant"
-
 "operator" = "operator"
-
 "function" = "func"
 "function.builtin" = { fg = "func", modifiers = ["bold"] }
 "function.method" = "func"
 "function.method.private" = "func"
 "function.macro" = "constant"
 "function.special" = "builtin"
-
 "tag" = "builtin"
 "tag.builtin" = "builtin"
-
 "namespace" = "constant"
-
 "special" = "builtin"
-
 ## Markup
 "markup.heading" = { fg = "keyword", modifiers = ["bold"] }
 "markup.heading.marker" = "keyword"
@@ -168,22 +137,18 @@
 "markup.heading.4" = { fg = "keyword", modifiers = ["bold"] }
 "markup.heading.5" = { fg = "keyword", modifiers = ["bold"] }
 "markup.heading.6" = { fg = "keyword", modifiers = ["bold"] }
-
 "markup.list" = "func"
 "markup.list.numbered" = "func"
 "markup.list.unnumbered" = "func"
 "markup.list.checked" = "func"
 "markup.list.unchecked" = "func"
-
 "markup.bold" = { modifiers = ["bold"] }
 "markup.italic" = { modifiers = ["italic"] }
 "markup.strikethrough" = { fg = "comment", modifiers = ["crossed_out"] }
-
 "markup.link" = "string"
 "markup.link.url" = { fg = "string", modifiers = ["underlined"] }
 "markup.link.label" = "string"
 "markup.link.text" = "string"
-
 "markup.quote" = "comment"
 "markup.raw" = "constant"
 "markup.raw.inline" = "constant"

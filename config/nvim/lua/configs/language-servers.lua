@@ -6,6 +6,7 @@ return {
         "emmylua_ls",
         -- "html-lsp",
         -- "json-lsp",
+        "mesonlsp",
         "pyright",
         -- "ruff",
         -- "typescript-language-server",
@@ -18,9 +19,8 @@ return {
         -- "prettierd",
         "black",
         "shfmt",
-        "stylua",
+        -- "stylua",
         "yamlfmt",
-        "cmakelang",
     },
     external_servers = {
         "qmlls",
