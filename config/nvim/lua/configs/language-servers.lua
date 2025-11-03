@@ -8,7 +8,7 @@ return {
         -- "json-lsp",
         "mesonlsp",
         "pyright",
-        -- "ruff",
+        "ruff",
         -- "typescript-language-server",
         -- "yaml-language-server",
         "tombi",

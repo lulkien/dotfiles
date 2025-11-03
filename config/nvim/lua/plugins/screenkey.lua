@@ -26,9 +26,9 @@ return {
             },
         })
 
-        if not require("screenkey").is_active() then
-            require("screenkey").toggle()
-        end
+        -- if not require("screenkey").is_active() then
+        --     require("screenkey").toggle()
+        -- end
 
         vim.keymap.set("n", "<leader>ts", function()
             require("screenkey").toggle()
