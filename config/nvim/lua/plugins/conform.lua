@@ -11,7 +11,6 @@ return {
             function()
                 require("conform").format({ async = true })
             end,
-            mode = "",
             desc = "LSP: Format buffer",
         },
     },
@@ -31,7 +30,8 @@ return {
         default_format_opts = {
             lsp_format = "fallback",
         },
-        format_on_save = { timeout_ms = 500 },
+        -- format_on_save = { timeout_ms = 500 },
+        format_on_save = nil,
         formatters = {
             shfmt = {
                 append_args = { "-i", "4" },

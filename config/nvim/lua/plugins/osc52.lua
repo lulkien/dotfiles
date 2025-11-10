@@ -1,9 +1,8 @@
 ---@type LazyConfig
 return {
     "ojroques/nvim-osc52",
-    config = function()
-        require("osc52").setup({})
-
+    opts = {},
+    init = function()
         local function copy(lines, _)
             require("osc52").copy(table.concat(lines, "\n"))
         end
@@ -20,9 +19,5 @@ return {
             copy = { ["+"] = copy, ["*"] = copy },
             paste = { ["+"] = paste, ["*"] = paste },
         }
-
-        -- Now the '+' register will copy to system clipboard using OSC52
-        vim.keymap.set("n", "<leader>c", '"+y')
-        vim.keymap.set("n", "<leader>cc", '"+yy')
     end,
 }

@@ -1,11 +1,10 @@
----@diagnostic disable: unused-local, unused-function
 ---@type LazyConfig
 return {
     "ibhagwan/fzf-lua",
     dependencies = {
         "nvim-tree/nvim-web-devicons",
     },
-    config = function()
+    opts = function()
         local Position = {
             TopLeft = 1,
             Top = 2,
@@ -17,15 +16,12 @@ return {
             Left = 8,
         }
 
-        local double_border =
-            { "╔", "═", "╗", "║", "╝", "═", "╚", "║" }
+        local double_border = { "╔", "═", "╗", "║", "╝", "═", "╚", "║" }
 
-        local fzf = require("fzf-lua")
-
-        fzf.setup({
+        return {
             { "default-title" },
             number = false,
-            fzf_bin = "sk",
+            -- fzf_bin = "sk",
 
             winopts = {
                 border = function(_, m)
@@ -61,8 +57,8 @@ return {
 
                         assert(
                             m.type == "nvim"
-                                and m.name == "prev"
-                                and type(m.layout) == "string"
+                            and m.name == "prev"
+                            and type(m.layout) == "string"
                         )
 
                         local b = vim.deepcopy(double_border)
@@ -89,63 +85,28 @@ return {
                     end,
                 },
             },
-        })
-
-        fzf.register_ui_select()
-
-        vim.keymap.set(
-            "n",
-            "<leader>fw",
-            require("fzf-lua").grep_cword,
-            { desc = "Fuzzy: Search word" }
-        )
-        vim.keymap.set(
-            "n",
-            "<leader>fW",
-            require("fzf-lua").grep_cWORD,
-            { desc = "Fuzzy: Search WORD" }
-        )
-
-        vim.keymap.set(
-            "n",
-            "<leader>fs",
-            require("fzf-lua").lgrep_curbuf,
-            { desc = "Fuzzy: Search in buffer" }
-        )
-        vim.keymap.set(
-            "n",
-            "<leader>fS",
-            require("fzf-lua").live_grep_native,
-            { desc = "Fuzzy: Search in project" }
-        )
-
-        vim.keymap.set(
-            "n",
-            "<leader>fr",
-            "<cmd>FzfLua live_grep resume=true<CR>",
-            { desc = "Fuzzy: Resume search" }
-        )
-        vim.keymap.set(
-            "n",
-            "<leader>fR",
-            require("fzf-lua").resume,
-            { desc = "Fuzzy: Resume action" }
-        )
-
-        vim.keymap.set(
-            "n",
-            "<leader>ff",
-            require("fzf-lua").files,
-            { desc = "Fuzzy: Find files" }
-        )
-        vim.keymap.set(
-            "n",
-            "<leader>fb",
-            require("fzf-lua").buffers,
-            { desc = "Fuzzy: Find buffer" }
-        )
-
-        -- vim.keymap.set("n", "<leader>ft", require("fzf-lua").btags, { desc = "Fuzzy: Buffer tags" })
-        -- vim.keymap.set("n", "<leader>fT", require("fzf-lua").tags, { desc = "Fuzzy: Project tags" })
+        }
+    end,
+    keys = function()
+        local fzf = require("fzf-lua")
+        return {
+            { "<leader>fr", fzf.resume,           desc = "Fzf: Resume" },
+            { "<leader>ff", fzf.files,            desc = "Fzf: Files" },
+            { "<leader>fb", fzf.buffers,          desc = "Fzf: Buffer" },
+            { "<leader>fw", fzf.grep_cword,       desc = "Fzf: Grep w-textobject" },
+            { "<leader>fW", fzf.grep_cWORD,       desc = "Fzf: Grep W-textobject" },
+            { "<leader>fs", fzf.lgrep_curbuf,     desc = "Fzf: Buffer grep" },
+            { "<leader>fG", fzf.live_grep_native, desc = "Fzf: Global grep new" },
+            {
+                "<leader>fg",
+                function()
+                    fzf.live_grep_native({ resume = true })
+                end,
+                desc = "Fzf: Global grep cont."
+            },
+        }
+    end,
+    init = function()
+        require("fzf-lua").register_ui_select()
     end,
 }

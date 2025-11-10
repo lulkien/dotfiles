@@ -38,9 +38,7 @@ local comments = {
 local colorizer = {
     -- High-performance color highlighter
     "norcalli/nvim-colorizer.lua",
-    config = function()
-        require("colorizer").setup()
-    end,
+    opts = {},
 }
 
 ---@type LazyConfig
@@ -49,15 +47,13 @@ local notify = {
     dependencies = {
         {
             "rcarriga/nvim-notify",
-            config = function()
-                ---@diagnostic disable-next-line: assign-type-mismatch
+            opts = {},
+            init = function()
                 vim.notify = require("notify")
             end,
         },
     },
-    config = function()
-        require("lsp-notify").setup()
-    end,
+    opts = {},
 }
 
 -- ---@type LazyConfig

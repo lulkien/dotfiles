@@ -1,8 +1,0 @@
-{
-    "diagnostics.disable": [
-        "missing-fields",
-        "missing-parameter",
-        "param-type-mismatch",
-        "duplicate-doc-field"
-    ]
-}

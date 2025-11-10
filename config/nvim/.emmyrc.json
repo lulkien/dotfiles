@@ -1,0 +1,135 @@
+{
+    "$schema": "https://raw.githubusercontent.com/EmmyLuaLs/emmylua-analyzer-rust/refs/heads/main/crates/emmylua_code_analysis/resources/schema.json",
+    "codeAction": {
+        "insertSpace": false
+    },
+    "codeLens": {
+        "enable": true
+    },
+    "completion": {
+        "enable": true,
+        "autoRequire": true,
+        "autoRequireFunction": "require",
+        "autoRequireNamingConvention": "keep",
+        "autoRequireSeparator": ".",
+        "callSnippet": false,
+        "postfix": "@",
+        "baseFunctionIncludesName": true
+    },
+    "diagnostics": {
+        "enable": true,
+        "disable": [
+            "undefined-global",
+            "assign-type-mismatch",
+            "param-type-mismatch",
+            "missing-fields"
+        ],
+        "enables": [
+            "undefined-field"
+        ],
+        "globals": [],
+        "globalsRegex": [],
+        "severity": {
+            "undefined-global": "warning",
+            "unused": "hint"
+        },
+        "diagnosticInterval": 500
+    },
+    "doc": {
+        "syntax": "md"
+    },
+    "documentColor": {
+        "enable": true
+    },
+    "hover": {
+        "enable": true
+    },
+    "hint": {
+        "enable": true,
+        "paramHint": true,
+        "indexHint": true,
+        "localHint": true,
+        "overrideHint": true,
+        "metaCallHint": true
+    },
+    "inlineValues": {
+        "enable": true
+    },
+    "references": {
+        "enable": true,
+        "fuzzySearch": true,
+        "shortStringSearch": false
+    },
+    "reformat": {
+        "externalTool": null,
+        "externalToolRangeFormat": null,
+        "useDiff": false
+    },
+    "resource": {
+        "paths": []
+    },
+    "runtime": {
+        "version": "LuaJIT",
+        "requireLikeFunction": [
+            "import",
+            "load",
+            "dofile"
+        ],
+        "frameworkVersions": [],
+        "extensions": [
+            ".lua",
+            ".lua.txt",
+            ".luau"
+        ],
+        "requirePattern": [
+            "?.lua",
+            "?/init.lua",
+            "lib/?.lua"
+        ],
+        "classDefaultCall": {
+            "functionName": "new",
+            "forceNonColon": false,
+            "forceReturnSelf": false
+        },
+        "nonstandardSymbol": [
+            "continue"
+        ],
+        "special": {
+            "errorf":"error"
+        }
+    },
+    "semanticTokens": {
+        "enable": true
+    },
+    "signature": {
+        "detailSignatureHelper": true
+    },
+    "strict": {
+        "requirePath": false,
+        "typeCall": false,
+        "arrayIndex": true,
+        "metaOverrideFileDefine": true,
+        "docBaseConstMatchBaseType": true
+    },
+    "workspace": {
+        "ignoreDir": [],
+        "ignoreGlobs": [],
+        "library": [
+            "$VIMRUNTIME",
+            "$LLS_Addons/luvit",
+            "$HOME/.local/share/nvim/lazy",
+            "$HOME/.local/share/nvim/lazy/luvit-meta/library/uv.lua"
+        ],
+        "workspaceRoots": [],
+        "preloadFileSize": 0,
+        "encoding": "utf-8",
+        "moduleMap": [
+            {
+                "pattern": "^lib(.*)$",
+                "replace": "script$1"
+            }
+        ],
+        "reindexDuration": 5000,
+        "enableReindex": false
+    }
+}

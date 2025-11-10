@@ -1,24 +1,22 @@
+---@diagnostic disable: undefined-global
 ---@type LazyConfig
 return {
     "numToStr/Comment.nvim",
     opts = {},
-    config = function()
-        local opts = { noremap = true, desc = "Comment: Toggle" }
-
+    keys = function()
         vim.keymap.del("n", "gc")
         vim.keymap.del("n", "gcc")
 
-        vim.keymap.set(
-            "n",
-            "<leader>/",
-            require("Comment.api").toggle.linewise.current,
-            opts
-        )
-        vim.keymap.set(
-            "v",
-            "<leader>/",
-            "<esc><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<cr>",
-            opts
-        )
+        local api = require("Comment.api")
+
+        return {
+            { "<leader>/", mode = { "n" }, api.toggle.linewise.current, desc = "Comment: Toggle" },
+            {
+                "<leader>/",
+                mode = { "v" },
+                "<Esc><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>",
+                desc = "Comment: Toggle"
+            },
+        }
     end,
 }

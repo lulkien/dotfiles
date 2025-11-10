@@ -22,7 +22,6 @@ safe_require("core.autocmds")
 ----------------------------------------------- LAZY -----------------------------------------------
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
----@diagnostic disable-next-line: undefined-field
 if not vim.uv.fs_stat(lazypath) then
     local lazyrepo = "https://github.com/folke/lazy.nvim.git"
     local out = vim.fn.system({
@@ -38,12 +37,12 @@ if not vim.uv.fs_stat(lazypath) then
     end
 end
 
+
 vim.opt.rtp:prepend(lazypath)
 
-local lazy = require("lazy")
 
 ---@diagnostic disable-next-line: undefined-field
-lazy.setup({
+require("lazy").setup({
     spec = {
         -- Theme
         safe_require("plugins.catppuccin"),
@@ -69,6 +68,7 @@ lazy.setup({
         -- Devlopment
         safe_require("plugins.treesitter"),
         safe_require("plugins.mason"),
+        safe_require("plugins.lib"),
 
         -- Rust devlopment
         safe_require("plugins.rustaceanvim"),

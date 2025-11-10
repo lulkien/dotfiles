@@ -1,10 +1,11 @@
 ---@type LazyConfig
 return {
     "nvim-lualine/lualine.nvim",
+    lazy = false,
     dependencies = {
         "catppuccin/nvim",
     },
-    config = function()
+    opts = function()
         local mode = {
             "mode",
             fmt = function(str)
@@ -16,7 +17,7 @@ return {
         local filename = {
             "filename",
             file_status = true, -- displays file status (readonly status, modified status)
-            path = 0, -- 0 = just filename, 1 = relative path, 2 = absolute path
+            path = 0,           -- 0 = just filename, 1 = relative path, 2 = absolute path
         }
 
         local hide_in_width = function()
@@ -46,7 +47,7 @@ return {
             cond = hide_in_width,
         }
 
-        require("lualine").setup({
+        return {
             options = {
                 icons_enabled = true,
                 theme = "catppuccin",
@@ -81,6 +82,6 @@ return {
             },
             tabline = {},
             extensions = { "fugitive" },
-        })
+        }
     end,
 }
