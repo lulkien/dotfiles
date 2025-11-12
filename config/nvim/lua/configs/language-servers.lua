@@ -6,20 +6,15 @@ return {
         "emmylua_ls",
         -- "html-lsp",
         -- "json-lsp",
-        "mesonlsp",
-        "pyright",
-        "ruff",
-        -- "typescript-language-server",
-        -- "yaml-language-server",
+        "pyright",  -- Python LSP: uncomment 1 at a time
+        -- "ruff",     -- Python LSP: uncomment 1 at a time
         "tombi",
-        "cmake-language-server",
     },
     formatters = {
         "clang-format",
-        -- "prettierd",
+        "prettierd",
         "black",
         "shfmt",
-        -- "stylua",
         "yamlfmt",
     },
     external_servers = {

@@ -1,6 +1,7 @@
 ---@type LazyConfig
 return {
     "ojroques/nvim-osc52",
+    lazy = false,
     opts = {},
     init = function()
         local function copy(lines, _)

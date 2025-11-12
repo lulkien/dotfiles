@@ -1,4 +1,3 @@
----@diagnostic disable: undefined-global
 ---@type LazyConfig
 return {
     "numToStr/Comment.nvim",
