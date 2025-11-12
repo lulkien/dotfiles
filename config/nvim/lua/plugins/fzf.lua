@@ -90,12 +90,20 @@ return {
     keys = function()
         local fzf = require("fzf-lua")
         return {
-            { "<leader>fr", fzf.resume,           desc = "Fzf: Resume" },
-            { "<leader>ff", fzf.files,            desc = "Fzf: Files" },
-            { "<leader>fb", fzf.buffers,          desc = "Fzf: Buffer" },
-            { "<leader>fw", fzf.grep_cword,       desc = "Fzf: Grep w-textobject" },
-            { "<leader>fW", fzf.grep_cWORD,       desc = "Fzf: Grep W-textobject" },
-            { "<leader>fs", fzf.lgrep_curbuf,     desc = "Fzf: Buffer grep" },
+            { "<leader>fr", fzf.resume,       desc = "Fzf: Resume" },
+
+            { "<leader>ff", fzf.files,        desc = "Fzf: Files" },
+            { "<leader>fb", fzf.buffers,      desc = "Fzf: Buffer" },
+
+            { "<leader>fS", fzf.lgrep_curbuf, desc = "Fzf: Buffer grep new" },
+            {
+                "<leader>fs",
+                function()
+                    fzf.lgrep_curbuf({ resume = true })
+                end,
+                desc = "Fzf: Buffer grep cont."
+            },
+
             { "<leader>fG", fzf.live_grep_native, desc = "Fzf: Global grep new" },
             {
                 "<leader>fg",
@@ -104,6 +112,9 @@ return {
                 end,
                 desc = "Fzf: Global grep cont."
             },
+
+            { "<leader>fw", fzf.grep_cword,       desc = "Fzf: Grep w-textobject" },
+            { "<leader>fW", fzf.grep_cWORD,       desc = "Fzf: Grep W-textobject" },
         }
     end,
     init = function()
