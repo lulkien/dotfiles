@@ -1,7 +1,6 @@
 # Abbreviations
 abbr -a chmox 'chmod +x'
-abbr -a rmc 'rm ~/.config/fish/fish_variables'
-abbr -a rf 'rm -rf'
+abbr -a rf 'rm -rfi'
 
 # Misc
 abbr -a ipa 'ip address'

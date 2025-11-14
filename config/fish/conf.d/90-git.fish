@@ -2,7 +2,7 @@
 abbr -a gcl 'git clone'
 abbr -a gco 'git checkout'
 abbr -a gpl 'git pull --rebase'
-abbr -a grs 'git clean -f -d && git reset --hard HEAD^^ && git pull --rebase'
+abbr -a grs 'git reset --hard HEAD^^ && git pull --rebase'
 
 # Commit
 abbr -a gad 'git add'
