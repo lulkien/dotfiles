@@ -1,9 +1,6 @@
----@diagnostic disable: duplicate-type, param-type-not-match
-local servers = require("configs.language-servers").servers
-local external_servers = require("configs.language-servers").external_servers
-
 -- Load blink capabilities
 local blink_ok, blink = pcall(require, "blink-cmp")
+
 if blink_ok then
     vim.lsp.config("*", {
         ---@diagnostic disable-next-line: need-check-nil
@@ -11,16 +8,30 @@ if blink_ok then
     })
 end
 
--- Enable language servers
+
+-- Enable configured language servers
+local configured_servers = require("configs.language-servers")
+local servers = configured_servers.servers
+local external_servers = configured_servers.external_servers
+
 vim.lsp.enable(servers)
 vim.lsp.enable(external_servers)
+
 
 -- Setup virtual line diagnostic
 vim.diagnostic.config({
     virtual_lines = true,
 })
 
----@diagnostic disable-next-line: duplicate-type
+
+---@class LspMethodConfig
+---@field name string           A brief description of what the LSP method does.
+---@field mode? string          The mode in which the keybinding should be active.
+---@field keys? string          The keybinding that triggers this LSP method.
+---@field setup? function()     The function that executes when initializing the LSP method.
+---@field callback? function()  The callback function that trigger by keymap.
+
+
 --- Callback function triggered on LSP attach event.
 ---
 --- @param args vim.api.keyset.create_autocmd.callback_args Event arguments containing:
@@ -33,77 +44,67 @@ vim.diagnostic.config({
 ---   - data?: any Arbitrary data passed from nvim_exec_autocmds() (includes client_id for LspAttach)
 ---
 --- Configures LSP keybindings and setups for supported methods.
-local function LspAttachCallback(args)
+local function lsp_attached_callback(args)
+    -- Get client
     local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
 
-    local fzf = pcall(require, "fzf-lua") and require("fzf-lua") or nil
+    -- Load fzf
+    local fzf_ok, fzf = pcall(require, "fzf-lua")
 
-    ---@class MethodConfig
-    ---@field name string         A brief description of what the LSP method does.
-    ---@field mode? string        The mode in which the keybinding should be active.
-    ---@field keys? string        The keybinding that triggers this LSP method.
-    ---@field setup? function()   The function that executes when initializing the LSP method.
-    ---@field trigger? function() The function that trigger by keymap.
-
-    ---@type table<string, MethodConfig>
+    ---@type table<string, LspMethodConfig>
     local method_configs = {
         [vim.lsp.protocol.Methods.textDocument_codeAction] = {
-            keys = "<leader>la",
             name = "Code action",
-            trigger = fzf and fzf.lsp_code_actions or vim.lsp.buf.code_action,
+            keys = "<leader>la",
+            callback = fzf_ok and fzf.lsp_code_actions or vim.lsp.buf.code_action,
         },
         [vim.lsp.protocol.Methods.textDocument_references] = {
             name = "Goto references",
             keys = "<leader>lr",
-            trigger = fzf and fzf.lsp_references or vim.lsp.buf.references,
+            callback = fzf_ok and fzf.lsp_references or vim.lsp.buf.references,
         },
         [vim.lsp.protocol.Methods.textDocument_definition] = {
             name = "Goto definition",
             keys = "<leader>ld",
-            trigger = fzf and fzf.lsp_definitions or vim.lsp.buf.definition,
+            callback = fzf_ok and fzf.lsp_definitions or vim.lsp.buf.definition,
         },
         [vim.lsp.protocol.Methods.textDocument_implementation] = {
-            name = "Goto implementations",
+            name = "Goto impl.",
             keys = "<leader>li",
-            trigger = fzf and fzf.lsp_implementatios
-                or vim.lsp.buf.implementation,
+            callback = fzf_ok and fzf.lsp_implementatios or vim.lsp.buf.implementation,
         },
         [vim.lsp.protocol.Methods.textDocument_declaration] = {
             name = "Goto declaration",
             keys = "<leader>lD",
-            trigger = fzf and fzf.lsp_declarations or vim.lsp.buf.declaration,
+            callback = fzf_ok and fzf.lsp_declarations or vim.lsp.buf.declaration,
         },
         [vim.lsp.protocol.Methods.textDocument_typeDefinition] = {
-            name = "Goto type definitions",
+            name = "Goto typedef.",
             keys = "<leader>lt",
-            trigger = fzf and fzf.lsp_typedefs or vim.lsp.buf.type_definition,
+            callback = fzf_ok and fzf.lsp_typedefs or vim.lsp.buf.type_definition,
         },
         [vim.lsp.protocol.Methods.textDocument_inlayHint] = {
             name = "Toggle inlay hint",
             keys = "<leader>lh",
             setup = function()
+                -- Enable inlay hint on startup
                 vim.lsp.inlay_hint.enable()
             end,
-            trigger = function()
-                local hint_enabled =
-                    vim.lsp.inlay_hint.is_enabled({ bufnr = args.buf })
-                vim.lsp.inlay_hint.enable(not hint_enabled)
+            callback = function()
+                -- Reverse current inlay state
+                local inlay_enabled = vim.lsp.inlay_hint.is_enabled({ bufnr = args.buf })
+                vim.lsp.inlay_hint.enable(not inlay_enabled)
             end,
         },
         [vim.lsp.protocol.Methods.textDocument_rename] = {
             name = "Rename",
             keys = "<leader>lR",
-            trigger = vim.lsp.buf.rename,
+            callback = vim.lsp.buf.rename,
         },
-        -- [vim.lsp.protocol.Methods.textDocument_formatting] = {
-        --     name = "Format",
-        --     keys = "<leader>lf",
-        --     trigger = vim.lsp.buf.format,
-        -- },
         [vim.lsp.protocol.Methods.textDocument_hover] = {
             name = "Hover",
             keys = "K",
-            trigger = function()
+            callback = function()
                 vim.lsp.buf.hover({
                     focusable = false,
                     border = "rounded",
@@ -145,19 +146,11 @@ local function LspAttachCallback(args)
                 })
             end,
         },
-        -- [vim.lsp.protocol.Methods.textDocument_diagnostic] = {
-        --   name = "Diagnostic document",
-        --   keys = "<leader>dd",
-        --   trigger = fzf and fzf.lsp_document_diagnostics or nil,
-        -- },
-        -- [vim.lsp.protocol.Methods.workspace_diagnostic] = {
-        --   name = "Diagnostic workspace",
-        --   keys = "<leader>dw",
-        --   trigger = fzf and fzf.lsp_workspace_diagnostics or nil,
-        -- },
+        -- Let conform.nvim handle this
+        -- [vim.lsp.protocol.Methods.textDocument_formatting] = nil,
     }
 
-    -- Loop through the config map and do configure
+    -- Iterate config table and config method if client supports
     for method, config in pairs(method_configs) do
         if client:supports_method(method, args.buf) then
             local mode = config.mode or "n"
@@ -167,8 +160,8 @@ local function LspAttachCallback(args)
                 config.setup()
             end
 
-            if config.keys and config.trigger then
-                vim.keymap.set(mode, config.keys, config.trigger, {
+            if config.keys and config.callback then
+                vim.keymap.set(mode, config.keys, config.callback, {
                     buffer = args.buf,
                     desc = desc,
                     silent = true,
@@ -177,8 +170,10 @@ local function LspAttachCallback(args)
         end
     end
 
-    -- Force enable lsp diagnostics, I have no idea why i can't check with client supported method
-    if fzf then
+    -- Force enable lsp diagnostics
+    -- I have no idea why i can't check with client supported method
+    if fzf_ok then
+        -- Using fzf diagnostics
         vim.keymap.set("n", "<leader>dd", fzf.lsp_document_diagnostics, {
             buffer = args.buf,
             desc = "LSP: Document diagnostic",
@@ -190,11 +185,20 @@ local function LspAttachCallback(args)
             desc = "LSP: Workspace diagnostic",
             silent = true,
         })
+    else
+        -- Using default vim diagnostics jumping
+        map("n", "<leader>dn", function()
+            vim.diagnostic.jump({ count = 1 })
+        end, { desc = "Diagnostics: Next" })
+
+        map("n", "<leader>dp", function()
+            vim.diagnostic.jump({ count = -1 })
+        end, { desc = "Diagnostics: Previous" })
     end
 end
 
 -- Create auto commands on LspAttach
 vim.api.nvim_create_autocmd("LspAttach", {
     group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }),
-    callback = LspAttachCallback,
+    callback = lsp_attached_callback,
 })

@@ -17,12 +17,6 @@ map("n", "<Down>", "<Nop>", opts)
 map("n", "<Left>", "<Nop>", opts)
 map("n", "<Right>", "<Nop>", opts)
 
--- Resize with arrow keys in normal mode
--- map("n", "<Up>", "<cmd>resize -2<CR>", { noremap = true, desc = "Resize: height -2" })
--- map("n", "<Down>", "<cmd>resize +2<CR>", { noremap = true, desc = "Resize: height + 2" })
--- map("n", "<Left>", "<cmd>vertical resize -2<CR>", { noremap = true, desc = "Resize: width -2" })
--- map("n", "<Right>", "<cmd>vertical resize +2<CR>", { noremap = true, desc = "Resize: width +2" })
-
 -- Navigate between windows
 map(
     "n",
@@ -137,15 +131,3 @@ map("v", "<S-Tab>", "<gv", opts)
 
 -- Keep last yanked when pasting
 map("v", "p", '"_dP', opts)
-
--- Diagnostic keymaps
-map("n", "<leader>dn", function()
-    vim.diagnostic.jump({ count = 1 })
-end, { desc = "Diagnostics: Next" })
-
-map("n", "<leader>dp", function()
-    vim.diagnostic.jump({ count = -1 })
-end, { desc = "Diagnostics: Previous" })
---
--- map("n", "<leader>df", vim.diagnostic.open_float, { desc = "Diagnostics: Open Floating" })
--- map("n", "<leader>dl", vim.diagnostic.setloclist, { desc = "Diagnostics: List" })
