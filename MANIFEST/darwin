@@ -1,5 +1,7 @@
 symlink|{SCRIPT_DIR}/config/nvim|{HOME}/.config/nvim
-symlink|{SCRIPT_DIR}/config/vim-noplug/vimrc|{HOME}/.vimrc
-symlink|{SCRIPT_DIR}/config/vim-noplug/vim|{HOME}/.vim
 symlink|{SCRIPT_DIR}/config/fish|{HOME}/.config/fish
 symlink|{SCRIPT_DIR}/config/kitty|{HOME}/.config/kitty
+
+# Vanilla vim
+symlink|{SCRIPT_DIR}/config/vim/vimrc|{HOME}/.vimrc
+symlink|{SCRIPT_DIR}/config/vim/vim|{HOME}/.vim

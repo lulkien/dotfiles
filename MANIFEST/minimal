@@ -1,5 +1,6 @@
 symlink|{SCRIPT_DIR}/config/bash|{HOME}/.config/bash
-symlink|{SCRIPT_DIR}/config/vim-noplug/vimrc|{HOME}/.vimrc
-symlink|{SCRIPT_DIR}/config/vim-noplug/vim|{HOME}/.vim
-symlink|{SCRIPT_DIR}/config/zellij|{HOME}/.config/zellij
 symlink|{SCRIPT_DIR}/config/helix|{HOME}/.config/helix
+
+# Vanilla vim
+symlink|{SCRIPT_DIR}/config/vim/vimrc|{HOME}/.vimrc
+symlink|{SCRIPT_DIR}/config/vim/vim|{HOME}/.vim

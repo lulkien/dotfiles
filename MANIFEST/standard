@@ -1,5 +1,8 @@
 symlink|{SCRIPT_DIR}/config/fish|{HOME}/.config/fish
 symlink|{SCRIPT_DIR}/config/bash|{HOME}/.config/bash
-symlink|{SCRIPT_DIR}/config/helix|{HOME}/.config/helix
 symlink|{SCRIPT_DIR}/config/kitty|{HOME}/.config/kitty
-symlink|{SCRIPT_DIR}/config/zellij|{HOME}/.config/zellij
+symlink|{SCRIPT_DIR}/config/nvim|{HOME}/.config/nvim
+
+# Vanilla vim
+symlink|{SCRIPT_DIR}/config/vim/vimrc|{HOME}/.vimrc
+symlink|{SCRIPT_DIR}/config/vim/vim|{HOME}/.vim
