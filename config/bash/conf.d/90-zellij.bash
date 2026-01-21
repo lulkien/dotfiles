@@ -1,9 +1,9 @@
 if command -v zellij &>/dev/null; then
-	alias zn="zellij"
-	alias zl="zellij list-sessions"
-	alias za="zellij attach"
-	alias zk="zellij kill-session"
-	alias zka="zellij kill-all-sessions"
-	alias zd="zellij delete-session"
-	alias zda="zellij delete-all-sessions"
+	abbr -a zn  'zellij'
+	abbr -a zl  'zellij list-sessions'
+	abbr -a za  'zellij attach'
+	abbr -a zk  'zellij kill-session'
+	abbr -a zka 'zellij kill-all-sessions'
+	abbr -a zd  'zellij delete-session'
+	abbr -a zda 'zellij delete-all-sessions'
 fi

@@ -1,0 +1,6 @@
+abbr -a pls     'sudo'
+abbr -a rf      'rm -rf'
+abbr -a ..      'cd ..'
+abbr -a ...     'cd ../..'
+abbr -a cls     'clear'
+abbr -a q       'exit 0'
