@@ -14,3 +14,4 @@ cwd() {
 
     pwd | sed "s#$HOME#~#" | perl -F/ -ane "$perl_cmd"
 }
+

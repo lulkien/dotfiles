@@ -3,3 +3,4 @@ bash_greeting() {
         echo -e "$KBC_BASH_GREETING"
     fi
 }
+

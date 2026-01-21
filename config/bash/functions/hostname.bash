@@ -7,5 +7,5 @@ hostname() {
         local HOSTNAME_=$(head -1 /etc/hostname)
         [[ -n "$HOSTNAME_" ]] && printf "${HOSTNAME_}\n" || printf "Unknown\n"
     fi
-
 }
+

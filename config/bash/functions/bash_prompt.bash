@@ -18,3 +18,4 @@ bash_prompt() {
 
     echo ${KBC_USER}${KBC_HOSTNAME}' \[\033[0;34m\]󰉋 `cwd`\[\033[00m\] `bash_git_prompt`\n  '
 }
+

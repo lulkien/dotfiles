@@ -16,6 +16,6 @@ function git_prompt_simple() {
 }
 
 function bash_prompt_simple() {
-
     echo '\[\033[0;32m\]\u\[\033[00m\]@\[\033[0;33m\]\h \[\033[0;34m\]\w \[\033[31m\]`git_prompt_simple`\[\033[00m\]\$ '
 }
+

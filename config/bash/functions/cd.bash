@@ -1,156 +1,107 @@
-cd() {
+function cd() {
     # Global variables for this SHELL session
-    declare -p KBC_CD_PREV &>/dev/null || declare -g KBC_CD_PREV=$HOME
+    declare -p KBC_CD_PREV &>/dev/null || declare -g KBC_CD_PREV="$HOME"
     declare -p KBC_CD_HISTORY_LEN &>/dev/null || declare -g -i KBC_CD_HISTORY_LEN=15
+    declare -p KBC_CD_HISTORY_FILE &>/dev/null || declare -g KBC_CD_HISTORY_FILE="$HOME/.cd_history"
 
-    HISTORY_FILE=$HOME/.cd_history
-    HISTORY_TEMP=$HISTORY_FILE.temp
-
-    [[ ! -f $HISTORY_FILE ]] && (
-        umask 077
-        touch $HISTORY_FILE
-    )
-
-    __cd_print_help() {
-        echo "Usage: cd [OPTION]"
-        echo "  or:  cd [DESTINATION]"
-        echo "Change directory to a specific path or a history index."
-        echo
-        echo "Options:"
-        echo "    -l, --list            Show cd history list and jump."
-        echo "    -h, --help            Show this help."
+    # --- Helpers ---
+    __cd_atomic_write() {
+        local tmp_file
+        tmp_file=$(mktemp "${1}.XXXXXX") || return 1
+        if cat >"$tmp_file"; then
+            [[ -f "$1" ]] && chmod --reference="$1" "$tmp_file" 2>/dev/null
+            mv -f "$tmp_file" "$1"
+        else
+            rm -f "$tmp_file"
+            return 1
+        fi
     }
 
     __cd_update_history() {
-
         [[ -z "$1" || "$1" = "$HOME" ]] && return
-
         {
             echo "$1"
-            cat "$HISTORY_FILE"
+            [[ -f "$KBC_CD_HISTORY_FILE" ]] && cat "$KBC_CD_HISTORY_FILE"
         } |
-            awk '!seen[$0]++' |
-            head -n $KBC_CD_HISTORY_LEN |
-            tee $HISTORY_TEMP >/dev/null &&
-            mv $HISTORY_TEMP $HISTORY_FILE
-
+            awk '!seen[$0]++' | head -n "$KBC_CD_HISTORY_LEN" | __cd_atomic_write "$KBC_CD_HISTORY_FILE"
     }
 
     __cd_remove_history() {
-
-        [[ -z "$1" || "$1" = "$HOME" ]] && return
-
-        awk -v line="$1" '$0 != line' $HISTORY_FILE |
-            tee $HISTORY_TEMP >/dev/null &&
-            mv $HISTORY_TEMP $HISTORY_FILE
-
-    }
-
-    __cd_show_jump_list() {
-
-        if [[ ! -s "$HISTORY_FILE" ]]; then
-            echo "History empty."
-            return 1
-        fi
-
-        declare -a cd_history=()
-
-        while IFS= read -r line; do
-            cd_history+=("$line")
-        done <$HISTORY_FILE
-
-        COLUMNS=30
-        select history_path in "${cd_history[@]}"; do
-
-            if [[ ! "$REPLY" =~ ^[0-9]+$ ]]; then
-                echo "Index must be a number."
-                return 2
-            fi
-
-            if [[ "$REPLY" -lt 1 || "$REPLY" -gt "${#cd_history[@]}" ]]; then
-                echo "Index out of range."
-                return 2
-            fi
-
-            echo "$history_path"
-            return 0
-
-        done
+        [[ -z "$1" || ! -f "$KBC_CD_HISTORY_FILE" ]] && return
+        awk -v line="$1" '$0 != line' "$KBC_CD_HISTORY_FILE" | __cd_atomic_write "$KBC_CD_HISTORY_FILE"
     }
 
     # ----------------------------------- MAIN -----------------------------------
-    # Variables for CD script
-    local cd_destination=
-    local _flag_help=false
-    local _flag_list=false
+    local cl_red='\e[1;31m'
+    local cl_yellow='\e[1;33m'
+    local cl_reset='\e[0m'
+
+    local flag_list=false
+    local opt=
+    OPTIND=1 # Required: reset getopts index for function calls
+
+    while getopts "hl" opt; do
+        case "$opt" in
+        h)
+            echo "Usage: cd [-l] [path]"
+            return 0
+            ;;
+        l) flag_list=true ;;
+        *) return 1 ;;
+        esac
+    done
+    shift $((OPTIND - 1))
+
+    local dest="$1"
     local current_dir=$(pwd)
 
-    if [[ $# -gt 1 ]]; then
-        echo "cd: Too many arguments."
-        return 1
-    fi
+    if $flag_list; then
+        if [[ ! -s "$KBC_CD_HISTORY_FILE" ]]; then
+            echo -e "${cl_red}cd${cl_reset}: History empty."
+            return 1
+        fi
 
-    case $1 in
-    -h | --help)
-        _flag_help=true
-        ;;
-    -j | -l | --jump | --list)
-        _flag_list=true
-        ;;
-    *)
-        cd_destination="$1"
-        ;;
-    esac
+        # Load history into array
+        local -a hist=()
+        while IFS= read -r line; do hist+=("$line"); done <"$KBC_CD_HISTORY_FILE"
 
-    if $_flag_help; then
-        __cd_print_help
-        return 0
-    fi
-
-    if $_flag_list; then
-
-        local jump_msg=
-        local jump_err=
-
-        jump_msg=$(__cd_show_jump_list)
-        jump_err=$?
-
+        echo "Select a directory:"
+        COLUMNS=1 # Force vertical list
+        select choice in "${hist[@]}"; do
+            [[ -n "$choice" ]] && dest="$choice" && break
+            echo "Invalid selection." >&2 && return 2
+        done
         echo "----------------------------"
-        if [[ $jump_err -ne 0 ]]; then
-            echo -e "\e[1;31mcd\e[00m: $jump_msg"
-            return $jump_err
-        fi
-
-        cd_destination="$jump_msg"
-        echo -e "\e[1;33mcd\e[00m: $cd_destination"
-
-    else
-
-        if [[ -z "$cd_destination" ]]; then
-            cd_destination="$HOME"
-        elif [[ "$cd_destination" = '-' ]]; then
-            cd_destination="$KBC_CD_PREV"
-            echo -e "\e[1;33mcd\e[00m: $cd_destination"
-        else
-            local real_path=
-            real_path=$(realpath -q "$cd_destination")
-            [[ $? -eq 0 ]] && cd_destination="$real_path"
-        fi
+        echo -e "${cl_yellow}cd${cl_reset}: $dest"
     fi
 
-    [[ "$current_dir" = "$cd_destination" ]] && return 0
+    # Path logic
+    if [[ -z "$dest" ]]; then
+        dest="$HOME"
+    elif [[ "$dest" == "-" ]]; then
+        dest="$KBC_CD_PREV"
+        echo -e "${cl_yellow}cd${cl_reset}: $dest"
+    else
+        # Resolve path to absolute for clean history
+        local real_p
+        real_p=$(realpath -q "$dest")
+        [[ $? -eq 0 ]] && dest="$real_p"
+    fi
 
-    builtin cd -- "$cd_destination"
-    local cd_status=$?
+    [[ "$current_dir" == "$dest" ]] && return 0
 
     # REMOVE HISTORY NO MATTER WHAT
     # BECAUSE OF THAT HISTORY MAY NOT EXIST ANYMORE
-    __cd_remove_history "$cd_destination"
+    __cd_remove_history "$dest"
 
-    [[ $cd_status -ne 0 ]] && return $cd_status
+    builtin cd -- "$dest"
+    local status=$?
+
+    [[ $status -ne 0 ]] && return $status
 
     KBC_CD_PREV="$current_dir"
-    __cd_update_history "$cd_destination"
+    __cd_update_history "$dest"
 
     return 0
 }
+
