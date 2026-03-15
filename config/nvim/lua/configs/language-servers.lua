@@ -2,7 +2,7 @@ return {
     servers = {
         -- "bash-language-server",
         "clangd",
-        -- "css-lsp",
+        "css-lsp",
         "emmylua_ls",
         -- "html-lsp",
         -- "json-lsp",
