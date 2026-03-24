@@ -566,7 +566,7 @@ mirror_session true
 // copy_command "xclip -selection clipboard"
 //
 // wayland
-copy_command "wl-copy"
+// copy_command "wl-copy"
 //
 // osx
 // copy_command "pbcopy"
