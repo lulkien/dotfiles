@@ -1,0 +1,133 @@
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
+
+local map = vim.keymap.set
+local opts = { noremap = true, silent = true }
+
+map({ "n", "v" }, "<Space>", "<Nop>", opts)
+
+-- Disable arrow keys
+map("i", "<Up>", "<Nop>", opts)
+map("i", "<Down>", "<Nop>", opts)
+map("i", "<Left>", "<Nop>", opts)
+map("i", "<Right>", "<Nop>", opts)
+
+map("n", "<Up>", "<Nop>", opts)
+map("n", "<Down>", "<Nop>", opts)
+map("n", "<Left>", "<Nop>", opts)
+map("n", "<Right>", "<Nop>", opts)
+
+-- Navigate between windows
+map(
+    "n",
+    "<C-h>",
+    "<cmd>wincmd h<CR>",
+    { noremap = true, desc = "Window: Focus left" }
+)
+map(
+    "n",
+    "<C-j>",
+    "<cmd>wincmd j<CR>",
+    { noremap = true, desc = "Window: Focus down" }
+)
+map(
+    "n",
+    "<C-k>",
+    "<cmd>wincmd k<CR>",
+    { noremap = true, desc = "Window: Focus up" }
+)
+map(
+    "n",
+    "<C-l>",
+    "<cmd>wincmd l<CR>",
+    { noremap = true, desc = "Window: Focus right" }
+)
+
+-- Windows
+map(
+    "n",
+    "<leader>wv",
+    "<cmd>wincmd v<CR>",
+    { noremap = true, desc = "Window: Split vertical" }
+)
+map(
+    "n",
+    "<leader>wh",
+    "<cmd>wincmd s<CR>",
+    { noremap = true, desc = "Window: Split horizontal" }
+)
+map(
+    "n",
+    "<leader>we",
+    "<cmd>wincmd =<CR>",
+    { noremap = true, desc = "Window: Equalize size" }
+)
+-- map("n", "<leader>wc", "<cmd>wincmd q<CR>", { noremap = true, desc = "Window: Close" })
+map(
+    "n",
+    "<leader>wx",
+    "<cmd>wincmd q<CR>",
+    { noremap = true, desc = "Window: Close" }
+)
+
+-- Buffers
+map(
+    "n",
+    "<leader>bN",
+    "<cmd>enew<CR>",
+    { noremap = true, desc = "Buffer: New" }
+)
+
+-- Tabs
+-- map("n", "<leader>to", "<cmd>tabnew<CR>", { noremap = true, desc = "Tab: New" })
+-- map("n", "<leader>tx", "<cmd>tabclose<CR>", { noremap = true, desc = "Tab: Close" })
+-- map("n", "<leader>tc", "<cmd>tabclose<CR>", { noremap = true, desc = "Tab: Close" })
+-- map("n", "<leader>tn", "<cmd>tabn<CR>", { noremap = true, desc = "Tab: Cycle next" })
+-- map("n", "<leader>tp", "<cmd>tabp<CR>", { noremap = true, desc = "Tab: Cycle previous" })
+
+-- Toggle
+map(
+    "n",
+    "<leader>tl",
+    "<cmd>set number! relativenumber!<CR>",
+    { noremap = true, desc = "Toggle: Line number + relativenumber" }
+)
+map(
+    "n",
+    "<leader>tn",
+    "<cmd>set number!<CR>",
+    { noremap = true, desc = "Toggle: Line number" }
+)
+map(
+    "n",
+    "<leader>tr",
+    "<cmd>set relativenumber!<CR>",
+    { noremap = true, desc = "Toggle: Line relativenumber" }
+)
+map(
+    "n",
+    "<leader>tw",
+    "<cmd>set wrap!<CR>",
+    { noremap = true, desc = "Toggle: Line wrap" }
+)
+
+-- Clear search highlight
+map("n", "<Esc>", "<cmd>noh<CR>", opts)
+
+-- Modify 'x' key behavior -> Just delete, don't copy into clipboard
+map("n", "x", '"_x', opts)
+
+-- Find and centered
+map("n", "n", "nzzzv", opts)
+map("n", "N", "Nzzzv", opts)
+
+-- Scroll and centered
+map("n", "<C-u>", "<C-u>zz", opts)
+map("n", "<C-d>", "<C-d>zz", opts)
+
+-- Indent mode
+map("v", "<Tab>", ">gv", opts)
+map("v", "<S-Tab>", "<gv", opts)
+
+-- Keep last yanked when pasting
+map("v", "p", '"_dP', opts)
