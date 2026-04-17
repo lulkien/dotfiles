@@ -1,20 +1,34 @@
--- Load blink capabilities
-local blink_ok, blink = pcall(require, "blink-cmp")
+require("common.utils")
 
-if blink_ok then
+-- Enable configured language servers
+local configured_servers = {
+	servers = {
+		-- "bash-language-server",
+		"clangd",
+		"css-lsp",
+		"emmylua_ls",
+		-- "html-lsp",
+		-- "json-lsp",
+		"pyright", -- Python LSP: uncomment 1 at a time
+		-- "ruff", -- Python LSP: uncomment 1 at a time
+		"tombi",
+	},
+	custom_servers = {
+		"qmlls",
+	},
+}
+
+local servers = configured_servers.servers
+local custom_servers = configured_servers.custom_servers
+
+---@type blink.cmp.API|nil
+local blink = safe_require("blink.cmp")
+
+if blink then
 	vim.lsp.config("*", {
-		---@diagnostic disable-next-line: undefined-field
 		capabilities = blink.get_lsp_capabilities(),
 	})
 end
-
--- Enable configured language servers
-local configured_servers = require("configs.language-servers")
-local servers = configured_servers.servers
-local external_servers = configured_servers.external_servers
-
-vim.lsp.enable(servers)
-vim.lsp.enable(external_servers)
 
 -- Setup virtual line diagnostic
 vim.diagnostic.config({
@@ -41,45 +55,48 @@ vim.diagnostic.config({
 ---
 --- Configures LSP keybindings and setups for supported methods.
 local function lsp_attached_callback(args)
-	-- Get client
-	local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
+    ---@type vim.lsp.Client    
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    if not client then
+        return
+    end
 
-	-- Load fzf
-	local fzf_ok, fzf = pcall(require, "fzf-lua")
+    ---@type fzf-lua|nil
+    local fzf = safe_require("fzf-lua")
 
 	---@type table<string, LspMethodConfig>
 	local method_configs = {
-		[vim.lsp.protocol.Methods.textDocument_codeAction] = {
+		["textDocument/codeAction"] = {
 			name = "Code action",
 			keys = "<leader>la",
-			callback = fzf_ok and fzf.lsp_code_actions or vim.lsp.buf.code_action,
+			callback = fzf and fzf.lsp_code_actions or vim.lsp.buf.code_action,
 		},
-		[vim.lsp.protocol.Methods.textDocument_references] = {
+		["textDocument/references"] = {
 			name = "Goto references",
 			keys = "<leader>lr",
-			callback = fzf_ok and fzf.lsp_references or vim.lsp.buf.references,
+			callback = fzf and fzf.lsp_references or vim.lsp.buf.references,
 		},
-		[vim.lsp.protocol.Methods.textDocument_definition] = {
+		["textDocument/definition"] = {
 			name = "Goto definition",
 			keys = "<leader>ld",
-			callback = fzf_ok and fzf.lsp_definitions or vim.lsp.buf.definition,
+			callback = fzf and fzf.lsp_definitions or vim.lsp.buf.definition,
 		},
-		[vim.lsp.protocol.Methods.textDocument_implementation] = {
+		["textDocument/implementation"] = {
 			name = "Goto impl.",
 			keys = "<leader>li",
-			callback = fzf_ok and fzf.lsp_implementatios or vim.lsp.buf.implementation,
+			callback = fzf and fzf.lsp_implementations or vim.lsp.buf.implementation,
 		},
-		[vim.lsp.protocol.Methods.textDocument_declaration] = {
+		["textDocument/declaration"] = {
 			name = "Goto declaration",
 			keys = "<leader>lD",
-			callback = fzf_ok and fzf.lsp_declarations or vim.lsp.buf.declaration,
+			callback = fzf and fzf.lsp_declarations or vim.lsp.buf.declaration,
 		},
-		[vim.lsp.protocol.Methods.textDocument_typeDefinition] = {
+		["textDocument/typeDefinition"] = {
 			name = "Goto typedef.",
 			keys = "<leader>lt",
-			callback = fzf_ok and fzf.lsp_typedefs or vim.lsp.buf.type_definition,
+			callback = fzf and fzf.lsp_typedefs or vim.lsp.buf.type_definition,
 		},
-		[vim.lsp.protocol.Methods.textDocument_inlayHint] = {
+		["textDocument/inlayHint"] = {
 			name = "Toggle inlay hint",
 			keys = "<leader>lh",
 			setup = function()
@@ -92,12 +109,12 @@ local function lsp_attached_callback(args)
 				vim.lsp.inlay_hint.enable(not inlay_enabled)
 			end,
 		},
-		[vim.lsp.protocol.Methods.textDocument_rename] = {
+		["textDocument/rename"] = {
 			name = "Rename",
 			keys = "<leader>lR",
 			callback = vim.lsp.buf.rename,
 		},
-		[vim.lsp.protocol.Methods.textDocument_hover] = {
+		["textDocument/hover"] = {
 			name = "Hover",
 			keys = "K",
 			callback = function()
@@ -107,7 +124,7 @@ local function lsp_attached_callback(args)
 				})
 			end,
 		},
-		[vim.lsp.protocol.Methods.textDocument_documentHighlight] = {
+		["textDocument/documentHighlight"] = {
 			name = "Document highlight",
 			setup = function()
 				local highlight_augroup = vim.api.nvim_create_augroup("lsp-highlight", { clear = false })
@@ -137,7 +154,7 @@ local function lsp_attached_callback(args)
 			end,
 		},
 		-- Let conform.nvim handle this
-		-- [vim.lsp.protocol.Methods.textDocument_formatting] = nil,
+		-- ["textDocument/formatting"] = nil,
 	}
 
 	-- Iterate config table and config method if client supports
@@ -162,7 +179,7 @@ local function lsp_attached_callback(args)
 
 	-- Force enable lsp diagnostics
 	-- I have no idea why i can't check with client supported method
-	if fzf_ok then
+	if fzf then
 		-- Using fzf diagnostics
 		vim.keymap.set("n", "<leader>dd", fzf.lsp_document_diagnostics, {
 			buffer = args.buf,
@@ -192,3 +209,8 @@ vim.api.nvim_create_autocmd("LspAttach", {
 	group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }),
 	callback = lsp_attached_callback,
 })
+
+-- Enable servers
+vim.lsp.enable(servers)
+vim.lsp.enable(custom_servers)
+

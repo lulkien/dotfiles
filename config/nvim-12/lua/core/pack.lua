@@ -1,6 +1,7 @@
 vim.pack.add({
 	-- Icons
 	"https://github.com/nvim-tree/nvim-web-devicons",
+    "https://github.com/nvim-mini/mini.icons",
 	-- Theme
 	{
 		src = "https://github.com/catppuccin/nvim",
@@ -39,6 +40,16 @@ vim.pack.add({
 	"https://github.com/ojroques/nvim-osc52",
 	"https://github.com/lewis6991/gitsigns.nvim",
 	"https://github.com/tpope/vim-fugitive",
+	{
+		src = "https://github.com/L3MON4D3/LuaSnip",
+		---@diagnostic disable-next-line: need-check-nil
+		version = vim.version.range("v2.*"),
+	},
+    {
+        src = "https://github.com/saghen/blink.cmp",
+		---@diagnostic disable-next-line: need-check-nil
+		version = vim.version.range("v1.*"),
+    },
 	"https://github.com/folke/which-key.nvim",
 	"https://github.com/NStefan002/screenkey.nvim",
 
@@ -52,30 +63,31 @@ vim.pack.add({
 		---@diagnostic disable-next-line: need-check-nil
 		version = vim.version.range("^9"),
 	},
-    "https://github.com/alexpasmantier/krust.nvim",
-
+	"https://github.com/alexpasmantier/krust.nvim",
 })
 
-require("setup.catppuccin")
-require("setup.alpha")
+require("config.catppuccin")
+require("config.alpha")
 
-require("setup.indent-blankline")
-require("setup.bufferline")
-require("setup.lualine")
+require("config.indent-blankline")
+require("config.bufferline")
+require("config.lualine")
 
-require("setup.nvim-tree")
+require("config.nvim-tree")
 
-require("setup.fzf")
-require("setup.comment")
-require("setup.treesitter")
-require("setup.notify")
+require("config.fzf")
+require("config.comment")
+require("config.treesitter")
+require("config.notify")
 
-require("setup.osc52")
-require("setup.autopairs")
-require("setup.gitsigns")
-require("setup.which-key")
-require("setup.screenkey")
+require("config.osc52")
+require("config.autopairs")
+require("config.gitsigns")
+require("config.blink")
+require("config.which-key")
+require("config.screenkey")
 
-require("setup.mason")
-require("setup.conform")
-require("setup.rust")
+require("config.mason")
+require("config.conform")
+require("config.rust")
+

@@ -41,3 +41,10 @@ vim.opt.swapfile = false
 
 vim.opt.whichwrap:append("bs<>[]hl")
 vim.opt.fileencoding = "utf-8"
+
+---------------------------------- vim.g ----------------------------------
+
+vim.g.loaded_node_provider = 0
+vim.g.loaded_perl_provider = 0
+vim.g.loaded_python3_provider = 0
+
