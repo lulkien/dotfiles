@@ -12,4 +12,3 @@ function safe_require(module, silent)
 	end
 	return mod
 end
-

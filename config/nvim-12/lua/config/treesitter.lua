@@ -6,7 +6,7 @@ ts_config.setup({
 })
 
 -- Install parser
-local ensureInstalled = { "lua" }
+local ensureInstalled = { "lua", "rust", "cpp", "c", "bash", "fish", "html", "css", "javascript" }
 
 local alreadyInstalled = ts_config.get_installed()
 local parsersToInstall = vim.iter(ensureInstalled)
