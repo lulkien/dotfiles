@@ -5,7 +5,9 @@ vim.opt.relativenumber = true
 vim.opt.numberwidth = 3
 vim.opt.ruler = true
 
-vim.opt.clipboard = "unnamedplus"
+vim.schedule(function()
+	vim.opt.clipboard = "unnamedplus"
+end)
 
 vim.opt.cursorline = true
 vim.opt.cursorlineopt = "number"
@@ -18,9 +20,9 @@ vim.opt.smartindent = true
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
-vim.opt.shiftwidth = 4
-vim.opt.tabstop = 4
-vim.opt.softtabstop = 4
+-- vim.opt.shiftwidth = 4
+-- vim.opt.tabstop = 4
+-- vim.opt.softtabstop = 4
 vim.opt.expandtab = true
 
 vim.opt.scrolloff = 15
@@ -47,4 +49,3 @@ vim.opt.fileencoding = "utf-8"
 vim.g.loaded_node_provider = 0
 vim.g.loaded_perl_provider = 0
 vim.g.loaded_python3_provider = 0
-

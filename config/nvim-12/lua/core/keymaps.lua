@@ -65,3 +65,5 @@ map("v", "p", '"_dP', opts)
 -- vim.pack
 map("n", "<leader>pu", "<cmd>lua vim.pack.update()<CR>", { noremap = true, desc = "Pack: Update" })
 
+-- Disable hover keybind for visual mode
+map("v", "K", "<Nop>")

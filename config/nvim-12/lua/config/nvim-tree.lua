@@ -1,6 +1,8 @@
-require("nvim-tree").setup({
+local nvimtree = require("nvim-tree")
+
+nvimtree.setup({
 	filters = {
-		dotfiles = true,
+		dotfiles = false,
 		git_ignored = true,
 	},
 
@@ -24,15 +26,30 @@ require("nvim-tree").setup({
 		indent_markers = { enable = true },
 		icons = {
 			glyphs = {
-				default = "󰈚",
+				default = "",
+				symlink = "",
+				bookmark = "󰆤",
+				modified = "●",
+				hidden = "󰜌",
 				folder = {
-					default = "",
-					empty = "",
-					empty_open = "",
-					open = "",
-					symlink = "",
+					arrow_closed = "",
+					arrow_open = "",
+					default = "",
+					open = "",
+					empty = "",
+					empty_open = "",
+					symlink = "",
+					symlink_open = "",
 				},
-				git = { unmerged = "" },
+				git = {
+					staged = "",
+					unstaged = "",
+					renamed = "",
+					untracked = "",
+					deleted = "",
+					ignored = "",
+					unmerged = "",
+				},
 			},
 		},
 	},

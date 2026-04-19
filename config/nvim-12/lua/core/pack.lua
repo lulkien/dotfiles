@@ -1,9 +1,13 @@
 vim.pack.add({
+	-- Libraries
+	"https://github.com/Bilal2453/luvit-meta",
+	"https://github.com/ii14/emmylua-nvim",
+
 	-- Essential
-    "https://github.com/nvim-lua/plenary.nvim",
+	"https://github.com/nvim-lua/plenary.nvim",
 	"https://github.com/rcarriga/nvim-notify",
 
-    -- Functional
+	-- Functional
 	"https://github.com/mrded/nvim-lsp-notify",
 	"https://github.com/windwp/nvim-autopairs",
 	"https://github.com/ojroques/nvim-osc52",
@@ -30,7 +34,6 @@ vim.pack.add({
 		src = "https://github.com/catppuccin/nvim",
 		name = "catppuccin",
 	},
-
 	"https://github.com/goolord/alpha-nvim",
 	"https://github.com/lukas-reineke/indent-blankline.nvim",
 	"https://github.com/moll/vim-bbye",
@@ -38,14 +41,13 @@ vim.pack.add({
 	"https://github.com/nvim-lualine/lualine.nvim",
 	"https://github.com/nvim-tree/nvim-tree.lua",
 
-	-- Libraries
-	"https://github.com/Bilal2453/luvit-meta",
-	"https://github.com/ii14/emmylua-nvim",
-
 	-- For development
+        "https://github.com/kdheepak/lazygit.nvim",
 	"https://github.com/numToStr/Comment.nvim",
 	"https://github.com/mason-org/mason.nvim",
 	"https://github.com/stevearc/conform.nvim",
+
+        -- LSP
 	{
 		src = "https://github.com/mrcjkb/rustaceanvim",
 		---@diagnostic disable-next-line: need-check-nil
@@ -77,7 +79,6 @@ require("config.nvim-tree")
 require("config.comment")
 require("config.mason")
 require("config.conform")
-require("config.rust")
 
 require("config.gitsigns")
 require("config.which-key")

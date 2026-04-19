@@ -116,9 +116,9 @@
         "ignoreGlobs": [],
         "library": [
             "$VIMRUNTIME",
-            "$LLS_Addons/luvit",
-            "$HOME/.local/share/nvim/lazy",
-            "$HOME/.local/share/nvim/lazy/luvit-meta/library/uv.lua"
+            "$HOME/.local/share/nvim/site/pack/core/opt",
+            "$HOME/.local/share/nvim/site/pack/core/opt/luvit-meta/library/uv.lua",
+            "$HOME/.local/share/nvim/site/pack/core/opt/emmylua-nvim/nvim/library/vim.lua"
         ],
         "workspaceRoots": [],
         "preloadFileSize": 0,

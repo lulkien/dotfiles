@@ -30,11 +30,6 @@ if blink then
 	})
 end
 
--- Setup virtual line diagnostic
-vim.diagnostic.config({
-	virtual_lines = true,
-})
-
 ---@class LspMethodConfig
 ---@field name string           A brief description of what the LSP method does.
 ---@field mode? string          The mode in which the keybinding should be active.
@@ -55,19 +50,19 @@ vim.diagnostic.config({
 ---
 --- Configures LSP keybindings and setups for supported methods.
 local function lsp_attached_callback(args)
-    ---@type vim.lsp.Client    
-    local client = vim.lsp.get_client_by_id(args.data.client_id)
-    if not client then
-        return
-    end
+	---@type vim.lsp.Client
+	local client = vim.lsp.get_client_by_id(args.data.client_id)
+	if not client then
+		return
+	end
 
-    ---@type fzf-lua|nil
-    local fzf = safe_require("fzf-lua")
+	---@type fzf-lua|nil
+	local fzf = safe_require("fzf-lua")
 
 	---@type table<string, LspMethodConfig>
 	local method_configs = {
 		["textDocument/codeAction"] = {
-			name = "Code action",
+			name = "Code actions",
 			keys = "<leader>la",
 			callback = fzf and fzf.lsp_code_actions or vim.lsp.buf.code_action,
 		},
@@ -210,7 +205,33 @@ vim.api.nvim_create_autocmd("LspAttach", {
 	callback = lsp_attached_callback,
 })
 
+-- Setup virtual line diagnostic
+local diagnostic_opts = {
+	signs = { text = signs },
+	virtual_lines = false,
+	virtual_text = true,
+	underline = true, -- Always on
+	update_in_insert = true,
+	float = {
+		focusable = false,
+		style = "minimal",
+		border = "rounded",
+		source = true,
+	},
+}
+
+vim.diagnostic.config(diagnostic_opts)
+
+vim.keymap.set("n", "<leader>ls", function()
+	local opts = vim.diagnostic.config() or diagnostic_opts
+	local current = opts.virtual_text
+
+	opts.virtual_text = not current
+	opts.virtual_lines = current
+
+	vim.diagnostic.config(opts)
+end, { desc = "LSP: Switch diagnostic style" })
+
 -- Enable servers
 vim.lsp.enable(servers)
 vim.lsp.enable(custom_servers)
-
