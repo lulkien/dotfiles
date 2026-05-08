@@ -2,16 +2,24 @@ if not command -sq pacman
     return
 end
 
-set -l pac_wapper "sudo pacman"
-if command -sq paru
-    set pac_wapper paru
+set -l PACMAN_CMD "sudo pacman"
+
+if test (whoami) = root
+    set -l PACMAN_CMD pacman
+else
+    if command -sq aura
+        set PACMAN_CMD aura
+    else if command -sq paru
+        set PACMAN_CMD paru
+    else if command -sq yay
+        set PACMAN_CMD yay
+    end
 end
 
 # Package manager
-abbr -a pit "$pac_wapper -S --noconfirm --needed"
-abbr -a prm "$pac_wapper -Rns"
-abbr -a puf "$pac_wapper -S --noconfirm --needed archlinux-keyring; $pac_wapper -Syu"
-abbr -a pcl "$pac_wapper -Rns (pacman -Qdttq)"
-
-abbr -a pqr 'pacman -Q'
-abbr -a pss 'pacman -sS'
+abbr -a pit "$PACMAN_CMD -S --noconfirm --needed"
+abbr -a puf "$PACMAN_CMD -S --noconfirm --needed archlinux-keyring; $PACMAN_CMD -Syu"
+abbr -a prm "$PACMAN_CMD -Rns"
+abbr -a pcl "$PACMAN_CMD -Rns (pacman -Qdttq)"
+abbr -a pqr "$PACMAN_CMD -Q"
+abbr -a pss "$PACMAN_CMD -sS"
