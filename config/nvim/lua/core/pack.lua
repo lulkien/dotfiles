@@ -42,12 +42,13 @@ vim.pack.add({
 	"https://github.com/nvim-tree/nvim-tree.lua",
 
 	-- For development
-        "https://github.com/kdheepak/lazygit.nvim",
+	"https://github.com/kdheepak/lazygit.nvim",
 	"https://github.com/numToStr/Comment.nvim",
 	"https://github.com/mason-org/mason.nvim",
 	"https://github.com/stevearc/conform.nvim",
 
-        -- LSP
+	-- LSP
+	{ src = "https://github.com/neovim/nvim-lspconfig" },
 	{
 		src = "https://github.com/mrcjkb/rustaceanvim",
 		---@diagnostic disable-next-line: need-check-nil
