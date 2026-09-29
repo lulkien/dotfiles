@@ -11,6 +11,11 @@ return {
     }),
 
     vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
+        pattern = "*.slint",
+        command = "set ft=slint",
+    }),
+
+    vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
         desc = "Reset C/C++ tabbing because of editorconfig.lua is an ass.",
         pattern = { "*.c", "*.cpp", "*.h", "*.hpp" },
         callback = function()

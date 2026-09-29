@@ -11,6 +11,7 @@ local configured_servers = {
 		-- "json-lsp",
         "pyrefly",
 		"tombi",
+        "slint_lsp",
 	},
 	custom_servers = {
 		"qmlls",
