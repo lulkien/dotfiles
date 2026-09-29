@@ -1,4 +1,9 @@
 require("blink.cmp").setup({
+	-- Agentic prompt buffer has its own slash-command/file-picker completion.
+	enabled = function()
+		return not vim.tbl_contains({ "AgenticInput", "AgenticChat" }, vim.bo.filetype)
+	end,
+
 	keymap = {
 		["<C-space>"] = {
 			"show",

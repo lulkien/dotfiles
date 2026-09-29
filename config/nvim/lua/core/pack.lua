@@ -61,6 +61,9 @@ vim.pack.add({
 	"https://github.com/tpope/vim-fugitive", -- Git
 	"https://github.com/folke/which-key.nvim",
 	"https://github.com/NStefan002/screenkey.nvim",
+
+	-- AI
+	"https://github.com/carlos-algms/agentic.nvim",
 })
 
 require("config.fzf")
@@ -84,3 +87,4 @@ require("config.conform")
 require("config.gitsigns")
 require("config.which-key")
 require("config.screenkey")
+require("config.agentic")
