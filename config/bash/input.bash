@@ -17,4 +17,12 @@ if [[ $- == *i* ]]; then
     bind '"\C-x\C-m": accept-line'
     bind '"\C-m": "\C-x\C-b\C-x\C-m"'
 
+    # Same keys under `set -o vi`, insert mode only: in vi command mode space
+    # has to keep its move-right function.
+    bind -m vi-insert -x '" ":_abbr_on_space'
+    bind -m vi-insert -x '"\C-@":_abbr_literal_space'
+    bind -m vi-insert -x '"\C-x\C-b":_abbr_before_accept'
+    bind -m vi-insert '"\C-x\C-m": accept-line'
+    bind -m vi-insert '"\C-m": "\C-x\C-b\C-x\C-m"'
+
 fi
